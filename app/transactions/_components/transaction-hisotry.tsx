@@ -38,7 +38,7 @@ const TransactionHistory = () => {
   ];
 
   return (
-    <Card className="md:max-w-[65%] w-full h-[1000px]">
+    <Card className="w-full h-[1000px]">
       <CardContent>
         <CardHeader className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold text-color">

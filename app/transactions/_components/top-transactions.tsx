@@ -3,7 +3,6 @@ import completedIcon from "@/sources/icons/completed.png";
 import moneyIcon from "@/sources/icons/money.png";
 import targetIcon from "@/sources/icons/target.png";
 import incomeIcon from "@/sources/icons/income.png";
-import StatusChip from "@/components/status-chip";
 import Image from "next/image";
 
 const TopTransactionsCard = () => {
@@ -60,7 +59,7 @@ const TopTransactionsCard = () => {
   ];
 
   return (
-    <Card className="max-w-[35%] w-full h-125 ">
+    <Card className="w-full h-125 ">
       <CardContent>
         <CardHeader className="font-textColor font-semibold text-2xl">
           Top Merchants
