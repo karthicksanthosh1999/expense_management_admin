@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-text: var(--text);
+  --color-textColor: var(--textColor);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
@@ -49,7 +49,7 @@
 }
 
 :root {
-  --text: #000;
+  --textColor: #000;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -85,7 +85,7 @@
 }
 
 .dark {
-    --text: #fff;
+    --textColor: #fff;
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: #13151C;
@@ -125,8 +125,5 @@
   }
   body {
     @apply bg-background text-foreground;
-  }
-  html {
-    @apply font-sans;
   }
 }

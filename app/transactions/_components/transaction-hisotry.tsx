@@ -38,7 +38,7 @@ const TransactionHistory = () => {
   ];
 
   return (
-    <Card className="md:max-w-[65%] w-full">
+    <Card className="md:max-w-[65%] w-full h-[1000px]">
       <CardContent>
         <CardHeader className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold text-color">
@@ -60,7 +60,7 @@ const TransactionHistory = () => {
                   height={65}
                 />
                 <div className="flex flex-col items-start">
-                  <h1 className="text-color text-xl font-semibold tracking-wider">
+                  <h1 className="text-color text-lg font-semibold tracking-wider">
                     {item.title}
                   </h1>
                   <p className="text-gray-400 tracking-wider">
@@ -86,9 +86,6 @@ const TransactionHistory = () => {
             </div>
           ))}
         </section>
-        <CardFooter>
-          <CustomPagination />
-        </CardFooter>
       </CardContent>
     </Card>
   );
