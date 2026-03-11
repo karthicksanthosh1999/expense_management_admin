@@ -1,23 +1,25 @@
-import React, { ReactNode } from 'react'
-import { ThemeProvider } from './theme-providers'
-import GlobalHeader from '@/components/global-header'
+import React, { ReactNode } from "react";
+import { ThemeProvider } from "./theme-providers";
+import GlobalHeader from "@/components/global-header";
+import { Toaster } from "react-hot-toast";
 
 type TProps = {
-    children: ReactNode
-}
+  children: ReactNode;
+};
 
 const AuthProvider = ({ children }: TProps) => {
-    return (
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange>
-            <GlobalHeader>
-                {children}
-            </GlobalHeader>
-        </ThemeProvider>
-    )
-}
+  return (
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange>
+      <GlobalHeader>
+        {children}
+        <Toaster position="top-right" />
+      </GlobalHeader>
+    </ThemeProvider>
+  );
+};
 
-export default AuthProvider
+export default AuthProvider;
