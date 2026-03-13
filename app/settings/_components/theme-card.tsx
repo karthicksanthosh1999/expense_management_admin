@@ -1,87 +1,84 @@
-'use client'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { Label } from '@/components/ui/label'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import bulbIcon from "@/sources/icons/light.png"
-import computerIcon from "@/sources/icons/laptop.png"
-import moonIcon from "@/sources/icons/moon.png"
-import Image from 'next/image';
-import { useTheme } from 'next-themes';
-import toast from 'react-hot-toast';
-import { Field, FieldContent, FieldDescription, FieldLabel, FieldTitle } from '@/components/ui/field';
-
+"use client";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useTheme } from "next-themes";
+import toast from "react-hot-toast";
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldLabel,
+  FieldTitle,
+} from "@/components/ui/field";
+import { laptopIcon, moonIcon, sunIcon } from "@/lib/icon-center";
 
 const ThemeCard = () => {
+  const { theme, setTheme } = useTheme();
+  const handleTheme = (theme: string) => {
+    setTheme(theme);
+    toast(`${theme} theme applied successfully`);
+  };
 
-    const { theme, setTheme } = useTheme();
-    const handleTheme = (theme: string) => {
-        setTheme(theme)
-        toast(`${theme} theme applied successfully`, {
+  const themeData = [
+    {
+      id: "0",
+      htmlId: "light-plan",
+      icon: moonIcon,
+      title: "Dark Mode",
+      description: " Clean and bright interface",
+      key: "dark",
+    },
+    {
+      id: "1",
+      htmlId: "light-plan",
+      description: "Clean and bright interface",
+      icon: sunIcon,
+      title: "Light",
+      key: "light",
+    },
+    {
+      id: "2",
+      htmlId: "system-plan",
+      description: "Follow system preferences",
+      icon: laptopIcon,
+      title: "System",
+      key: "system",
+    },
+  ];
 
-        })
-    }
-    return (
-        <Card className='max-w-[50%] w-full'>
-            <CardContent>
-                <CardHeader className='text-textColor text-lg font-semibold'>Theme</CardHeader>
-                <RadioGroup defaultValue={theme} className="max-w-full space-y-2">
-                    <FieldLabel htmlFor="light-plan">
-                        <Field orientation="horizontal">
-                            <FieldContent>
-                                <div className='flex items-start gap-5'>
-                                    <div className="flex items-center gap-5">
-                                        <RadioGroupItem value="light" id="light-plan" />
-                                        <Image src={bulbIcon} alt='icon' width={50} height={50} />
-                                    </div>
-                                    <div>
-                                        <FieldTitle>Light Mode</FieldTitle>
-                                        <FieldDescription>
-                                            Clean and bright interface
-                                        </FieldDescription>
-                                    </div>
-                                </div>
-                            </FieldContent>
-                        </Field>
-                    </FieldLabel>
-                    <FieldLabel htmlFor="dark-plan">
-                        <Field orientation="horizontal">
-                            <div className='flex items-start gap-5'>
-                                <div className="flex items-center gap-5">
-                                    <RadioGroupItem value="dark" id="dark-plan" />
-                                    <Image src={moonIcon} alt='icon' width={50} height={50} />
-                                </div>
-                                <div>
-                                    <FieldTitle>Dark Mode</FieldTitle>
-                                    <FieldDescription>
-                                        Clean and bright interface
-                                    </FieldDescription>
-                                </div>
-                            </div>
-                        </Field>
-                    </FieldLabel>
-                    <FieldLabel htmlFor="system-plan" className='border border-highlight'>
-                        <Field orientation="horizontal">
-                            <FieldContent>
-                                <div className='flex items-start gap-5'>
-                                    <div className="flex items-center gap-5">
-                                        <RadioGroupItem value="system" id="system-plan" />
-                                        <Image src={computerIcon} alt='icon' width={50} height={50} />
-                                    </div>
-                                    <div>
-                                        <FieldTitle>System Mode</FieldTitle>
-                                        <FieldDescription>
-                                            Follow system preferences
-                                        </FieldDescription>
-                                    </div>
-                                </div>
-                            </FieldContent>
-                        </Field>
-                    </FieldLabel>
-                </RadioGroup>
-
-
-            </CardContent>
-        </Card>
-    )
-}
-export default ThemeCard
+  return (
+    <Card className="max-w-[50%] w-full">
+      <CardContent>
+        <CardHeader className="text-textColor text-lg font-semibold">
+          Theme
+        </CardHeader>
+        <RadioGroup defaultValue={theme} className="max-w-full space-y-2">
+          {themeData.map(
+            ({ htmlId, icon: Icon, id, title, description, key }) => (
+              <FieldLabel
+                htmlFor={htmlId}
+                key={id}
+                onClick={() => handleTheme(key)}>
+                <Field orientation="horizontal">
+                  <FieldContent>
+                    <div className="flex items-start gap-5">
+                      <div className="flex items-center gap-5">
+                        <RadioGroupItem value={key} id={htmlId} />
+                        <Icon />
+                      </div>
+                      <div>
+                        <FieldTitle>{title}</FieldTitle>
+                        <FieldDescription>{description}</FieldDescription>
+                      </div>
+                    </div>
+                  </FieldContent>
+                </Field>
+              </FieldLabel>
+            ),
+          )}
+        </RadioGroup>
+      </CardContent>
+    </Card>
+  );
+};
+export default ThemeCard;

@@ -21,7 +21,11 @@ const tabs = [
     name: "Appearance",
     value: "appearance",
     icon: SunMoon,
-    content: <>{/* <ThemeCard /> */}</>,
+    content: (
+      <>
+        <ThemeCard />
+      </>
+    ),
   },
 ];
 

@@ -8,6 +8,8 @@ import {
   TabsTrigger,
 } from "@/components/ui/animated-tab/motion-tabs";
 import { SunMoon, User2 } from "lucide-react";
+import ContactCard from "./_component/contact-card";
+import SecondHeader from "@/components/second-header";
 
 const page = () => {
   const tabs = [
@@ -16,9 +18,10 @@ const page = () => {
       value: "faq",
       icon: User2,
       content: (
-        <>
+        <div className="flex gap-3">
           <FAQCard />
-        </>
+          <ContactCard />
+        </div>
       ),
     },
     {
@@ -31,6 +34,10 @@ const page = () => {
 
   return (
     <div>
+      <SecondHeader currentPage="Support">
+        <></>
+      </SecondHeader>
+
       <Tabs defaultValue="faq" className="w-full">
         <TabsList className="bg-card h-fit w-full rounded-sm flex gap-2">
           {tabs.map(({ icon: Icon, name, value }) => (

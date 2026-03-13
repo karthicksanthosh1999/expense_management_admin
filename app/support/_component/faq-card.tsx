@@ -56,7 +56,7 @@ const FAQCard = () => {
   };
 
   return (
-    <Card className="max-w-[60%] w-full">
+    <Card className="max-w-[70%] w-full">
       <CardContent>
         <div className="flex items-center justify-between">
           <h1 className="text-textColor text-xl font-semibold">
@@ -80,7 +80,7 @@ const FAQCard = () => {
           <Accordion
             type="single"
             collapsible
-            defaultValue="1"
+            defaultValue={1}
             className="w-full">
             {filteredCategoryList.map(
               ({ anser, category, icon: Icon, id, question }) => (
