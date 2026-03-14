@@ -1,16 +1,9 @@
-"use client";
 import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { laptopIcon } from "@/lib/icon-center";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import "./index.css";
 
 const GoalCard = () => {
-  const [progress, setProgress] = useState(13);
-  useEffect(() => {
-    const timer = setTimeout(() => setProgress(66), 500);
-    return () => clearTimeout(timer);
-  }, []);
   const myGoalData = [
     {
       id: "0",
@@ -46,26 +39,30 @@ const GoalCard = () => {
             </Link>
           </h1>
         </div>
-        <div className="space-y-3">
+        <div className="space-y-3 mt-5 ">
           {myGoalData.map(
             ({ currentAmount, goalAmount, icon: Icon, id, title }) => (
               <div
                 key={id}
-                className="flex flex-col items-center justify-between border border-blue-900 hover:border-primary p-3 cursor-pointer rounded-xl transaction ease-in-out duration-500 hover:translate-y-1">
+                className="flex flex-col items-center justify-between border border-blue-900 hover:border-primary p-5 rounded-xl transaction ease-in-out duration-500 hover:translate-y-1">
                 <div className="flex items-center gap-5 w-full">
-                  <Icon />
-                  <div className="flex items-center justify-between w-full">
-                    <h1 className="text-color text-lg font-semibold tracking-wider">
-                      {title}
-                    </h1>
-                    <p className="text-gray-400 tracking-wider">
-                      {currentAmount} of {goalAmount}
-                    </p>
-                  </div>
-                  <div className="h-1 w-[40%] bg-neutral-200 dark:bg-neutral-600">
-                    <div
-                      className="h-1 bg-primary"
-                      style={{ width: "45%" }}></div>
+                  <Icon size={30} />
+                  <div className="flex flex-col w-full space-y-5">
+                    <div className="flex items-center justify-between w-full">
+                      <h1 className="text-color text-lg font-semibold tracking-wider">
+                        {title}
+                      </h1>
+                      <p className="text-gray-400 tracking-wider">
+                        {currentAmount} of {goalAmount}
+                      </p>
+                    </div>
+                    <div className="w-full">
+                      <div className="h-2 rounded-lg w-[90%] bg-neutral-200 dark:bg-neutral-600">
+                        <div
+                          className="h-2 bg-primary rounded-lg progress-fill"
+                          style={{ width: "45%" }}></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

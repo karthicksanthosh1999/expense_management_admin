@@ -1,4 +1,6 @@
 import {
+  Calendar,
+  ChartPie,
   CircleDollarSign,
   CircleQuestionMark,
   CreditCard,
@@ -8,10 +10,12 @@ import {
   Mail,
   MoonStar,
   Phone,
+  Plus,
   Shield,
   Smartphone,
   Sun,
   Timer,
+  TrendingUp,
   Trophy,
   UserRoundX,
 } from "lucide-react";
@@ -122,6 +126,34 @@ export const laptopIcon = ({ size = 23 }: IconProps) => {
   return (
     <div className="bg-linear-to-r from-indigo-500 to-blue-500 p-2 rounded-lg">
       <Laptop size={size} className="text-white" />
+    </div>
+  );
+};
+export const plusIcon = ({ size = 23 }: IconProps) => {
+  return (
+    <div className="bg-linear-to-r from-pink-500 to-rose-500 p-2 rounded-lg">
+      <Plus size={size} className="text-white" />
+    </div>
+  );
+};
+export const calenderIcon = ({ size = 23 }: IconProps) => {
+  return (
+    <div className="bg-linear-to-r from-indigo-400 to-cyan-400 p-2 rounded-lg">
+      <Calendar size={size} className="text-white" />
+    </div>
+  );
+};
+export const pieChartIcon = ({ size = 23 }: IconProps) => {
+  return (
+    <div className="bg-linear-to-r from-indigo-400 to-cyan-400 p-2 rounded-lg">
+      <ChartPie size={size} className="text-white" />
+    </div>
+  );
+};
+export const trendingUpIcon = ({ size = 23 }: IconProps) => {
+  return (
+    <div className="bg-linear-to-r from-indigo-400 to-cyan-400 p-2 rounded-lg">
+      <TrendingUp size={size} className="text-white" />
     </div>
   );
 };

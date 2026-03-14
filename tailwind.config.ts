@@ -10,8 +10,6 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-poppins)", "sans-serif"], // Sets Poppins as the default 'font-sans'
-        // or add a new utility
-        // poppins: ['var(--font-poppins)'],
       },
       keyframes: {
         gradientMove: {
