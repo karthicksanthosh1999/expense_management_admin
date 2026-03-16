@@ -27,9 +27,11 @@ import {
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { NavUser } from "./app-navuser";
+import { useAuth } from "@/context/hooks/authHooks";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathName = usePathname();
+  const values = useAuth();
   const data = {
     user: {
       name: "shadcn",
