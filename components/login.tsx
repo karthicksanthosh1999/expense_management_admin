@@ -9,6 +9,9 @@ import { userLoginValidationSchema } from "@/validation_schema/user-validation";
 import api from "@/lib/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/hooks/authHooks";
+import { useEffect } from "react";
 
 type LoginFormData = z.infer<typeof userLoginValidationSchema>;
 
@@ -16,6 +19,17 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const navigate = useRouter();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user?.data) {
+      navigate.push("/dashboard");
+    } else {
+      navigate.push("/");
+    }
+  }, [user, navigate]);
+
   const { handleSubmit, register, reset } = useForm<LoginFormData>({
     resolver: zodResolver(userLoginValidationSchema),
   });
@@ -24,7 +38,9 @@ export function LoginForm({
     try {
       const response = await api.post("/api/auth/login", data);
       console.log(response?.data?.user);
-
+      if (response?.data?.user) {
+        navigate.push("/dashboard");
+      }
       reset();
     } catch (error) {
       console.log(error);

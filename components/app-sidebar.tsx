@@ -31,7 +31,7 @@ import { useAuth } from "@/context/hooks/authHooks";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathName = usePathname();
-  const values = useAuth();
+  const { user } = useAuth();
   const data = {
     user: {
       name: "shadcn",
@@ -114,7 +114,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         ))}
       </SidebarContent>
       <SidebarFooter className="w-full">
-        <NavUser user={data.user} />
+        {user && <NavUser data={user?.data} message={user?.message} />}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

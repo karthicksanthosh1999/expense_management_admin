@@ -1,12 +1,38 @@
-import React from "react";
+"use client";
+import { useState } from "react";
 import TransactionHistory from "./_components/transaction-hisotry";
 import TopTransactionsCard from "./_components/top-transactions";
 import { TransactionChart } from "./_components/transaction-chart";
 import FilterTransactions from "./_components/filter-transaction";
+import SecondHeader from "@/components/second-header";
+import { Button } from "@/components/ui/button";
+import { TransactionForm } from "./_components/form-transaction";
+import { TTransactionType } from "@/lib/constants";
 
 const page = () => {
+  const [transactionFormOpen, setTransactionFormOpen] = useState(false);
+  const [selectedFormType, setSelectedFormType] =
+    useState<TTransactionType>("Expense");
+
+  const handleTransactionFormOpen = (formType: TTransactionType) => {
+    setSelectedFormType(formType);
+    setTransactionFormOpen(true);
+  };
+
   return (
     <div>
+      <SecondHeader currentPage="Transaction">
+        <Button
+          className={"text-sm text-textColor p-5"}
+          onClick={() => handleTransactionFormOpen("Income")}>
+          Add Income
+        </Button>
+        <Button
+          className={"text-sm text-textColor p-5"}
+          onClick={() => handleTransactionFormOpen("Expense")}>
+          Add Expense
+        </Button>
+      </SecondHeader>
       <div className="flex md:flex-row flex-col items-start gap-5 w-full">
         <div className="w-[75%] space-y-3">
           <FilterTransactions />
@@ -17,6 +43,11 @@ const page = () => {
           <TransactionChart />
         </div>
       </div>
+      <TransactionForm
+        open={transactionFormOpen}
+        setOpen={setTransactionFormOpen}
+        formType={selectedFormType}
+      />
     </div>
   );
 };

@@ -1,11 +1,11 @@
 "use client";
-import { IUser } from "@/constants/UserTypes";
+import { IDecodeUser } from "@/constants/UserTypes";
 import api from "@/lib/api";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
 type AuthContextType = {
-  user: IUser | null;
-  setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
+  user: IDecodeUser | null;
+  setUser: React.Dispatch<React.SetStateAction<IDecodeUser | null>>;
 };
 
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -14,7 +14,7 @@ type TProp = {
   children: ReactNode;
 };
 export const AuthUserProvider = ({ children }: TProp) => {
-  const [user, setUser] = useState<IUser | null>(null);
+  const [user, setUser] = useState<IDecodeUser | null>(null);
 
   useEffect(() => {
     decodeUser();
@@ -28,7 +28,6 @@ export const AuthUserProvider = ({ children }: TProp) => {
       console.log("Decode error:", error);
     }
   };
-  console.log(user);
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       {children}
