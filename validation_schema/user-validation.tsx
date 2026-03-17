@@ -8,3 +8,14 @@ export const userLoginValidationSchema = z.object({
 export type TUserLoginValidationSchemaType = z.infer<
   typeof userLoginValidationSchema
 >;
+
+
+export const userValidationSchema = z.object({
+  id: z.string().optional(),
+  fullName: z.string({ message: "Full name is required" }),
+  email: z.email({ message: "Email is required" }),
+  mobile: z.string({ message: "Mobile is required" }),
+  password: z.string().optional()
+})
+
+export type TUserValidationSchema = z.infer<typeof userValidationSchema>

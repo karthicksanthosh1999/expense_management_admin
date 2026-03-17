@@ -1,4 +1,3 @@
-import React from "react";
 import SettingTabs from "./_components/settings-tab";
 import SecondHeader from "@/components/second-header";
 

@@ -5,6 +5,7 @@ import {
   CircleQuestionMark,
   CreditCard,
   DollarSign,
+  Key,
   Laptop,
   Link,
   Mail,
@@ -12,6 +13,7 @@ import {
   Phone,
   Plus,
   Shield,
+  ShieldCheck,
   Smartphone,
   Sun,
   Timer,
@@ -154,6 +156,20 @@ export const trendingUpIcon = ({ size = 23 }: IconProps) => {
   return (
     <div className="bg-linear-to-r from-indigo-400 to-cyan-400 p-2 rounded-lg">
       <TrendingUp size={size} className="text-white" />
+    </div>
+  );
+};
+export const KeyIcon = ({ size = 23 }: IconProps) => {
+  return (
+    <div className="bg-linear-to-r from-indigo-400 to-cyan-400 p-2 rounded-lg">
+      <Key size={size} className="text-white" />
+    </div>
+  );
+};
+export const verifiedIcon = ({ size = 23 }: IconProps) => {
+  return (
+    <div className="bg-linear-to-r from-indigo-400 to-cyan-400 p-2 rounded-lg">
+      <ShieldCheck size={size} className="text-white" />
     </div>
   );
 };

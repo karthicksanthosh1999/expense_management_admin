@@ -16,7 +16,7 @@ import { IModelPropsType } from "@/constants/CommonTypes";
 import { useAuth } from "@/context/hooks/authHooks";
 import { TTransactionType } from "@/lib/constants";
 import { transactionValidationSchema } from "@/validation_schema/transaction-validatino";
-import { zodResolver } from "@hookform/resolvers/zod/src/zod.js";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { use } from "react";
 import { useForm } from "react-hook-form";
 
@@ -37,6 +37,11 @@ export function TransactionForm({ open, setOpen, formType }: TProps) {
       userId: user?.data?.id,
     },
   });
+
+
+  const handleTransaction = () => {
+    console.log("")
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

@@ -9,13 +9,25 @@ import {
 } from "@/components/ui/animated-tab/motion-tabs";
 import { SunMoon, User2 } from "lucide-react";
 import ThemeCard from "./theme-card";
+import ProfileCard from "./profile-card";
+import SecurityCard from "./security-card";
 
 const tabs = [
   {
     name: "Profile",
     value: "profile",
     icon: User2,
-    content: <></>,
+    content:
+      <>
+        <div className="flex items-start gap-5 w-full">
+          <div className="w-full">
+            <ProfileCard />
+          </div>
+          <div className="w-full">
+            <SecurityCard />
+          </div>
+        </div>
+      </>
   },
   {
     name: "Appearance",
@@ -24,6 +36,15 @@ const tabs = [
     content: (
       <>
         <ThemeCard />
+      </>
+    ),
+  },
+  {
+    name: "Account",
+    value: "account",
+    icon: SunMoon,
+    content: (
+      <>
       </>
     ),
   },
