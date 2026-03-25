@@ -12,7 +12,7 @@ export type TUserLoginValidationSchemaType = z.infer<
 
 export const userValidationSchema = z.object({
   id: z.string().optional(),
-  fullName: z.string({ message: "Full name is required" }),
+  name: z.string({ message: "Name is required" }),
   email: z.email({ message: "Email is required" }),
   mobile: z.string({ message: "Mobile is required" }),
   password: z.string().optional()

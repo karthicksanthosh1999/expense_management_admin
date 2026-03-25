@@ -1,4 +1,4 @@
-import { Card, CardAction, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import expenseIcon from "@/sources/icons/expense.png";
 import incomeIcon from "@/sources/icons/income.png";
 import balanceIcon from "@/sources/icons/balance.png";
@@ -11,8 +11,18 @@ import {
   trendingUpIcon,
 } from "@/lib/icon-center";
 import Link from "next/link";
+import { prisma } from "@/lib/prisma";
 
-const page = () => {
+const page = async () => {
+  const totals = await prisma.transaction.groupBy({
+    by: ["transactionType"],
+    _sum: { amount: true },
+  });
+
+  const income =
+    totals.find((t) => t.transactionType === "Income")?._sum.amount || 0;
+  const expense =
+    totals.find((t) => t.transactionType === "Expense")?._sum.amount || 0;
   const cardData = [
     {
       title: "Total Expense",
@@ -65,8 +75,10 @@ const page = () => {
   return (
     <>
       <div className="flex items-center justify-between gap-5 flex-wrap">
-        {cardData.map((item) => (
-          <Card className="max-w-lg w-lg p-5 shadow-lg hover:shadow-blue-500">
+        {cardData.map((item, idx) => (
+          <Card
+            className="max-w-lg w-lg p-5 shadow-lg hover:shadow-blue-500"
+            key={idx}>
             <div>
               <Image src={item.icon} alt="image" height={50} width={50} />
               <div className="mt-5">

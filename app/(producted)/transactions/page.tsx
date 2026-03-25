@@ -22,16 +22,18 @@ const page = () => {
   return (
     <div>
       <SecondHeader currentPage="Transaction">
-        <Button
-          className={"text-sm text-textColor p-5"}
-          onClick={() => handleTransactionFormOpen("Income")}>
-          Add Income
-        </Button>
-        <Button
-          className={"text-sm text-textColor p-5"}
-          onClick={() => handleTransactionFormOpen("Expense")}>
-          Add Expense
-        </Button>
+        <div className="space-x-3">
+          <Button
+            className={"text-sm text-textColor p-5"}
+            onClick={() => handleTransactionFormOpen("Income")}>
+            Add Income
+          </Button>
+          <Button
+            className={"text-sm text-textColor p-5"}
+            onClick={() => handleTransactionFormOpen("Expense")}>
+            Add Expense
+          </Button>
+        </div>
       </SecondHeader>
       <div className="flex md:flex-row flex-col items-start gap-5 w-full">
         <div className="w-[75%] space-y-3">

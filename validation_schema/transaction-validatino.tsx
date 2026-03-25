@@ -2,10 +2,11 @@ import z from "zod";
 
 export const transactionValidationSchema = z.object({
   amount: z.number({ message: "Amount is required" }),
-  description: z.string({ message: "Description is required" }),
-  expenseType: z.string({ message: "Expense type is required" }),
+  message: z.string({ message: "Description is required" }),
+  transactionType: z.enum(["INCOME", "EXPENSE"], { message: "Expense type is required" }),
   userId: z.string({ message: "UserId is required" }),
-  categoryId: z.string({ message: "CategoryId type is required" }),
+  category: z.string({ message: "Category type is required" }),
+  transactionDate: z.string().transform((val) => new Date(val))
 });
 
 export type TTransactionValidationSchemaType = z.infer<
@@ -15,7 +16,7 @@ export const transactionFilterValidationSchema = z.object({
   search: z.string().optional(),
   startDate: z.string().optional(),
   endDate: z.string().optional(),
-  expenseType: z.string().optional(),
+  transactionType: z.string().optional(),
   page: z.string().optional(),
   limit: z.string().optional(),
 });

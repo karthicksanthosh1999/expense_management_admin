@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String        @id @default(uuid())
+  name         String
+  mobile       String        @unique
+  email        String        @unique
+  password     String
+  profileImage String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  goals        Goal[]
+  goalsHistory GoalHistory[]
+  tokens       Token[]
+  transactions Transaction[]
+}
+
+model Token {
+  id           String   @id @default(uuid())
+  userId       String
+  accessToken  String
+  refreshToken String
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Transaction {
+  id              String          @id @default(uuid())
+  userId          String
+  transactionType TransactionType @default(EXPENSE)
+  amount          Decimal         @db.Decimal(10, 2)
+  message         String
+  transactionDate DateTime        @default(now())
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  category        String
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Goal {
+  id            String        @id @default(uuid())
+  userId        String
+  goalAmount    Decimal       @db.Decimal(10, 2)
+  currentAmount Decimal       @db.Decimal(10, 2)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  goalHistory   GoalHistory[]
+
+  @@index([userId])
+}
+
+model GoalHistory {
+  id        String   @id @default(uuid())
+  userId    String
+  goalId    String
+  amount    Decimal  @db.Decimal(10, 2)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  goal      Goal     @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([goalId])
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}

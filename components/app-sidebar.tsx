@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-
 import { SearchForm } from "@/components/search-form";
 import { VersionSwitcher } from "@/components/version-switcher";
 import {
@@ -21,6 +20,7 @@ import Link from "next/link";
 import {
   ArrowRightLeft,
   Headset,
+  Layers2,
   LayoutDashboard,
   Settings,
   Target,
@@ -57,9 +57,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             isActive: pathName === "/transactions",
           },
           {
+            title: "Categories",
+            url: "/categories",
+            icon: ArrowRightLeft,
+            isActive: pathName === "/categories",
+          },
+          {
             title: "Galas",
             url: "/goal",
-            icon: Target,
+            icon: Layers2,
             isActive: pathName === "/goal",
           },
           {
@@ -96,11 +102,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 {item.items.map(({ icon: Icon, title, url, isActive }) => (
                   <SidebarMenuItem key={title} className="p-2 ">
                     <SidebarMenuButton
-                      className={`flex items-center gap-2 py-2 px-2 text-lg font-normal transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] rounded-md ${
-                        isActive
-                          ? "bg-[#0B1020] text-white"
-                          : "text-gray-400 hover:text-textColor hover:bg-[#1D1A27] hover:translate-x-0.75"
-                      }`}
+                      className={`flex items-center gap-2 py-2 px-2 text-lg font-normal transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] rounded-md ${isActive
+                        ? "bg-[#0B1020] text-white"
+                        : "text-gray-400 hover:text-textColor hover:bg-[#1D1A27] hover:translate-x-0.75"
+                        }`}
                       isActive={isActive}
                       render={<Link href={url} />}>
                       {Icon && <Icon size={18} />}

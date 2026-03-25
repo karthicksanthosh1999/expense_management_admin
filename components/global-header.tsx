@@ -1,3 +1,4 @@
+'use client'
 import { AppSidebar } from "@/components/app-sidebar";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -7,12 +8,16 @@ import {
 } from "@/components/ui/sidebar";
 import { ReactNode } from "react";
 import { ModeToggle } from "./theme-doggle";
+import { ProfileDropdown } from "./profile-dropdown";
+import { useAuth } from "@/context/hooks/authHooks";
 
 type TProps = {
   children: ReactNode;
 };
-
 export default function GlobalHeader({ children }: TProps) {
+
+  const { user, setUser } = useAuth()
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -27,11 +32,15 @@ export default function GlobalHeader({ children }: TProps) {
             <div className="">
               <h1 className="text-textColor font-bold text-xl">Settings</h1>
               <p className="text-gray-400 font-normal text-xs">
-                Welcome back Joseph Karthick!
+                Welcome back {user?.data?.fullname}!
               </p>
             </div>
-            <div className="w-fit">
+            <div className="w-fit mr-5 flex items-center justify-center gap-4">
               <ModeToggle />
+              {
+                user &&
+                <ProfileDropdown logout={setUser} user={user} />
+              }
             </div>
           </section>
         </header>

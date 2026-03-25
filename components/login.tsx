@@ -25,8 +25,6 @@ export function LoginForm({
   useEffect(() => {
     if (user?.data) {
       navigate.push("/dashboard");
-    } else {
-      navigate.push("/");
     }
   }, [user, navigate]);
 
@@ -34,11 +32,11 @@ export function LoginForm({
     resolver: zodResolver(userLoginValidationSchema),
   });
 
-  const handleLogin = async (data: LoginFormData) => {
+  const handleLogin = async (loginPayload: LoginFormData) => {
     try {
-      const response = await api.post("/api/auth/login", data);
-      console.log(response?.data?.user);
-      if (response?.data?.user) {
+      const { data } = await api.post("/api/auth/login", loginPayload);
+      console.log(data?.user)
+      if (data?.user) {
         navigate.push("/dashboard");
       }
       reset();
