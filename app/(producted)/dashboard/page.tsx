@@ -2,42 +2,36 @@ import { Card } from "@/components/ui/card";
 import expenseIcon from "@/sources/icons/expense.png";
 import incomeIcon from "@/sources/icons/income.png";
 import balanceIcon from "@/sources/icons/balance.png";
-import Image from "next/image";
 import GoalCard from "./_components/goal-card";
 import {
   calenderIcon,
   pieChartIcon,
   plusIcon,
   trendingUpIcon,
+  trendingDownIcon,
+  walletIcon,
 } from "@/lib/icon-center";
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
+import { transactionAmount } from "./_actions/transactionAmount";
 
 const page = async () => {
-  const totals = await prisma.transaction.groupBy({
-    by: ["transactionType"],
-    _sum: { amount: true },
-  });
+  const { expense, income, total } = await transactionAmount();
 
-  const income =
-    totals.find((t) => t.transactionType === "Income")?._sum.amount || 0;
-  const expense =
-    totals.find((t) => t.transactionType === "Expense")?._sum.amount || 0;
   const cardData = [
     {
       title: "Total Expense",
-      amount: "20,00,000",
-      icon: expenseIcon,
+      amount: expense,
+      icon: trendingDownIcon,
     },
     {
       title: "Total Income",
-      amount: "20,00,000",
-      icon: incomeIcon,
+      amount: income,
+      icon: trendingUpIcon,
     },
     {
       title: "Balance",
-      amount: "20,00,000",
-      icon: balanceIcon,
+      amount: total,
+      icon: walletIcon,
     },
   ];
 
@@ -74,16 +68,18 @@ const page = async () => {
 
   return (
     <>
-      <div className="flex items-center justify-between gap-5 flex-wrap">
-        {cardData.map((item, idx) => (
+      <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 place-items-center justify-center">
+        {cardData.map(({ amount, icon: Icon, title }, idx) => (
           <Card
-            className="max-w-lg w-lg p-5 shadow-lg hover:shadow-blue-500"
+            className="max-w-sm w-full p-5 shadow-lg hover:shadow-blue-500"
             key={idx}>
             <div>
-              <Image src={item.icon} alt="image" height={50} width={50} />
+              <div className="w-fit">
+                <Icon />
+              </div>
               <div className="mt-5">
-                <p className="text-gray-400">{item.title}</p>
-                <h1 className="text-4xl font-semibold">${item.amount}</h1>
+                <p className="text-gray-400">{title}</p>
+                <h1 className="text-4xl font-semibold">₹{amount}</h1>
               </div>
             </div>
           </Card>

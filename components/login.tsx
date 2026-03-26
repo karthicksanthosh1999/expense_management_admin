@@ -35,7 +35,7 @@ export function LoginForm({
   const handleLogin = async (loginPayload: LoginFormData) => {
     try {
       const { data } = await api.post("/api/auth/login", loginPayload);
-      console.log(data?.user)
+      console.log(data?.user);
       if (data?.user) {
         navigate.push("/dashboard");
       }
@@ -46,9 +46,14 @@ export function LoginForm({
   };
 
   return (
-    <div className={cn("flex flex-col gap-6 w-full", className)} {...props}>
+    <div
+      className={cn(
+        "flex flex-col gap-6 w-full h-auto max-w-5xl container mx-auto md:mx-5",
+        className,
+      )}
+      {...props}>
       <Card className="overflow-hidden p-0">
-        <CardContent className="grid p-0 md:grid-cols-2 justify-center">
+        <CardContent className="grid p-0 md:grid-cols-2 grid-cols-1 justify-center">
           <form className="p-6 md:p-8" onSubmit={handleSubmit(handleLogin)}>
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
@@ -62,7 +67,7 @@ export function LoginForm({
                 <FieldLabel>Email</FieldLabel>
                 <Input
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder="jk@jk.net"
                   {...register("email")}
                 />
               </Field>
@@ -74,11 +79,17 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input type="password" {...register("password")} />
+                <Input
+                  type="password"
+                  placeholder="Password"
+                  {...register("password")}
+                />
               </Field>
 
               <Field>
-                <Button type="submit" className="w-full">
+                <Button
+                  type="submit"
+                  className="w-full text-textColor text-base font-normal p-5">
                   Login
                 </Button>
               </Field>

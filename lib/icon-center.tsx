@@ -17,9 +17,11 @@ import {
   Smartphone,
   Sun,
   Timer,
+  TrendingDown,
   TrendingUp,
   Trophy,
   UserRoundX,
+  Wallet,
 } from "lucide-react";
 
 type IconProps = {
@@ -156,6 +158,20 @@ export const trendingUpIcon = ({ size = 23 }: IconProps) => {
   return (
     <div className="bg-linear-to-r from-indigo-400 to-cyan-400 p-2 rounded-lg">
       <TrendingUp size={size} className="text-white" />
+    </div>
+  );
+};
+export const trendingDownIcon = ({ size = 23 }: IconProps) => {
+  return (
+    <div className="bg-linear-to-r from-indigo-400 to-cyan-400 p-2 rounded-lg">
+      <TrendingDown size={size} className="text-white" />
+    </div>
+  );
+};
+export const walletIcon = ({ size = 23 }: IconProps) => {
+  return (
+    <div className="bg-linear-to-r from-indigo-400 to-cyan-400 p-2 rounded-lg">
+      <Wallet size={size} className="text-white" />
     </div>
   );
 };
