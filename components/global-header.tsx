@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -15,8 +15,9 @@ type TProps = {
   children: ReactNode;
 };
 export default function GlobalHeader({ children }: TProps) {
+  const { user, setUser } = useAuth();
 
-  const { user, setUser } = useAuth()
+  console.log(user);
 
   return (
     <SidebarProvider>
@@ -37,10 +38,7 @@ export default function GlobalHeader({ children }: TProps) {
             </div>
             <div className="w-fit mr-5 flex items-center justify-center gap-4">
               <ModeToggle />
-              {
-                user &&
-                <ProfileDropdown logout={setUser} user={user} />
-              }
+              {user && <ProfileDropdown logout={setUser} user={user} />}
             </div>
           </section>
         </header>

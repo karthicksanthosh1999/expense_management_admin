@@ -21,8 +21,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid password" }, { status: 401 });
   }
 
-  const accessToken = generateAccessToken(user.id);
-  const refreshToken = generateRefreshToken(user.id);
+  const accessToken = generateAccessToken(user);
+  const refreshToken = generateRefreshToken(user);
 
   const hashedRefresh = await hashToken(refreshToken);
 

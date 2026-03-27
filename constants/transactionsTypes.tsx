@@ -1,20 +1,25 @@
+import { TTransactionType } from "./CommonTypes";
+
+export interface ITransactionFilterType {
+  page?: number;
+  limit?: number;
+  type?: TTransactionType;
+  category?: string;
+  startDate?: Date;
+  endDate?: Date;
+}
+
 export interface ITransactionsResponseType {
-    id: string,
-    amount: string,
-    description: string,
-    userid: string,
-    categoryid: string,
-    createdat: string,
-    updatedat: string,
-    expensetype: string,
-    user: {
-        id: string,
-        fullName: string,
-        email: string
-    },
-    category: {
-        id: string,
-        title: string,
-        color: string
-    }
+  id: string;
+  amount: string;
+  message: string;
+  userId: string;
+  category: string;
+  transactionDate: Date;
+  transactionType: string;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+  };
 }

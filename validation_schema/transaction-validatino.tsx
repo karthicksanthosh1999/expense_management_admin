@@ -1,12 +1,14 @@
 import z from "zod";
 
 export const transactionValidationSchema = z.object({
-  amount: z.number({ message: "Amount is required" }),
+  amount: z.string({ message: "Amount is required" }),
   message: z.string({ message: "Description is required" }),
-  transactionType: z.enum(["INCOME", "EXPENSE"], { message: "Expense type is required" }),
-  userId: z.string({ message: "UserId is required" }),
+  transactionType: z.enum(["INCOME", "EXPENSE"], {
+    message: "Expense type is required",
+  }),
+  userId: z.uuid({ message: "UserId is required" }),
   category: z.string({ message: "Category type is required" }),
-  transactionDate: z.string().transform((val) => new Date(val))
+  transactionDate: z.string().transform((val) => new Date(val)),
 });
 
 export type TTransactionValidationSchemaType = z.infer<

@@ -19,9 +19,14 @@ import {
 import { IModelPropsType } from "@/constants/CommonTypes";
 import { useAuth } from "@/context/hooks/authHooks";
 import { TTransactionType } from "@/lib/constants";
-import { transactionValidationSchema } from "@/validation_schema/transaction-validatino";
+import {
+  transactionValidationSchema,
+  TTransactionValidationSchemaType,
+} from "@/validation_schema/transaction-validatino";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { useCreateTransactionHook } from "../_hooks/transaction-hook";
 
 interface TProps extends IModelPropsType {
   formType: TTransactionType;
@@ -30,20 +35,34 @@ interface TProps extends IModelPropsType {
 export function TransactionForm({ open, setOpen, formType }: TProps) {
   const { user } = useAuth();
 
+  const { mutate } = useCreateTransactionHook();
+
   const {
     formState: { errors },
     reset,
     handleSubmit,
     register,
+    control,
   } = useForm({
     resolver: zodResolver(transactionValidationSchema),
     defaultValues: {
-      userId: user?.data?.id,
+      userId: user?.id,
+      transactionType: formType,
     },
   });
 
-  const handleTransaction = (data: any) => {
-    console.log(data);
+  useEffect(() => {
+    if (user?.id) {
+      reset((prev) => ({
+        ...prev,
+        userId: user.id,
+      }));
+    }
+  }, [user, reset]);
+
+  const handleTransaction = (data: TTransactionValidationSchemaType) => {
+    mutate(data);
+    handleClose();
   };
   const handleClose = () => {
     setOpen(false);
@@ -64,7 +83,8 @@ export function TransactionForm({ open, setOpen, formType }: TProps) {
               <Label htmlFor="amount">Amount</Label>
               <Input
                 id="amount"
-                type="text"
+                type="number"
+                step="0.01"
                 {...register("amount")}
                 placeholder="00.00"
                 className="h-10 text-xl font-normal"
@@ -81,21 +101,24 @@ export function TransactionForm({ open, setOpen, formType }: TProps) {
             </Field>
             <Field>
               <Label htmlFor="category">Category</Label>
-              <Select>
-                <SelectTrigger className="w-full h-12">
-                  <SelectValue
-                    placeholder="Select a fruit"
-                    {...register("category")}
-                  />
-                </SelectTrigger>
-                <SelectContent className={"h-12"}>
-                  <SelectItem value="apple">Apple</SelectItem>
-                  <SelectItem value="banana">Banana</SelectItem>
-                  <SelectItem value="blueberry">Blueberry</SelectItem>
-                  <SelectItem value="grapes">Grapes</SelectItem>
-                  <SelectItem value="pineapple">Pineapple</SelectItem>
-                </SelectContent>
-              </Select>
+              <Controller
+                control={control}
+                name="category"
+                render={({ field }) => (
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="w-full h-12">
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="apple">Apple</SelectItem>
+                      <SelectItem value="banana">Banana</SelectItem>
+                      <SelectItem value="blueberry">Blueberry</SelectItem>
+                      <SelectItem value="grapes">Grapes</SelectItem>
+                      <SelectItem value="pineapple">Pineapple</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              />
             </Field>
             <Field>
               <Label htmlFor="date">Date</Label>

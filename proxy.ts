@@ -11,4 +11,5 @@ export default async function proxy(req: NextRequest) {
   const isPublicRoute = publicRoots.includes(path);
 
   const token = (await cookies()).get("accessToken")?.value;
+  console.log(token);
 }

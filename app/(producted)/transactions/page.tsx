@@ -12,7 +12,7 @@ import { TTransactionType } from "@/lib/constants";
 const page = () => {
   const [transactionFormOpen, setTransactionFormOpen] = useState(false);
   const [selectedFormType, setSelectedFormType] =
-    useState<TTransactionType>("Expense");
+    useState<TTransactionType>("EXPENSE");
 
   const handleTransactionFormOpen = (formType: TTransactionType) => {
     setSelectedFormType(formType);
@@ -25,12 +25,12 @@ const page = () => {
         <div className="space-x-3">
           <Button
             className={"text-sm text-textColor p-5"}
-            onClick={() => handleTransactionFormOpen("Income")}>
+            onClick={() => handleTransactionFormOpen("INCOME")}>
             Add Income
           </Button>
           <Button
             className={"text-sm text-textColor p-5"}
-            onClick={() => handleTransactionFormOpen("Expense")}>
+            onClick={() => handleTransactionFormOpen("EXPENSE")}>
             Add Expense
           </Button>
         </div>

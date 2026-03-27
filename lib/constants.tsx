@@ -4,12 +4,12 @@ export interface ICommonModel {
 }
 
 export type TFormMode = "CREATE" | "UPDATE";
-export type TTransactionType = "Expense" | "Income";
+export type TTransactionType = "EXPENSE" | "INCOME";
 export type TTransactionStatus = "Completed" | "Pending";
 
 export interface IApiResponse<T> {
-  message: string,
-  statusCode: number,
-  status: boolean,
-  data: T
+  message: string;
+  statusCode: number;
+  status: boolean;
+  data: T;
 }
