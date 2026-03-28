@@ -1,21 +1,21 @@
 import { TTransactionStatus } from "@/lib/constants";
 
 type TProps = {
-  status: TTransactionStatus;
+  status: "EXPENSE" | "INCOME";
 };
 
 const StatusChip = ({ status }: TProps) => {
   switch (status) {
-    case "Pending":
+    case "EXPENSE":
       return (
         <p className="text-violet-500 text-sm p-2 rounded-lg border border-primary">
-          Pending
+          EXPENSE
         </p>
       );
-    case "Completed":
+    case "INCOME":
       return (
         <p className="text-color text-sm font-semibold bg-linear-to-r from-green-500 to-cyan-400 p-2 rounded-lg w-fit">
-          Completed
+          Income
         </p>
       );
   }

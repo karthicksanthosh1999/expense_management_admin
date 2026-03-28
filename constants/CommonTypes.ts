@@ -3,4 +3,4 @@ export interface IModelPropsType {
   setOpen: (open: boolean) => void;
 }
 
-export type TTransactionType = "Income" | "Expense";
+export type TTransactionType = "INCOME" | "EXPENSE" | "ALL";

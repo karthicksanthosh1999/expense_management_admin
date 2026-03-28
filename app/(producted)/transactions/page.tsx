@@ -38,7 +38,6 @@ const page = () => {
       <div className="flex md:flex-row flex-col items-start gap-5 w-full">
         <div className="w-[75%] space-y-3">
           <FilterTransactions />
-          <TransactionHistory />
         </div>
         <div className="w-[25%] space-y-3">
           <TopTransactionsCard />

@@ -9,6 +9,15 @@ export interface ITransactionFilterType {
   endDate?: Date;
 }
 
+export interface ITransaction {
+  id: string;
+  amount: string;
+  message: string;
+  category: string;
+  transactionDate: Date;
+  transactionType: "EXPENSE" | "INCOME";
+}
+
 export interface ITransactionsResponseType {
   id: string;
   amount: string;
