@@ -4,20 +4,16 @@ import { Separator } from "@/components/ui/separator";
 import DataLoader from "@/components/loders/DataLoader";
 import { ITransaction } from "@/constants/transactionsTypes";
 import { format } from "date-fns";
-import { useState } from "react";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Field, FieldGroup } from "@/components/ui/field";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import { SmartphoneIcon, X } from "lucide-react";
+import { getSingleTransaction } from "../_actions/get-single-transaction";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
 type props = {
@@ -26,7 +22,10 @@ type props = {
 };
 
 const TransactionHistory = ({ transactionData, loading }: props) => {
-  const [transactionDetailsModel, setTransactionDetailModel] = useState(false);
+  const [transaction, setTransaction] = useState<ITransaction | null>(null);
+  const handleModelClose = () => {
+    setTransaction(null);
+  };
 
   return (
     <>
@@ -52,6 +51,7 @@ const TransactionHistory = ({ transactionData, loading }: props) => {
                 {transactionData &&
                   transactionData.map((item, idx) => (
                     <div
+                      onClick={() => setTransaction(item)}
                       key={idx}
                       className="flex items-center justify-between border border-blue-900 hover:border-primary p-3 cursor-pointer rounded-xl transaction ease-in-out duration-500 hover:translate-y-1">
                       <div className="flex items-center gap-5">
@@ -85,24 +85,32 @@ const TransactionHistory = ({ transactionData, loading }: props) => {
             </CardContent>
           </Card>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-sm">
+        <DialogContent className="sm:max-w-lg bg-card">
           <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
-            <DialogDescription>
-              Make changes to your profile here. Click save when you&apos;re
-              done.
-            </DialogDescription>
+            <div className="flex justify-between items-center">
+              <DialogTitle className="text-2xl font-semibold">
+                Transaction Details
+              </DialogTitle>
+              <X onClick={handleModelClose} />
+            </div>
+            <Separator />
           </DialogHeader>
-          <FieldGroup>
-            <Field>
-              <Label htmlFor="name-1">Name</Label>
-              <Input id="name-1" name="name" defaultValue="Pedro Duarte" />
-            </Field>
-            <Field>
-              <Label htmlFor="username-1">Username</Label>
-              <Input id="username-1" name="username" defaultValue="@peduarte" />
-            </Field>
-          </FieldGroup>
+          <section>
+            <div className="flex items-center justify-center flex-col gap-2">
+              <SmartphoneIcon size={30} />
+              <h1 className="font-semibold text-4xl">₹{transaction?.amount}</h1>
+              <p className="text-base font-normal">{transaction?.message}</p>
+            </div>
+
+            <div className="space-x-5 flex items-center justify-center">
+              <Button variant={"outline"} className="h-10 w-30">
+                Close
+              </Button>
+              <Button variant={"default"} className="h-10 w-30 text-white">
+                Close
+              </Button>
+            </div>
+          </section>
         </DialogContent>
       </Dialog>
     </>
