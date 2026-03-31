@@ -27,6 +27,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useCreateTransactionHook } from "../_hooks/transaction-hook";
+import { categoryConfig } from "@/lib/icon-center";
 
 interface TProps extends IModelPropsType {
   formType: TTransactionType;
@@ -68,7 +69,7 @@ export function TransactionForm({ open, setOpen, formType }: TProps) {
     setOpen(false);
     reset();
   };
-  console.log(errors);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="bg-card border border-highlight h-auto">
@@ -110,11 +111,9 @@ export function TransactionForm({ open, setOpen, formType }: TProps) {
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="apple">Apple</SelectItem>
-                      <SelectItem value="banana">Banana</SelectItem>
-                      <SelectItem value="blueberry">Blueberry</SelectItem>
-                      <SelectItem value="grapes">Grapes</SelectItem>
-                      <SelectItem value="pineapple">Pineapple</SelectItem>
+                      {Object.keys(categoryConfig).map((item) => (
+                        <SelectItem value={item}>{item}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 )}

@@ -1,7 +1,7 @@
 import {
   Calendar,
   ChartPie,
-  CircleDollarSign,
+  ShoppingBag,
   CircleQuestionMark,
   CreditCard,
   DollarSign,
@@ -48,22 +48,26 @@ export const categoryConfig = {
     icon: Utensils,
     bg: "from-red-400 to-red-500",
   },
+  shop: {
+    icon: ShoppingBag,
+    bg: "bg-linear-to-r from-red-500 to-orange-500",
+  },
 };
 
 type Category = keyof typeof categoryConfig;
 
-type Props = {
+type IconProps = {
   category: Category | string;
   size?: number;
 };
 
-export const CategoryIcon = ({ category, size = 23 }: Props) => {
+export const CategoryIcon = ({ category, size = 23 }: IconProps) => {
   const config = categoryConfig[category as Category] || categoryConfig.other;
 
   const Icon = config.icon;
 
   return (
-    <div className={`bg-gradient-to-r ${config.bg} p-2 rounded-lg`}>
+    <div className={`bg-linear-to-r ${config.bg} p-2 rounded-lg`}>
       <Icon size={size} className="text-white" />
     </div>
   );

@@ -13,6 +13,7 @@ import {
 import { SmartphoneIcon, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { CategoryIcon } from "@/lib/icon-center";
 
 type props = {
   loading: boolean;
@@ -79,7 +80,7 @@ const TransactionHistory = ({ transactionData, loading }: props) => {
                               ? "#fb2c36"
                               : "oklch(72.3% 0.219 149.579)",
                         }}>
-                        ${item.amount}
+                        ${item.amount.toString()}
                       </h1>
                       <p className="text-color text-lg font-semibold">
                         <StatusChip status={item.transactionType} />
@@ -102,7 +103,7 @@ const TransactionHistory = ({ transactionData, loading }: props) => {
           </DialogHeader>
           <section>
             <div className="flex items-center justify-center flex-col gap-2">
-              <SmartphoneIcon size={30} />
+              <CategoryIcon category="food" size={30} />
               <h1 className="font-semibold text-4xl">
                 ₹{transaction?.amount.toString()}
               </h1>
@@ -138,7 +139,10 @@ const TransactionHistory = ({ transactionData, loading }: props) => {
               <Button variant={"outline"} className="h-10 w-30">
                 Download Recept
               </Button>
-              <Button variant={"default"} className="h-10 w-30 text-white">
+              <Button
+                variant={"default"}
+                className="h-10 w-30 text-white"
+                onClick={handleModelClose}>
                 Close
               </Button>
             </div>
