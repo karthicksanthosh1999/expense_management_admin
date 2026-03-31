@@ -1,3 +1,4 @@
+import { Decimal } from "@prisma/client/runtime/client";
 import { TTransactionType } from "./CommonTypes";
 
 export interface ITransactionFilterType {
@@ -11,7 +12,7 @@ export interface ITransactionFilterType {
 
 export interface ITransaction {
   id: string;
-  amount: string;
+  amount: Decimal;
   message: string;
   category: string;
   transactionDate: Date;

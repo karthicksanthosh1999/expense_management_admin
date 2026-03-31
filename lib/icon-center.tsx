@@ -22,10 +22,51 @@ import {
   Trophy,
   UserRoundX,
   Wallet,
+  Home,
+  Car,
+  Utensils,
 } from "lucide-react";
 
-type IconProps = {
+export const categoryConfig = {
+  other: {
+    icon: CircleQuestionMark,
+    bg: "from-gray-400 to-gray-500",
+  },
+  electronics: {
+    icon: Smartphone,
+    bg: "from-blue-400 to-blue-500",
+  },
+  home: {
+    icon: Home,
+    bg: "from-green-400 to-green-500",
+  },
+  transport: {
+    icon: Car,
+    bg: "from-yellow-400 to-yellow-500",
+  },
+  food: {
+    icon: Utensils,
+    bg: "from-red-400 to-red-500",
+  },
+};
+
+type Category = keyof typeof categoryConfig;
+
+type Props = {
+  category: Category | string;
   size?: number;
+};
+
+export const CategoryIcon = ({ category, size = 23 }: Props) => {
+  const config = categoryConfig[category as Category] || categoryConfig.other;
+
+  const Icon = config.icon;
+
+  return (
+    <div className={`bg-gradient-to-r ${config.bg} p-2 rounded-lg`}>
+      <Icon size={size} className="text-white" />
+    </div>
+  );
 };
 
 export const QuestionMarkIcon = ({ size = 23 }: IconProps) => {

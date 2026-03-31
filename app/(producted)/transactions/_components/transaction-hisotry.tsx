@@ -9,10 +9,8 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { SmartphoneIcon, X } from "lucide-react";
-import { getSingleTransaction } from "../_actions/get-single-transaction";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -105,7 +103,9 @@ const TransactionHistory = ({ transactionData, loading }: props) => {
           <section>
             <div className="flex items-center justify-center flex-col gap-2">
               <SmartphoneIcon size={30} />
-              <h1 className="font-semibold text-4xl">₹{transaction?.amount}</h1>
+              <h1 className="font-semibold text-4xl">
+                ₹{transaction?.amount.toString()}
+              </h1>
               <p className="text-base font-normal pb-5">
                 {transaction?.message}
               </p>
@@ -128,7 +128,7 @@ const TransactionHistory = ({ transactionData, loading }: props) => {
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <p>Transaction Date:</p>
-                    <div>{new Date(transaction?.transactionDate)}</div>
+                    {/* <div>{new Date(transaction?.transactionDate)}</div> */}
                   </div>
                 </CardContent>
               </Card>
