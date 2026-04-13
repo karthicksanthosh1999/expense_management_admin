@@ -5,7 +5,7 @@ import {
 import api from "@/lib/api";
 import { IApiResponse } from "@/lib/constants";
 import { TTransactionValidationSchemaType } from "@/validation_schema/transaction-validatino";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";
 
@@ -59,7 +59,7 @@ const createTransactionAPI = async (
 const filterTransactionApi = async (
   filterData: ITransactionFilterType,
 ): Promise<ITransactionsResponseType[]> => {
-  const { data } = await api.get(
+  const { data } = await api.post(
     `/api/transaction/filters?type=${filterData?.type}&category=${filterData?.category}&page=${filterData?.page}&limit=${filterData?.limit}&startDate=${filterData?.startDate}&endDate=${filterData?.endDate}`,
   );
   return data;

@@ -135,7 +135,7 @@ const TransactionHistory = ({ transactionData, loading }: props) => {
               </Card>
             </div>
 
-            <div className="space-x-5 flex items-center justify-center">
+            <div className="space-x-5 flex items-center justify-center mt-5">
               <Button variant={"outline"} className="h-10 w-30">
                 Download Recept
               </Button>

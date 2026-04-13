@@ -20,13 +20,22 @@ export const POST = asyncHandler(async (req: Request) => {
   let { start, end } = getCurrentWeekRange();
 
   // ✅ Override if user passes dates
-  if (startDateParam && endDateParam) {
-    start = new Date(startDateParam);
-    end = new Date(endDateParam);
+  if (
+    startDateParam &&
+    endDateParam &&
+    startDateParam !== "undefined" &&
+    endDateParam !== "undefined"
+  ) {
+    const parsedStart = new Date(startDateParam);
+    const parsedEnd = new Date(endDateParam);
 
-    // normalize time
-    start.setHours(0, 0, 0, 0);
-    end.setHours(23, 59, 59, 999);
+    if (!isNaN(parsedStart.getTime()) && !isNaN(parsedEnd.getTime())) {
+      start = parsedStart;
+      end = parsedEnd;
+
+      start.setHours(0, 0, 0, 0);
+      end.setHours(23, 59, 59, 999);
+    }
   }
 
   // 🔥 Dynamic filter
@@ -37,12 +46,15 @@ export const POST = asyncHandler(async (req: Request) => {
     },
   };
 
-  if (type && type !== "ALL") {
-    where.transactionType = type;
+  const normalizedType = type?.toUpperCase();
+  const normalizedCategory = category?.toLowerCase();
+
+  if (normalizedType && normalizedType !== "ALL") {
+    where.transactionType = normalizedType;
   }
 
-  if (category && category !== "ALL") {
-    where.category = category;
+  if (normalizedCategory && normalizedCategory !== "all") {
+    where.category = normalizedCategory;
   }
 
   const [transactions, total] = await Promise.all([
