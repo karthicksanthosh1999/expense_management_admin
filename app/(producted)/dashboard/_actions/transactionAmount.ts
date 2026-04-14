@@ -12,12 +12,14 @@ export const transactionAmount = async () => {
   ]);
 
   const income =
-    grouped.find((t) => t.transactionType === "INCOME")?._sum.amount || 0;
+    grouped.find((t) => t.transactionType === "INCOME")?._sum.amount ?? 0;
 
   const expense =
-    grouped.find((t) => t.transactionType === "EXPENSE")?._sum.amount || 0;
+    grouped.find((t) => t.transactionType === "EXPENSE")?._sum.amount ?? 0;
 
-  const total = overall._sum.amount || 0;
+  const balance = income - expense;
 
-  return { income, expense, total };
+  const total = overall._sum.amount ?? 0;
+
+  return { income, expense, balance, total };
 };

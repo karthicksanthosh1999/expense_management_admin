@@ -1,7 +1,4 @@
 import { Card } from "@/components/ui/card";
-import expenseIcon from "@/sources/icons/expense.png";
-import incomeIcon from "@/sources/icons/income.png";
-import balanceIcon from "@/sources/icons/balance.png";
 import GoalCard from "./_components/goal-card";
 import {
   calenderIcon,
@@ -15,7 +12,7 @@ import Link from "next/link";
 import { transactionAmount } from "./_actions/transactionAmount";
 
 const page = async () => {
-  const { expense, income, total } = await transactionAmount();
+  const { expense, income, total, balance } = await transactionAmount();
 
   const cardData = [
     {
@@ -29,8 +26,13 @@ const page = async () => {
       icon: trendingUpIcon,
     },
     {
-      title: "Balance",
+      title: "Total Amount",
       amount: total,
+      icon: walletIcon,
+    },
+    {
+      title: "Balance",
+      amount: balance,
       icon: walletIcon,
     },
   ];
@@ -68,14 +70,14 @@ const page = async () => {
 
   return (
     <>
-      <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 place-items-center justify-center">
+      <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 place-items-center justify-center">
         {cardData.map(({ amount, icon: Icon, title }, idx) => (
           <Card
             className="max-w-sm w-full p-5 shadow-lg hover:shadow-blue-500"
             key={idx}>
             <div>
               <div className="w-fit">
-                <Icon />
+                <Icon category="home" />
               </div>
               <div className="mt-5">
                 <p className="text-gray-400">{title}</p>
@@ -94,7 +96,7 @@ const page = async () => {
             key={id}
             className="w-full max-w-lg flex items-center justify-center">
             <Link href={link} className="w-fit">
-              <Icon size={30} />
+              <Icon size={30} category="home" />
             </Link>
             <div>
               <h1 className="text-lg text-textColor text-center font-semibold">

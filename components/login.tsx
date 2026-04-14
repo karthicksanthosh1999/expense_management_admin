@@ -20,7 +20,7 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"div">) {
   const navigate = useRouter();
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
 
   useEffect(() => {
     if (user?.data) {
@@ -37,6 +37,7 @@ export function LoginForm({
       const { data } = await api.post("/api/auth/login", loginPayload);
       console.log(data?.user);
       if (data?.user) {
+        setUser(data?.user);
         navigate.push("/dashboard");
       }
       reset();

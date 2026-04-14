@@ -10,14 +10,33 @@ import { ReactNode } from "react";
 import { ModeToggle } from "./theme-doggle";
 import { ProfileDropdown } from "./profile-dropdown";
 import { useAuth } from "@/context/hooks/authHooks";
+import { usePathname } from "next/navigation";
 
 type TProps = {
   children: ReactNode;
 };
 export default function GlobalHeader({ children }: TProps) {
   const { user, setUser } = useAuth();
+  const path = usePathname();
 
-  console.log(user);
+  const currentPageName = () => {
+    switch (path) {
+      case "/dashboard":
+        return "Dashboard";
+      case "/transactions":
+        return "Transaction";
+      case "/categories":
+        return "Categories";
+      case "/goal":
+        return "Goal";
+      case "/settings":
+        return "Settings";
+      case "/support":
+        return "Support";
+      default:
+        return null;
+    }
+  };
 
   return (
     <SidebarProvider>
@@ -31,9 +50,11 @@ export default function GlobalHeader({ children }: TProps) {
           />
           <section className="flex w-full items-center justify-between">
             <div className="">
-              <h1 className="text-textColor font-bold text-xl">Settings</h1>
+              <h1 className="text-textColor font-bold text-xl">
+                {currentPageName()}
+              </h1>
               <p className="text-gray-400 font-normal text-xs">
-                Welcome back {user?.data?.fullname}!
+                Welcome back {user?.name}!
               </p>
             </div>
             <div className="w-fit mr-5 flex items-center justify-center gap-4">
