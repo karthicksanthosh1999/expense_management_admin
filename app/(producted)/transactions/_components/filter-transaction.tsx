@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { DatePicker } from "@/components/date-picker";
@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import TransactionHistory from "./transaction-hisotry";
 import { useFilterTransaction } from "../_hooks/transaction-hook";
 import { ITransactionFilterType } from "@/constants/transactionsTypes";
+import { getDefaultDates } from "@/lib/getCurrentMonth";
 
 const categories = [
   { value: "all", label: "All Categories" },
@@ -17,18 +18,25 @@ const categories = [
   { value: "travel", label: "Travel" },
   { value: "entertainment", label: "Entertainment" },
   { value: "shopping", label: "Shopping" },
-  { value: "bills", label: "Bills" },
+  { value: "snakes", label: "Snakes" },
   { value: "income", label: "Income" },
 ];
 
 export default function TransactionFilters() {
-  const [appliedFilters, setAppliedFilters] = useState<ITransactionFilterType>(
-    {},
-  );
+  const { endDate, startDate } = getDefaultDates();
+  const [appliedFilters, setAppliedFilters] = useState<ITransactionFilterType>({
+    type: "ALL",
+    startDate,
+    endDate,
+    category: "all",
+    limit: 10,
+    page: 1,
+  });
+
   const [filters, setFilters] = useState<ITransactionFilterType>({
-    type: "all",
-    startDate: undefined as Date | undefined,
-    endDate: undefined as Date | undefined,
+    type: "ALL",
+    startDate,
+    endDate,
     category: "all",
     limit: 10,
     page: 1,
@@ -41,23 +49,18 @@ export default function TransactionFilters() {
   };
 
   const handleSubmit = () => {
-    // const payload = {
-    //   ...filters,
-    //   startDate: filters.startDate
-    //     ? format(filters.startDate, "yyyy-MM-dd")
-    //     : null,
-    //   endDate: filters.endDate
-    //     ? format(filters.endDate, "yyyy-MM-dd")
-    //     : null,
-    // };
-
     setAppliedFilters(filters);
     console.log("Filters:", filters);
   };
 
+  useEffect(() => {
+    setAppliedFilters(filters);
+    console.log(data);
+  }, []);
+
   const handleReset = () => {
     setFilters({
-      type: "all",
+      type: "ALL",
       startDate: undefined as Date | undefined,
       endDate: undefined as Date | undefined,
       category: "all",
@@ -73,18 +76,15 @@ export default function TransactionFilters() {
             <Tabs
               value={filters.type}
               onValueChange={(val) => updateFilter("type", val)}>
-              <TabsList className="grid grid-cols-4 border rounded-xl">
+              <TabsList className="grid grid-cols-3 border rounded-xl">
                 <TabsTrigger className={"cursor-pointer"} value="All">
                   All
                 </TabsTrigger>
-                <TabsTrigger className={"cursor-pointer"} value="income">
+                <TabsTrigger className={"cursor-pointer"} value="INCOME">
                   Income
                 </TabsTrigger>
-                <TabsTrigger className={"cursor-pointer"} value="expenses">
+                <TabsTrigger className={"cursor-pointer"} value="EXPENSE">
                   Expenses
-                </TabsTrigger>
-                <TabsTrigger className={"cursor-pointer"} value="pending">
-                  Pending
                 </TabsTrigger>
               </TabsList>
             </Tabs>

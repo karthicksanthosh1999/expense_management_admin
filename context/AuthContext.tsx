@@ -23,6 +23,7 @@ export const AuthUserProvider = ({ children }: TProp) => {
   const decodeUser = async () => {
     try {
       const { data } = await api.get("/api/auth/decode");
+      console.log(data);
       setUser(data?.user?.user);
     } catch (error) {
       console.log("Decode error:", error);

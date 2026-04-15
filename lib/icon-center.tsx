@@ -25,6 +25,7 @@ import {
   Home,
   Car,
   Utensils,
+  Hamburger,
 } from "lucide-react";
 
 export const categoryConfig = {
@@ -50,6 +51,14 @@ export const categoryConfig = {
   },
   shop: {
     icon: ShoppingBag,
+    bg: "bg-linear-to-r from-red-500 to-orange-500",
+  },
+  snacks: {
+    icon: Hamburger,
+    bg: "bg-linear-to-r from-red-500 to-orange-500",
+  },
+  rent: {
+    icon: Home,
     bg: "bg-linear-to-r from-red-500 to-orange-500",
   },
 };

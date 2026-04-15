@@ -29,7 +29,7 @@ const TopTransactionsCard = () => {
   useEffect(() => {
     topTransaction();
   }, []);
-  console.log(topTransactions);
+
   return (
     <Card className="w-full h-125 ">
       <CardContent>

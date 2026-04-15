@@ -12,11 +12,11 @@ export interface ITransactionFilterType {
 
 export interface ITransaction {
   id: string;
-  amount: Decimal;
+  amount: Decimal | String;
   message: string;
   category: string;
   transactionDate: Date;
-  transactionType: "EXPENSE" | "INCOME";
+  transactionType: TTransactionType;
 }
 
 export interface ITransactionsResponseType {

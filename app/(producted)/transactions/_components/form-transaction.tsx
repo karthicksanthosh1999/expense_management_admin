@@ -110,9 +110,13 @@ export function TransactionForm({ open, setOpen, formType }: TProps) {
                     <SelectTrigger className="w-full h-12">
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className={"p-1 "}>
                       {Object.keys(categoryConfig).map((item) => (
-                        <SelectItem value={item}>{item}</SelectItem>
+                        <SelectItem
+                          value={item}
+                          className={"capitalize cursor-pointer"}>
+                          {item}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>

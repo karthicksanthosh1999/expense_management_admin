@@ -1,8 +1,6 @@
-import { TTransactionStatus } from "@/lib/constants";
+import { TTransactionType } from "@/constants/CommonTypes";
 
-type TProps = {
-  status: "EXPENSE" | "INCOME";
-};
+type TProps = { status: TTransactionType };
 
 const StatusChip = ({ status }: TProps) => {
   switch (status) {
@@ -13,6 +11,12 @@ const StatusChip = ({ status }: TProps) => {
         </p>
       );
     case "INCOME":
+      return (
+        <p className="text-color text-sm font-semibold bg-linear-to-r from-green-500 to-cyan-400 p-2 rounded-lg w-fit">
+          Income
+        </p>
+      );
+    case "ALL":
       return (
         <p className="text-color text-sm font-semibold bg-linear-to-r from-green-500 to-cyan-400 p-2 rounded-lg w-fit">
           Income

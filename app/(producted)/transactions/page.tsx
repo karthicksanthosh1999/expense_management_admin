@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import TransactionHistory from "./_components/transaction-hisotry";
 import TopTransactionsCard from "./_components/top-transactions";
 import { TransactionChart } from "./_components/transaction-chart";
 import FilterTransactions from "./_components/filter-transaction";
