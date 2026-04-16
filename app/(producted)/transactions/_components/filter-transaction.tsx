@@ -18,7 +18,7 @@ const categories = [
   { value: "travel", label: "Travel" },
   { value: "entertainment", label: "Entertainment" },
   { value: "shopping", label: "Shopping" },
-  { value: "snakes", label: "Snakes" },
+  { value: "snacks", label: "Snakes" },
   { value: "income", label: "Income" },
 ];
 
@@ -50,13 +50,29 @@ export default function TransactionFilters() {
 
   const handleSubmit = () => {
     setAppliedFilters(filters);
-    console.log("Filters:", filters);
   };
 
   useEffect(() => {
     setAppliedFilters(filters);
-    console.log(data);
   }, []);
+
+  const tabsList = [
+    {
+      id: "0",
+      title: "All",
+      value: "ALL",
+    },
+    {
+      id: "1",
+      title: "Income",
+      value: "INCOME",
+    },
+    {
+      id: "2",
+      title: "Expense",
+      value: "EXPENSE",
+    },
+  ];
 
   const handleReset = () => {
     setFilters({
@@ -72,22 +88,22 @@ export default function TransactionFilters() {
         <CardContent className="space-y-4 flex  items-center justify-between">
           <div className="h-full flex flex-col justify-start items-start space-y-3">
             <Label>Transaction Type:</Label>
-            {/* Tabs */}
-            <Tabs
-              value={filters.type}
-              onValueChange={(val) => updateFilter("type", val)}>
-              <TabsList className="grid grid-cols-3 border rounded-xl">
-                <TabsTrigger className={"cursor-pointer"} value="All">
-                  All
-                </TabsTrigger>
-                <TabsTrigger className={"cursor-pointer"} value="INCOME">
-                  Income
-                </TabsTrigger>
-                <TabsTrigger className={"cursor-pointer"} value="EXPENSE">
-                  Expenses
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
+            <div className="flex flex-wrap gap-3">
+              {tabsList.map((item) => {
+                const isActive = filters.type === item.value;
+                return (
+                  <button
+                    key={item.value}
+                    type="button"
+                    onClick={() => updateFilter("type", item.value)}
+                    className={`rounded-xl border px-4 py-2 text-sm border-primary font-medium transition cursor-pointer ${
+                      isActive ? "bg-primary text-white" : "hover:bg-input/40"
+                    }`}>
+                    {item.title}
+                  </button>
+                );
+              })}
+            </div>
 
             {/* DATES */}
             <div className="grid grid-cols-3 gap-4">
@@ -96,6 +112,7 @@ export default function TransactionFilters() {
                 <DatePicker
                   value={filters.startDate}
                   onChange={(date) => updateFilter("startDate", date)}
+                  className="p-4 font-normal text-base"
                 />
               </div>
               <div className="space-y-3">
@@ -103,6 +120,7 @@ export default function TransactionFilters() {
                 <DatePicker
                   value={filters.endDate}
                   onChange={(date) => updateFilter("endDate", date)}
+                  className="p-4 font-normal text-base"
                 />
               </div>
             </div>
@@ -117,10 +135,8 @@ export default function TransactionFilters() {
                     key={item.value}
                     type="button"
                     onClick={() => updateFilter("category", item.value)}
-                    className={`rounded-xl border px-4 py-2 text-sm font-medium transition cursor-pointer ${
-                      isActive
-                        ? "bg-primary text-white border-primary"
-                        : "hover:bg-input/40"
+                    className={`rounded-xl border px-4 py-2 text-sm font-medium transition border-primary cursor-pointer ${
+                      isActive ? "bg-primary text-white" : "hover:bg-input/40"
                     }`}>
                     {item.label}
                   </button>
@@ -144,14 +160,16 @@ export default function TransactionFilters() {
               className="text-white hover:bg-orange-500 bg-orange-400 px-8 text-base py-5 rounded-lg cursor-pointer">
               Reset
             </Button>
+            <Button
+              onClick={handleReset}
+              className="text-white hover:bg-green-500 bg-green-400 px-8 text-base py-5 rounded-lg cursor-pointer">
+              Export
+            </Button>
           </div>
         </CardContent>
       </Card>
       <div>
-        <TransactionHistory
-          isLoading={isLoading}
-          transactionData={data ?? []}
-        />
+        <TransactionHistory loading={isLoading} transactionData={data ?? []} />
       </div>
     </>
   );

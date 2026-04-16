@@ -1,9 +1,5 @@
 "use client";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import completedIcon from "@/sources/icons/completed.png";
-import moneyIcon from "@/sources/icons/money.png";
-import targetIcon from "@/sources/icons/target.png";
-import incomeIcon from "@/sources/icons/income.png";
 import { Separator } from "@/components/ui/separator";
 import { topFiveTransaction } from "../_actions/top_transaction";
 import { useEffect, useState } from "react";

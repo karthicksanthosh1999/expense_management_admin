@@ -26,7 +26,6 @@ export function RegisterPage({
     const handleRegister = async (registerPayload: registerFormData) => {
         try {
             const { data } = await api.post("/api/auth/register", registerPayload);
-            console.log(data?.user);
             if (data?.user) {
                 navigate.push("/");
             }

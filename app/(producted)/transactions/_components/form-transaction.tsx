@@ -28,6 +28,7 @@ import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useCreateTransactionHook } from "../_hooks/transaction-hook";
 import { categoryConfig } from "@/lib/icon-center";
+import { DatePicker } from "@/components/date-picker";
 
 interface TProps extends IModelPropsType {
   formType: TTransactionType;
@@ -35,7 +36,6 @@ interface TProps extends IModelPropsType {
 
 export function TransactionForm({ open, setOpen, formType }: TProps) {
   const { user } = useAuth();
-
   const { mutate } = useCreateTransactionHook();
 
   const {
@@ -54,12 +54,12 @@ export function TransactionForm({ open, setOpen, formType }: TProps) {
 
   useEffect(() => {
     if (user?.id) {
-      reset((prev) => ({
-        ...prev,
+      reset({
         userId: user.id,
-      }));
+        transactionType: formType,
+      });
     }
-  }, [user, reset]);
+  }, [user, formType, reset]);
 
   const handleTransaction = (data: TTransactionValidationSchemaType) => {
     mutate(data);
@@ -125,6 +125,10 @@ export function TransactionForm({ open, setOpen, formType }: TProps) {
             </Field>
             <Field>
               <Label htmlFor="date">Date</Label>
+              <DatePicker
+                {...register("transactionDate")}
+                className="p-4 font-normal text-base"
+              />
               <Input
                 id="date"
                 type="date"

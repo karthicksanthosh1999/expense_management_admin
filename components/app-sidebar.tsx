@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { SearchForm } from "@/components/search-form";
 import { VersionSwitcher } from "@/components/version-switcher";
 import {
   Sidebar,
@@ -23,7 +22,6 @@ import {
   Layers2,
   LayoutDashboard,
   Settings,
-  Target,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { NavUser } from "./app-navuser";
@@ -33,12 +31,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathName = usePathname();
   const { user } = useAuth();
   const data = {
-    user: {
-      name: "shadcn",
-      email: "m@example.com",
-      avatar: "/avatars/shadcn.jpg",
-    },
-    versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
     navMain: [
       {
         title: "Getting Started",
@@ -57,13 +49,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             isActive: pathName === "/transactions",
           },
           {
-            title: "Categories",
-            url: "/categories",
-            icon: ArrowRightLeft,
-            isActive: pathName === "/categories",
-          },
-          {
-            title: "Galas",
+            title: "Goals",
             url: "/goal",
             icon: Layers2,
             isActive: pathName === "/goal",
@@ -87,11 +73,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <VersionSwitcher
-          versions={data.versions}
-          defaultVersion={data.versions[0]}
-        />
-        <SearchForm />
+        <VersionSwitcher />
       </SidebarHeader>
       <SidebarContent className="bg-card">
         {data.navMain.map((item) => (
@@ -114,12 +96,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   </SidebarMenuItem>
                 ))}
               </SidebarMenu>
+
             </SidebarGroupContent>
           </SidebarGroup>
         ))}
       </SidebarContent>
       <SidebarFooter className="w-full">
-        {user && <NavUser data={user?.data} message={user?.message} />}
+        {user && <NavUser user={user} />}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

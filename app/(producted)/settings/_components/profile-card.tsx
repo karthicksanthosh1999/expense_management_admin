@@ -19,25 +19,29 @@ const ProfileCard = () => {
 
   const { handleSubmit, register, reset } = useForm<TUserValidationSchema>({
     resolver: zodResolver(userValidationSchema),
+    defaultValues: {
+      email: user?.email,
+      name: user?.name,
+      mobile: user?.mobile,
+    }
   });
 
   useEffect(() => {
-    if (user?.data) {
+    if (user) {
       reset({
-        email: user.data.email,
-        fullName: user.data.fullname,
-        mobile: user.data.mobile,
+        email: user.email,
+        name: user.name,
+        mobile: user.mobile,
       });
     }
   }, [user, reset]);
 
-  const handleLogin = async (data: TUserValidationSchema) => {
+  const handleRegister = async (data: TUserValidationSchema) => {
     try {
       const response = await api.put(
-        `/api/users/update/${user?.data?.id}`,
+        `/api/users/update/${user?.id}`,
         data,
       );
-      console.log(response);
       reset();
       setEditMode(false);
     } catch (error) {
@@ -45,11 +49,16 @@ const ProfileCard = () => {
     }
   };
 
+  const handleCancel = () => {
+    setEditMode(true)
+
+  }
+
   return (
     <Card>
       <CardContent>
         <CardTitle className="text-2xl">Profile Information</CardTitle>
-        <form className="p-6 md:p-8" onSubmit={handleSubmit(handleLogin)}>
+        <form className="p-6 md:p-8" onSubmit={handleSubmit(handleRegister)}>
           <FieldGroup>
             <Field>
               <FieldLabel>Full Name:</FieldLabel>
@@ -57,7 +66,7 @@ const ProfileCard = () => {
                 disabled={editMode}
                 type="string"
                 placeholder="Jhon Duo"
-                {...register("fullName")}
+                {...register("name")}
               />
             </Field>
             <Field>
@@ -71,7 +80,7 @@ const ProfileCard = () => {
             </Field>
             <Field>
               <FieldLabel>Phone No:</FieldLabel>
-              <Input disabled={editMode} type="text" {...register("mobile")} />
+              <Input disabled={editMode} type="text" placeholder="Mobile Number" {...register("mobile")} />
             </Field>
             <Field>
               {editMode ? (
@@ -82,7 +91,7 @@ const ProfileCard = () => {
                   Edit
                 </Button>
               ) : (
-                <div className="flex items-center w-full justify-center">
+                <div className="flex flex-col space-y-3 items-center w-full justify-center">
                   <Button
                     type="submit"
                     className="w-full text-lg font-normal text-textColor p-4">
@@ -91,6 +100,7 @@ const ProfileCard = () => {
                   <Button
                     type="button"
                     variant={"outline"}
+                    onClick={handleCancel}
                     className="w-full text-lg font-normal text-textColor p-4 hover:border-highlight">
                     Cancel
                   </Button>

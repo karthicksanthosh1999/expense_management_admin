@@ -1,4 +1,5 @@
 import {
+  ITransaction,
   ITransactionFilterType,
   ITransactionsResponseType,
 } from "@/constants/transactionsTypes";
@@ -23,7 +24,7 @@ export const useFilterTransaction = (filterData: ITransactionFilterType) => {
 export const useCreateTransactionHook = () => {
   const queryClient = useQueryClient();
   return useMutation<
-    IApiResponse<ITransactionsResponseType>,
+    IApiResponse<ITransaction>,
     AxiosError,
     TTransactionValidationSchemaType
   >({
@@ -50,7 +51,7 @@ export const useCreateTransactionHook = () => {
 // CREATE TRANSACTION API
 const createTransactionAPI = async (
   transactionData: TTransactionValidationSchemaType,
-): Promise<IApiResponse<ITransactionsResponseType>> => {
+): Promise<IApiResponse<ITransaction>> => {
   const { data } = await api.post("/api/transaction", transactionData);
   return data;
 };
@@ -58,7 +59,7 @@ const createTransactionAPI = async (
 // FILTER TRANSACTION API
 const filterTransactionApi = async (
   filterData: ITransactionFilterType,
-): Promise<ITransactionsResponseType[]> => {
+): Promise<ITransaction[]> => {
   const { data } = await api.post(
     `/api/transaction/filters?type=${filterData?.type}&category=${filterData?.category}&page=${filterData?.page}&limit=${filterData?.limit}&startDate=${filterData?.startDate}&endDate=${filterData?.endDate}`,
   );

@@ -1,63 +1,20 @@
-"use client"
-
-import * as React from "react"
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import {
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { GalleryVerticalEndIcon, ChevronsUpDownIcon, CheckIcon } from "lucide-react"
+import { GalleryVerticalEndIcon } from "lucide-react"
+import Link from "next/link"
 
-export function VersionSwitcher({
-  versions,
-  defaultVersion,
-}: {
-  versions: string[]
-  defaultVersion: string
-}) {
-  const [selectedVersion, setSelectedVersion] = React.useState(defaultVersion)
+export function VersionSwitcher() {
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <DropdownMenu>
-          <DropdownMenuTrigger
-            render={
-              <SidebarMenuButton
-                size="lg"
-                className="data-open:bg-sidebar-accent data-open:text-sidebar-accent-foreground"
-              />
-            }
-          >
-            <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-              <GalleryVerticalEndIcon className="size-4" />
-            </div>
-            <div className="flex flex-col gap-0.5 leading-none">
-              <span className="font-medium">Documentation</span>
-              <span className="">v{selectedVersion}</span>
-            </div>
-            <ChevronsUpDownIcon className="ml-auto" />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start">
-            {versions.map((version) => (
-              <DropdownMenuItem
-                key={version}
-                onSelect={() => setSelectedVersion(version)}
-              >
-                v{version}{" "}
-                {version === selectedVersion && (
-                  <CheckIcon className="ml-auto" />
-                )}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Link href={'/dashboard'} className="flex items-center gap-5 ml-2 cursor-pointer p-3 mt-2">
+          <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+            <GalleryVerticalEndIcon className="size-4" />
+          </div>
+          <span className="font-medium text-xl">Jk-Tech</span>
+        </Link>
       </SidebarMenuItem>
     </SidebarMenu>
   )

@@ -1,27 +1,65 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+"use client"
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
-import { IDecodeUser } from "@/constants/UserTypes";
-export function NavUser({ data }: IDecodeUser) {
+  SidebarSeparator,
+} from "@/components/ui/sidebar"
+import { Avatar, AvatarFallback } from "./ui/avatar"
+import { LogOut } from "lucide-react"
+
+export function NavUser({
+  user,
+}: {
+  user: {
+    name: string
+    email: string
+  }
+}) {
   return (
-    <SidebarMenu className="w-full">
+    <SidebarMenu>
       <SidebarMenuItem>
-        <SidebarMenuButton
-          size="lg"
-          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
-          <Avatar className="h-8 w-8 rounded-lg">
-            <AvatarImage src={""} alt={data?.fullname} />
-            <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+        <SidebarSeparator />
+        <SidebarMenuButton className="cursor-pointer h-full text-center mt-1 text-base font-normal">
+          <Avatar>
+            <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
           </Avatar>
-          <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-medium">{data?.fullname}</span>
-            <span className="truncate text-xs">{data?.email}</span>
-          </div>
+          {user.name}
+          <AlertDialog>
+            <AlertDialogTrigger>
+              <Button variant="outline">
+                <LogOut />
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete your
+                  account from our servers.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction>Continue</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </SidebarMenuButton>
       </SidebarMenuItem>
     </SidebarMenu>
-  );
+  )
 }
