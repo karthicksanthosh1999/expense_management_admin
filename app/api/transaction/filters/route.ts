@@ -73,16 +73,18 @@ export const POST = asyncHandler(async (req: Request) => {
     message: "Transaction Get Successfully",
     status: true,
     statusCode: 200,
-    data: transactions,
+    data: {
+      transactions,
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    },
     filters: {
       startDate: start,
       endDate: end,
-    },
-    pagination: {
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
     },
   });
 });

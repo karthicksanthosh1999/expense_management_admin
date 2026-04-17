@@ -50,7 +50,9 @@ const TopTransactionsCard = () => {
                     size={30}
                   />
                   <div>
-                    <h1 className="font-semibold text-sm">{item.category}</h1>
+                    <h1 className="font-semibold text-sm capitalize">
+                      {item.category}
+                    </h1>
                     <p className="text-gray-400 text-xs">
                       {item.transactionType}
                     </p>

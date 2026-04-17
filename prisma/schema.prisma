@@ -55,6 +55,7 @@ model Goal {
   currentAmount Decimal       @db.Decimal(10, 2)
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
+  title         String
   user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   goalHistory   GoalHistory[]
 

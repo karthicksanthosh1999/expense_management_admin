@@ -10,6 +10,16 @@ export interface ITransactionFilterType {
   endDate?: Date;
 }
 
+export interface ITransactionFilteredResponse {
+  transactions: ITransaction[];
+  pagination: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+}
+
 export interface ITransaction {
   id: string;
   amount: Decimal | String;

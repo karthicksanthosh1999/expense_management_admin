@@ -18,7 +18,7 @@ export const transactionFilterValidationSchema = z.object({
   search: z.string().optional(),
   startDate: z.string().optional(),
   endDate: z.string().optional(),
-  transactionType: z.string().optional(),
+  transactionType: z.enum(["INCOME", "EXPENSE"]).optional(),
   page: z.string().optional(),
   limit: z.string().optional(),
 });

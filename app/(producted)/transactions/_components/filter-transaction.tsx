@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { DatePicker } from "@/components/date-picker";
 import { Label } from "@/components/ui/label";
@@ -11,38 +10,26 @@ import TransactionHistory from "./transaction-hisotry";
 import { useFilterTransaction } from "../_hooks/transaction-hook";
 import { ITransactionFilterType } from "@/constants/transactionsTypes";
 import { getDefaultDates } from "@/lib/getCurrentMonth";
-
-const categories = [
-  { value: "all", label: "All Categories" },
-  { value: "food", label: "Food" },
-  { value: "travel", label: "Travel" },
-  { value: "entertainment", label: "Entertainment" },
-  { value: "shopping", label: "Shopping" },
-  { value: "snacks", label: "Snakes" },
-  { value: "income", label: "Income" },
-];
+import { transactionCategories } from "@/lib/constants";
 
 export default function TransactionFilters() {
   const { endDate, startDate } = getDefaultDates();
-  const [appliedFilters, setAppliedFilters] = useState<ITransactionFilterType>({
+  const defaultValues: ITransactionFilterType = {
     type: "ALL",
     startDate,
     endDate,
     category: "all",
     limit: 10,
     page: 1,
-  });
+  };
+  const [appliedFilters, setAppliedFilters] =
+    useState<ITransactionFilterType>(defaultValues);
+  const [filters, setFilters] = useState<ITransactionFilterType>(defaultValues);
 
-  const [filters, setFilters] = useState<ITransactionFilterType>({
-    type: "ALL",
-    startDate,
-    endDate,
-    category: "all",
-    limit: 10,
-    page: 1,
-  });
-
+  // HOOKS
   const { data, isLoading } = useFilterTransaction(appliedFilters);
+
+  console.log({ data });
 
   const updateFilter = (key: string, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -128,18 +115,21 @@ export default function TransactionFilters() {
             {/* Categories */}
             <Label>Category:</Label>
             <div className="flex flex-wrap gap-3">
-              {categories.map((item) => {
-                const isActive = filters.category === item.value;
+              {transactionCategories.map(({ icon: Icon, label, value }) => {
+                const isActive = filters.category === value;
                 return (
-                  <button
-                    key={item.value}
-                    type="button"
-                    onClick={() => updateFilter("category", item.value)}
-                    className={`rounded-xl border px-4 py-2 text-sm font-medium transition border-primary cursor-pointer ${
-                      isActive ? "bg-primary text-white" : "hover:bg-input/40"
-                    }`}>
-                    {item.label}
-                  </button>
+                  <>
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => updateFilter("category", value)}
+                      className={`rounded-xl border px-4 py-2 text-sm flex items-center gap-2 font-medium transition border-primary cursor-pointer ${
+                        isActive ? "bg-primary text-white" : "hover:bg-input/40"
+                      }`}>
+                      {Icon}
+                      {label}
+                    </button>
+                  </>
                 );
               })}
             </div>
@@ -169,7 +159,7 @@ export default function TransactionFilters() {
         </CardContent>
       </Card>
       <div>
-        <TransactionHistory loading={isLoading} transactionData={data ?? []} />
+        <TransactionHistory loading={isLoading} transactionData={data!} />
       </div>
     </>
   );

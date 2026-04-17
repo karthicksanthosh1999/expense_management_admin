@@ -10,7 +10,7 @@ export const topFiveTransaction = async () => {
       orderBy: {
         amount: "desc",
       },
-      take: 5,
+      take: 6,
     });
 
     return transaction;

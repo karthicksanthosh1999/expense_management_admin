@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -28,7 +29,6 @@ import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useCreateTransactionHook } from "../_hooks/transaction-hook";
 import { categoryConfig } from "@/lib/icon-center";
-import { DatePicker } from "@/components/date-picker";
 
 interface TProps extends IModelPropsType {
   formType: TTransactionType;
@@ -75,8 +75,8 @@ export function TransactionForm({ open, setOpen, formType }: TProps) {
       <DialogContent className="bg-card border border-highlight h-auto">
         <form onSubmit={handleSubmit(handleTransaction)}>
           <DialogHeader>
-            <DialogTitle className={"text-2xl"}>
-              {formType} Transaction
+            <DialogTitle className={"text-2xl capitalize"}>
+              {formType.toLocaleLowerCase()} Transaction
             </DialogTitle>
           </DialogHeader>
           <FieldGroup className="my-3">
@@ -125,10 +125,6 @@ export function TransactionForm({ open, setOpen, formType }: TProps) {
             </Field>
             <Field>
               <Label htmlFor="date">Date</Label>
-              <DatePicker
-                {...register("transactionDate")}
-                className="p-4 font-normal text-base"
-              />
               <Input
                 id="date"
                 type="date"
@@ -150,7 +146,7 @@ export function TransactionForm({ open, setOpen, formType }: TProps) {
               variant="default"
               type="submit"
               className={"text-textColor text-base font-normal p-5"}>
-              Save changes
+              Add Transaction
             </Button>
           </div>
         </form>
