@@ -10,6 +10,7 @@ import {
 } from "@/lib/icon-center";
 import Link from "next/link";
 import { transactionAmount } from "./_actions/transactionAmount";
+import TopTransactionsCard from "../transactions/_components/top-transactions";
 
 const page = async () => {
   const { expense, income, total, balance } = await transactionAmount();
@@ -81,13 +82,12 @@ const page = async () => {
               </div>
               <div className="mt-5">
                 <p className="text-gray-400">{title}</p>
-                <h1 className="text-4xl font-semibold">₹{amount}</h1>
+                <h1 className="text-4xl font-semibold">₹{amount.toString()}</h1>
               </div>
             </div>
           </Card>
         ))}
       </div>
-
       {/* QUICK ACTION CARD */}
       <h1 className="text-fontColor text-xl font-semibold">Quick Action</h1>
       <div className="grid grid-cols-4 gap-5">
@@ -108,9 +108,16 @@ const page = async () => {
         ))}
       </div>
       {/* GOAL CARD */}
-      <GoalCard />
+      <div className="flex md:flex-row flex-col w-full gap-5 items-start">
+        <div className="md:max-w-[75%] w-full">
+          <GoalCard />
+        </div>
+        <div className="md:max-w-[25%] w-full">
+          <TopTransactionsCard />
+        </div>
+      </div>
     </>
-  );
+  )
 };
 
 export default page;

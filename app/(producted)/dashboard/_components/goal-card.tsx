@@ -29,7 +29,7 @@ const GoalCard = () => {
   ];
 
   return (
-    <Card className="max-w-[60%] w-full">
+    <Card className="w-full">
       <CardContent>
         <div className="flex items-center  justify-between">
           <h1 className="text-textColor text-lg font-semibold">My Goal</h1>

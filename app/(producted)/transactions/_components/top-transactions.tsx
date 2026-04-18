@@ -41,7 +41,12 @@ const TopTransactionsCard = () => {
           )}
         </div>
         <section className="mt-3 p-5 space-y-5">
-          {topTransactions &&
+          {topTransactions && topTransactions.length === 0 ? (
+            <div className="flex items-center justify-center min-h-[50vh]">
+              No Transaction Found
+            </div>
+          ) : (
+            topTransactions &&
             topTransactions.map((item) => (
               <div className="flex items-center justify-between" key={item.id}>
                 <div className="flex items-center gap-5">
@@ -64,7 +69,8 @@ const TopTransactionsCard = () => {
                   </h1>
                 </div>
               </div>
-            ))}
+            ))
+          )}
         </section>
       </CardContent>
     </Card>

@@ -1,4 +1,8 @@
-import { IGoalType } from "@/constants/goalTypes";
+import {
+  IGoalFilteredResponse,
+  IGoalFilterType,
+  IGoalType,
+} from "@/constants/goalTypes";
 import api from "@/lib/api";
 import { IApiResponse } from "@/lib/constants";
 import { TGoalValidationSchema } from "@/validation_schema/goal-validation";
@@ -7,13 +11,13 @@ import { AxiosError } from "axios";
 import toast from "react-hot-toast";
 
 // FILTER TRANSACTION HOOK
-// export const useFilterTransaction = (filterData: IGoalType) => {
-//   return useQuery({
-//     queryKey: ["goals", filterData],
-//     queryFn: () => filterGoalApi(filterData),
-//     enabled: !!filterData,
-//   });
-// };
+export const useFilterGoals = (filterData: IGoalFilterType) => {
+  return useQuery({
+    queryKey: ["goals", filterData],
+    queryFn: () => filterGoalsApi(filterData),
+    enabled: !!filterData,
+  });
+};
 
 // CREATE TRANSACTION HOOK
 export const useCreateGoalHook = () => {
@@ -43,7 +47,7 @@ export const useCreateGoalHook = () => {
   });
 };
 
-// CREATE TRANSACTION API
+// CREATE GOALS API
 const createGoalAPI = async (
   goalData: TGoalValidationSchema,
 ): Promise<IApiResponse<IGoalType>> => {
@@ -51,12 +55,12 @@ const createGoalAPI = async (
   return data;
 };
 
-// FILTER TRANSACTION API
-// const filterGoalApi = async (
-//   filterData: IGoalType,
-// ): Promise<IGoalType[]> => {
-//   const { data } = await api.post(
-//     `/api/transaction/filters?type=${filterData?.type}&category=${filterData?.category}&page=${filterData?.page}&limit=${filterData?.limit}&startDate=${filterData?.startDate}&endDate=${filterData?.endDate}`,
-//   );
-//   return data?.data;
-// };
+// FILTER GOALS API
+const filterGoalsApi = async (
+  filterData: IGoalFilterType,
+): Promise<IGoalFilteredResponse> => {
+  const { data } = await api.post(
+    `/api/goal/filters?status=${filterData?.status}&page=${filterData?.page}&limit=${filterData?.limit}`,
+  );
+  return data?.data;
+};

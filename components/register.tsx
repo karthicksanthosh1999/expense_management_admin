@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { userValidationSchema } from "@/validation_schema/user-validation";
@@ -10,6 +10,7 @@ import api from "@/lib/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type registerFormData = z.infer<typeof userValidationSchema>;
 
@@ -92,6 +93,10 @@ export function RegisterPage({
                                     Register
                                 </Button>
                             </Field>
+
+                            <FieldDescription className="text-center">
+                                Don&apos;t have an account? <Link href="/">Login</Link>
+                            </FieldDescription>
                         </FieldGroup>
                     </form>
 

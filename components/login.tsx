@@ -2,7 +2,12 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { userLoginValidationSchema } from "@/validation_schema/user-validation";
@@ -12,6 +17,7 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/hooks/authHooks";
 import { useEffect } from "react";
+import Link from "next/link";
 
 type LoginFormData = z.infer<typeof userLoginValidationSchema>;
 
@@ -23,7 +29,7 @@ export function LoginForm({
   const { user, setUser } = useAuth();
 
   useEffect(() => {
-    if (user?.data) {
+    if (user) {
       navigate.push("/dashboard");
     }
   }, [user, navigate]);
@@ -35,7 +41,6 @@ export function LoginForm({
   const handleLogin = async (loginPayload: LoginFormData) => {
     try {
       const { data } = await api.post("/api/auth/login", loginPayload);
-      console.log(data?.user);
       if (data?.user) {
         setUser(data?.user);
         navigate.push("/dashboard");
@@ -94,6 +99,11 @@ export function LoginForm({
                   Login
                 </Button>
               </Field>
+
+              <FieldDescription className="text-center">
+                Don&apos;t have an account?{" "}
+                <Link href="/register">Sign up</Link>
+              </FieldDescription>
             </FieldGroup>
           </form>
 

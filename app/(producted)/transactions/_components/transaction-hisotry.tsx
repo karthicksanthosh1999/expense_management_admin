@@ -63,7 +63,7 @@ const TransactionHistory = ({ transactionData, loading }: props) => {
             </div>
             <section className="space-y-3">
               {transactionData?.transactions &&
-              transactionData?.transactions.length === 0 ? (
+                transactionData?.transactions.length === 0 ? (
                 <div className="flex items-center justify-center min-h-screen">
                   <h1 className="text-xl font-normal">No Transaction Found</h1>
                 </div>
@@ -156,6 +156,9 @@ const TransactionHistory = ({ transactionData, loading }: props) => {
             <div className="space-x-5 flex items-center justify-center mt-5">
               <Button variant={"outline"} className="h-10 w-30">
                 Download Recept
+              </Button>
+              <Button variant={"destructive"} className="h-10 w-30">
+                Delete
               </Button>
               <Button
                 variant={"default"}

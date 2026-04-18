@@ -1,11 +1,17 @@
+"use client";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import completedIcon from "@/sources/icons/completed.png";
 import moneyIcon from "@/sources/icons/money.png";
 import targetIcon from "@/sources/icons/target.png";
 import incomeIcon from "@/sources/icons/income.png";
+import { goalStatusCount } from "../_actions/goal-status";
+import { useEffect } from "react";
 
 const GoalCards = () => {
+  useEffect(() => {
+    goalStatusCount().then(console.log);
+  }, []);
   return (
     <div className="flex md:flex-nowrap flex-wrap items-center md:justify-between justify-center gap-5">
       <Card className="max-w-lg w-full p-5 shadow-lg hover:shadow-blue-500">

@@ -11,8 +11,10 @@ import { useFilterTransaction } from "../_hooks/transaction-hook";
 import { ITransactionFilterType } from "@/constants/transactionsTypes";
 import { getDefaultDates } from "@/lib/getCurrentMonth";
 import { transactionCategories } from "@/lib/constants";
+import { ExportModel } from "./export-model";
 
 export default function TransactionFilters() {
+
   const { endDate, startDate } = getDefaultDates();
   const defaultValues: ITransactionFilterType = {
     type: "ALL",
@@ -22,14 +24,14 @@ export default function TransactionFilters() {
     limit: 10,
     page: 1,
   };
-  const [appliedFilters, setAppliedFilters] =
-    useState<ITransactionFilterType>(defaultValues);
+
+
+  const [exportModelOpen, setExportModelOpen] = useState(false)
+  const [appliedFilters, setAppliedFilters] = useState<ITransactionFilterType>(defaultValues);
   const [filters, setFilters] = useState<ITransactionFilterType>(defaultValues);
 
   // HOOKS
   const { data, isLoading } = useFilterTransaction(appliedFilters);
-
-  console.log({ data });
 
   const updateFilter = (key: string, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -69,6 +71,7 @@ export default function TransactionFilters() {
       category: "all",
     });
   };
+
   return (
     <>
       <Card className="p-4">
@@ -83,9 +86,8 @@ export default function TransactionFilters() {
                     key={item.value}
                     type="button"
                     onClick={() => updateFilter("type", item.value)}
-                    className={`rounded-xl border px-4 py-2 text-sm border-primary font-medium transition cursor-pointer ${
-                      isActive ? "bg-primary text-white" : "hover:bg-input/40"
-                    }`}>
+                    className={`rounded-xl border px-4 py-2 text-sm border-primary font-medium transition cursor-pointer ${isActive ? "bg-primary text-white" : "hover:bg-input/40"
+                      }`}>
                     {item.title}
                   </button>
                 );
@@ -123,9 +125,8 @@ export default function TransactionFilters() {
                       key={value}
                       type="button"
                       onClick={() => updateFilter("category", value)}
-                      className={`rounded-xl border px-4 py-2 text-sm flex items-center gap-2 font-medium transition border-primary cursor-pointer ${
-                        isActive ? "bg-primary text-white" : "hover:bg-input/40"
-                      }`}>
+                      className={`rounded-xl border px-4 py-2 text-sm flex items-center gap-2 font-medium transition border-primary cursor-pointer ${isActive ? "bg-primary text-white" : "hover:bg-input/40"
+                        }`}>
                       {Icon}
                       {label}
                     </button>
@@ -151,15 +152,18 @@ export default function TransactionFilters() {
               Reset
             </Button>
             <Button
-              onClick={handleReset}
-              className="text-white hover:bg-green-500 bg-green-400 px-8 text-base py-5 rounded-lg cursor-pointer">
+              onClick={() => setExportModelOpen(true)}
+              className="text-white hover:bg-green-600 bg-green-700 px-8 text-base py-5 rounded-lg cursor-pointer">
               Export
             </Button>
           </div>
         </CardContent>
       </Card>
       <div>
+        {/* TRANSACTION HISTORY SECTION */}
         <TransactionHistory loading={isLoading} transactionData={data!} />
+        {/* EXPORT TRANSACTION MODEL */}
+        <ExportModel open={exportModelOpen} setOpen={setExportModelOpen} transactions={data?.transactions ?? []} />
       </div>
     </>
   );

@@ -2,7 +2,7 @@ import { asyncHandler } from "@/lib/async-handler";
 import { AppError } from "@/lib/errors";
 import { prisma } from "@/lib/prisma";
 import { transactionValidationSchema } from "@/validation_schema/transaction-validatino";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export const POST = asyncHandler(async (req: Request) => {
     const body = await req.json()
@@ -40,3 +40,51 @@ export const GET = asyncHandler(async () => {
     })
 });
 
+export const DELETE = async (req: NextRequest) => {
+    const { id } = await req.json();
+    if (!id) {
+        return NextResponse.json({
+            message: "Id is required",
+            statusCode: 400
+        })
+    }
+    const transaction = await prisma.transaction.delete(
+        {
+            where: { id }
+        }
+    )
+    return NextResponse.json({
+        message: "Transaction Deleted Successfully",
+        status: true,
+        statusCode: 200,
+        data: transaction,
+    })
+}
+
+export const PUT = async (req: NextRequest) => {
+    const { id, amount, message, transactionDate, transactionType, category } = await req.json();
+    if (!id) {
+        return NextResponse.json({
+            message: "Id is required",
+            statusCode: 400
+        })
+    }
+    const transaction = await prisma.transaction.update(
+        {
+            where: { id },
+            data: {
+                amount,
+                message,
+                transactionDate,
+                transactionType,
+                category,
+            }
+        }
+    )
+    return NextResponse.json({
+        message: "Transaction Updated Successfully",
+        status: true,
+        statusCode: 200,
+        data: transaction,
+    })
+}

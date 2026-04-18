@@ -64,6 +64,5 @@ const filterTransactionApi = async (
   const { data } = await api.post(
     `/api/transaction/filters?type=${filterData?.type}&category=${filterData?.category}&page=${filterData?.page}&limit=${filterData?.limit}&startDate=${filterData?.startDate}&endDate=${filterData?.endDate}`,
   );
-  console.log(data);
   return data?.data;
 };

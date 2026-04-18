@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import GoalCards from "./_components/goal-cards";
 import { useState } from "react";
 import GoalModel from "./_components/goal-model";
-import GoalTabs from "./_components/goal-tab";
+import GoalList from "./_components/goal-list";
 
 const page = () => {
   const [addGoalModelOpen, setAddGoalModelOpen] = useState(false);
@@ -23,7 +23,7 @@ const page = () => {
 
       <GoalCards />
 
-      <GoalTabs />
+      <GoalList />
 
       <GoalModel
         formMode={"CREATE"}

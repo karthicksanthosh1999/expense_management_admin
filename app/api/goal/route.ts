@@ -7,16 +7,18 @@ import { NextResponse } from "next/server";
 export const POST = asyncHandler(async (req: Request) => {
   const body = await req.json();
   const validatedData = goalValidationSchema.parse(body);
-  console.log(body);
+
   if (!validatedData) {
-    throw new AppError("Fill the all transactions inputs", 400);
+    throw new AppError("Fill the all goal inputs", 400);
   }
-  const { userId, title, goalAmount, currentAmount } = validatedData;
+  const { userId, title, goalAmount, currentAmount, goalStatus } =
+    validatedData;
   const transaction = await prisma.goal.create({
     data: {
       userId,
       title,
       goalAmount,
+      goalStatus,
       currentAmount,
     },
   });

@@ -56,6 +56,7 @@ model Goal {
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   title         String
+  goalStatus    GoalStatus?   @default(ACTIVE)
   user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   goalHistory   GoalHistory[]
 
@@ -79,4 +80,10 @@ model GoalHistory {
 enum TransactionType {
   INCOME
   EXPENSE
+}
+
+enum GoalStatus {
+  ACTIVE
+  INACTIVE
+  COMPLETED
 }
