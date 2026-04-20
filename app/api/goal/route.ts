@@ -13,7 +13,7 @@ export const POST = asyncHandler(async (req: Request) => {
   }
   const { userId, title, goalAmount, currentAmount, goalStatus } =
     validatedData;
-  const transaction = await prisma.goal.create({
+  const goal = await prisma.goal.create({
     data: {
       userId,
       title,
@@ -27,7 +27,7 @@ export const POST = asyncHandler(async (req: Request) => {
     message: "Goal Created Successfully",
     status: true,
     statusCode: 201,
-    data: transaction,
+    data: goal,
   });
 });
 
@@ -38,5 +38,20 @@ export const GET = asyncHandler(async () => {
     status: true,
     statusCode: 200,
     data: transactions,
+  });
+});
+
+export const DELETE = asyncHandler(async (req: Request) => {
+  const { id } = await req.json();
+  if (!id) {
+    throw new AppError("Id is required", 400);
+  }
+  console.log({ id });
+  const goal = await prisma.goal.delete({ where: { id } });
+  return NextResponse.json({
+    message: "Goal Deleted Successfully",
+    status: true,
+    statusCode: 200,
+    data: goal,
   });
 });

@@ -101,6 +101,7 @@ const GoalList = () => {
                 title={item.title}
                 currentAmount={item.currentAmount}
                 userId={item.userId}
+                id={item?.id}
               />
             </div>
           ))

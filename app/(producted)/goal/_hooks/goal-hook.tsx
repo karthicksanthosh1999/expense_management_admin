@@ -47,6 +47,29 @@ export const useCreateGoalHook = () => {
   });
 };
 
+export const useDeleteGoalHook = () => {
+  const queryClient = useQueryClient();
+  return useMutation<IApiResponse<IGoalType>, AxiosError, { id: string }>({
+    mutationFn: deleteGoalAPI,
+    onMutate: () => {
+      toast.loading("Goal Creating...", {
+        id: "delete-goals",
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["goals"] });
+      toast.success("Goal Deleted Successfully", {
+        id: "delete-goals",
+      });
+    },
+    onError: () => {
+      toast.error("Something Went Wrong", {
+        id: "delete-goals",
+      });
+    },
+  });
+};
+
 // CREATE GOALS API
 const createGoalAPI = async (
   goalData: TGoalValidationSchema,
@@ -63,4 +86,12 @@ const filterGoalsApi = async (
     `/api/goal/filters?status=${filterData?.status}&page=${filterData?.page}&limit=${filterData?.limit}`,
   );
   return data?.data;
+};
+
+// DELETE GOALS API
+const deleteGoalAPI = async (id: {
+  id: string;
+}): Promise<IApiResponse<IGoalType>> => {
+  const { data } = await api.delete("/api/goal", { data: id });
+  return data;
 };

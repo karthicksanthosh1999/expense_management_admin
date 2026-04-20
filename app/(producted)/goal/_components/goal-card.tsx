@@ -1,18 +1,48 @@
+"use client";
+
 import { Card, CardAction, CardContent } from "@/components/ui/card";
 import moneyIcon from "@/sources/icons/money.png";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { Delete, Edit, Trash, Trash2 } from "lucide-react";
+import { Edit, Trash2 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { IGoalType } from "@/constants/goalTypes";
+import DeleteModel from "@/components/delete-model";
+import { useState } from "react";
+import { useDeleteGoalHook } from "../_hooks/goal-hook";
+import { Button } from "@/components/ui/button";
+import { GoalAmountForm } from "./goal-amount-form";
 
 const GoalCard = ({
+  id,
   goalAmount,
   goalStatus,
   title,
   currentAmount,
 }: IGoalType) => {
+  const [deleteModelOpen, setDeleteModelOpen] = useState(false);
+  const [addAmountModelOpen, setAddAmountModelOpen] = useState(false);
+
+  // HOOKS
+  const { mutate } = useDeleteGoalHook();
+  console.log(id);
+
+  const confirmDelete = () => {
+    if (id) {
+      mutate({ id });
+      setDeleteModelOpen(false);
+    }
+  };
+
+  const percentage =
+    goalAmount && Number(goalAmount) > 0
+      ? Math.min(
+          100,
+          Math.round((Number(currentAmount || 0) / Number(goalAmount)) * 100),
+        )
+      : 0;
+
   return (
     <>
       <Card className="w-full max-w-md shadow-sm hover:shadow-blue-500">
@@ -31,6 +61,7 @@ const GoalCard = ({
               <div className="flex items-center gap-2">
                 <Trash2
                   size={20}
+                  onClick={() => setDeleteModelOpen(true)}
                   className="hover:text-gray-500 cursor-pointer transaction ease-in-out duration-300 "
                 />
                 <Edit
@@ -48,9 +79,9 @@ const GoalCard = ({
                   </span>
                 </FieldLabel>
                 <Progress
-                  value={66}
+                  value={percentage}
                   id="progress-upload"
-                  className={"w-full"}
+                  className="w-full"
                 />
               </Field>
             </div>
@@ -68,8 +99,30 @@ const GoalCard = ({
                 </h1>
               </div>
             </div>
+            <div className="space-x-3 mt-5">
+              <Button
+                className="text-gray-200 p-4 text-sm"
+                onClick={() => setAddAmountModelOpen(true)}>
+                Add Amount
+              </Button>
+              <Button variant={"outline"} className="p-4 text-sm">
+                Details
+              </Button>
+            </div>
           </CardAction>
         </CardContent>
+        <DeleteModel
+          open={deleteModelOpen}
+          setOpen={setDeleteModelOpen}
+          name="Goal"
+          deleteDataId={id!}
+          handleDelete={confirmDelete}
+        />
+
+        <GoalAmountForm
+          open={addAmountModelOpen}
+          setOpen={setAddAmountModelOpen}
+        />
       </Card>
     </>
   );
