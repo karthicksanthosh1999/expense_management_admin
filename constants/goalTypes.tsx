@@ -1,4 +1,3 @@
-import { GoalStatus } from "@prisma/client";
 import { Decimal } from "@prisma/client/runtime/client";
 
 export interface IGoalChartTypes {
@@ -9,6 +8,11 @@ export interface IGoalChartTypes {
 
 export type EGoalStatus = "ALL" | "COMPLETED" | "INACTIVE" | "ACTIVE";
 
+export interface IGoalDashboard {
+  status: EGoalStatus;
+  count: number;
+}
+
 export interface IGoalType {
   id?: string;
   title: string;
@@ -16,6 +20,13 @@ export interface IGoalType {
   currentAmount?: string;
   goalStatus: EGoalStatus;
   userId: string;
+}
+export interface IGoalAmountType {
+  id?: string;
+  userId: string;
+  goalId: string;
+  amount: Decimal;
+  createdAt?: Date;
 }
 
 export interface IAddAmountType {

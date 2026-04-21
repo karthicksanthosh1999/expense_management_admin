@@ -8,8 +8,13 @@ export const goalStatusCount = async () => {
     _count: { goalStatus: true },
   });
 
-  return grouped.map((item) => ({
-    status: item.goalStatus,
-    count: item._count.goalStatus,
-  }));
+  const result = grouped.reduce(
+    (acc, item) => {
+      acc[item.goalStatus!] = item._count.goalStatus;
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
+
+  return result;
 };

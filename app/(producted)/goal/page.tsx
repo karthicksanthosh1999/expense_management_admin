@@ -14,7 +14,7 @@ const page = () => {
       <SecondHeader currentPage="Goal">
         <Button
           className={
-            "font-normal text-lg py-5 px-5 bg-primary text-white hover:bg-primary"
+            "font-normal text-base py-5 px-5 bg-primary text-white hover:bg-primary"
           }
           onClick={() => setAddGoalModelOpen(true)}>
           New Goal
@@ -26,7 +26,7 @@ const page = () => {
       <GoalList />
 
       <GoalModel
-        formMode={"CREATE"}
+        mode="CREATE"
         open={addGoalModelOpen}
         setOpen={setAddGoalModelOpen}
       />

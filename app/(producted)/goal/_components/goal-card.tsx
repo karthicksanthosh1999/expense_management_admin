@@ -13,20 +13,25 @@ import { useState } from "react";
 import { useDeleteGoalHook } from "../_hooks/goal-hook";
 import { Button } from "@/components/ui/button";
 import { GoalAmountForm } from "./goal-amount-form";
+import { GoalAmountTimeline } from "./goal-timeline";
+import GoalModel from "./goal-model";
 
 const GoalCard = ({
   id,
   goalAmount,
   goalStatus,
   title,
+  userId,
   currentAmount,
 }: IGoalType) => {
   const [deleteModelOpen, setDeleteModelOpen] = useState(false);
   const [addAmountModelOpen, setAddAmountModelOpen] = useState(false);
+  const [historyModelOpen, setHistoryModelOpen] = useState(false);
+  const [updateGoalModelOpen, setUpdateGoalModelOpen] = useState(false);
+  const [selectedGoal, setSelectedGoal] = useState<IGoalType | null>(null)
 
   // HOOKS
   const { mutate } = useDeleteGoalHook();
-  console.log(id);
 
   const confirmDelete = () => {
     if (id) {
@@ -35,13 +40,19 @@ const GoalCard = ({
     }
   };
 
+
   const percentage =
     goalAmount && Number(goalAmount) > 0
       ? Math.min(
-          100,
-          Math.round((Number(currentAmount || 0) / Number(goalAmount)) * 100),
-        )
+        100,
+        Math.round((Number(currentAmount || 0) / Number(goalAmount)) * 100),
+      )
       : 0;
+
+  const handleGoal = () => {
+    setUpdateGoalModelOpen(true)
+    setSelectedGoal({ goalAmount, goalStatus, title, userId, currentAmount, id })
+  }
 
   return (
     <>
@@ -53,7 +64,7 @@ const GoalCard = ({
                 <Image src={moneyIcon} alt="icons" width={50} height={50} />
                 <div className="">
                   <h1 className="text-xl font-semibold">{title}</h1>
-                  <Badge variant="secondary" className="uppercase text-xs">
+                  <Badge variant="default" className="uppercase text-white text-xs p-3 mt-2">
                     {goalStatus}
                   </Badge>
                 </div>
@@ -66,6 +77,7 @@ const GoalCard = ({
                 />
                 <Edit
                   size={20}
+                  onClick={() => handleGoal()}
                   className="hover:text-gray-500 cursor-pointer transaction ease-in-out duration-300 "
                 />
               </div>
@@ -75,7 +87,7 @@ const GoalCard = ({
                 <FieldLabel htmlFor="progress-upload">
                   <span className="text-gray-400">progress</span>
                   <span className="ml-auto text-black dark:text-white">
-                    66%
+                    {percentage}%
                   </span>
                 </FieldLabel>
                 <Progress
@@ -105,7 +117,8 @@ const GoalCard = ({
                 onClick={() => setAddAmountModelOpen(true)}>
                 Add Amount
               </Button>
-              <Button variant={"outline"} className="p-4 text-sm">
+              <Button variant={"outline"} className="p-4 text-sm"
+                onClick={() => setHistoryModelOpen(true)}>
                 Details
               </Button>
             </div>
@@ -118,11 +131,30 @@ const GoalCard = ({
           deleteDataId={id!}
           handleDelete={confirmDelete}
         />
-
-        <GoalAmountForm
-          open={addAmountModelOpen}
-          setOpen={setAddAmountModelOpen}
-        />
+        {
+          id &&
+          <>
+            <GoalAmountForm
+              open={addAmountModelOpen}
+              setOpen={setAddAmountModelOpen}
+              goalId={id}
+            />
+            <GoalAmountTimeline
+              open={historyModelOpen}
+              setOpen={setHistoryModelOpen}
+              goalId={id}
+            />
+          </>
+        }
+        {
+          selectedGoal &&
+          <GoalModel
+            mode="UPDATE"
+            open={updateGoalModelOpen}
+            setOpen={setUpdateGoalModelOpen}
+            existingGoalData={selectedGoal}
+          />
+        }
       </Card>
     </>
   );

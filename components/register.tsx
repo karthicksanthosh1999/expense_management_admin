@@ -11,6 +11,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import ButtonLoading from "./loders/ButtonLoading";
+import { useState } from "react";
 
 type registerFormData = z.infer<typeof userValidationSchema>;
 
@@ -19,6 +21,7 @@ export function RegisterPage({
     ...props
 }: React.ComponentProps<"div">) {
     const navigate = useRouter();
+    const [isLoading, setIsLoading] = useState(false)
 
     const { handleSubmit, register, reset } = useForm<registerFormData>({
         resolver: zodResolver(userValidationSchema),
@@ -26,13 +29,18 @@ export function RegisterPage({
 
     const handleRegister = async (registerPayload: registerFormData) => {
         try {
+            setIsLoading(true)
             const { data } = await api.post("/api/auth/register", registerPayload);
             if (data?.user) {
                 navigate.push("/");
             }
+            setIsLoading(false)
             reset();
         } catch (error) {
             console.log(error);
+            setIsLoading(false)
+        } finally {
+            setIsLoading(false)
         }
     };
 
@@ -87,11 +95,17 @@ export function RegisterPage({
                                 />
                             </Field>
                             <Field>
-                                <Button
-                                    type="submit"
-                                    className="w-full text-textColor text-base font-normal p-5">
-                                    Register
-                                </Button>
+                                <Field>
+                                    <Button
+                                        type="submit"
+                                        className="w-full text-textColor text-base font-normal p-5">
+                                        {isLoading ? (
+                                            <>
+                                                <ButtonLoading />
+                                            </>
+                                        ) : (<h1>Register</h1>)}
+                                    </Button>
+                                </Field>
                             </Field>
 
                             <FieldDescription className="text-center">

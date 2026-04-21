@@ -26,7 +26,6 @@ const GoalList = () => {
     setAppliedFilters(updated);
   };
 
-  console.log(goalList);
   useEffect(() => {
     setAppliedFilters(filters);
   }, []);
@@ -68,9 +67,8 @@ const GoalList = () => {
                     key={item.value}
                     type="button"
                     onClick={() => updateFilter("status", item.value)}
-                    className={`rounded-xl border px-4 py-2 text-sm border-primary font-medium transition cursor-pointer ${
-                      isActive ? "bg-primary text-white" : "hover:bg-input/40"
-                    }`}>
+                    className={`rounded-xl border px-4 py-2 text-sm border-primary font-medium transition cursor-pointer ${isActive ? "bg-primary text-white" : "hover:bg-input/40"
+                      }`}>
                     {item.title}
                   </button>
                 );

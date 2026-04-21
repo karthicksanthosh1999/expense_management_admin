@@ -71,6 +71,7 @@ const page = async () => {
 
   return (
     <>
+      <h1 className="text-fontColor text-xl font-semibold">Transactions</h1>
       <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 place-items-center justify-center">
         {cardData.map(({ amount, icon: Icon, title }, idx) => (
           <Card

@@ -23,7 +23,6 @@ const DeleteModel = ({
   deleteDataId,
   handleDelete,
 }: TType) => {
-  console.log(deleteDataId);
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent className="bg-card border border-highlight">

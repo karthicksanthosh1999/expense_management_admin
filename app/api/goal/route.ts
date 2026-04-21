@@ -46,12 +46,34 @@ export const DELETE = asyncHandler(async (req: Request) => {
   if (!id) {
     throw new AppError("Id is required", 400);
   }
-  console.log({ id });
   const goal = await prisma.goal.delete({ where: { id } });
   return NextResponse.json({
     message: "Goal Deleted Successfully",
     status: true,
     statusCode: 200,
+    data: goal,
+  });
+});
+
+export const PUT = asyncHandler(async (req: Request) => {
+  const body = await req.json();
+  const { userId, title, goalAmount, currentAmount, goalStatus, id } = body;
+  console.log(body);
+  const goal = await prisma.goal.update({
+    where: { id },
+    data: {
+      userId,
+      title,
+      goalAmount,
+      goalStatus,
+      currentAmount,
+    },
+  });
+
+  return NextResponse.json({
+    message: "Goal Updated Successfully",
+    status: true,
+    statusCode: 201,
     data: goal,
   });
 });

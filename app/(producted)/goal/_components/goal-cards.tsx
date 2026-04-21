@@ -6,12 +6,23 @@ import moneyIcon from "@/sources/icons/money.png";
 import targetIcon from "@/sources/icons/target.png";
 import incomeIcon from "@/sources/icons/income.png";
 import { goalStatusCount } from "../_actions/goal-status";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { IGoalDashboard } from "@/constants/goalTypes";
 
 const GoalCards = () => {
+  const [goalDash, setGoalDash] = useState<IGoalDashboard>({
+    status: "",
+    count: 0,
+  });
+
   useEffect(() => {
-    goalStatusCount().then(console.log);
+    goalStatusCount().then((res) => {
+      setGoalDash(res);
+    });
   }, []);
+
+  console.log(goalDash);
+
   return (
     <div className="flex md:flex-nowrap flex-wrap items-center md:justify-between justify-center gap-5">
       <Card className="max-w-lg w-full p-5 shadow-lg hover:shadow-blue-500">
@@ -20,10 +31,12 @@ const GoalCards = () => {
             <Image src={targetIcon} alt="image" height={50} width={50} />
             <div className="mt-5">
               <p className="text-gray-400">Active Goals</p>
-              <h1 className="text-4xl font-semibold">8</h1>
+              <h1 className="text-4xl font-semibold">
+                {goalDash.count ?? "0"}
+              </h1>
             </div>
           </div>
-          <h1 className="bg-gradient-to-r from-cyan-500 to-blue-500 w-fit p-2 text-lg font-normal rounded-lg">
+          <h1 className="bg-linear-to-r from-cyan-500 to-blue-500 w-fit p-2 text-lg font-normal rounded-lg">
             Active
           </h1>
         </div>
@@ -34,10 +47,12 @@ const GoalCards = () => {
             <Image src={moneyIcon} alt="image" height={50} width={50} />
             <div className="mt-5">
               <p className="text-gray-400">Completed</p>
-              <h1 className="text-4xl font-semibold">20</h1>
+              <h1 className="text-4xl font-semibold">
+                {goalDash.count ?? "0"}
+              </h1>
             </div>
           </div>
-          <h1 className="bg-gradient-to-r from-teal-500 to-teal-500 w-fit p-2 text-lg font-normal rounded-lg">
+          <h1 className="bg-linear-to-r from-teal-500 to-teal-500 w-fit p-2 text-lg font-normal rounded-lg">
             +25%
           </h1>
         </div>
@@ -65,7 +80,7 @@ const GoalCards = () => {
               <h1 className="text-4xl font-semibold">10</h1>
             </div>
           </div>
-          <h1 className="bg-gradient-to-r from-teal-500 to-teal-500 w-fit p-2 text-lg font-normal rounded-lg">
+          <h1 className="bg-linear-to-r from-teal-500 to-teal-500 w-fit p-2 text-lg font-normal rounded-lg">
             68%
           </h1>
         </div>

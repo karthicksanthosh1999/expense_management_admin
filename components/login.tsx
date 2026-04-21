@@ -16,8 +16,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/hooks/authHooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import ButtonLoading from "./loders/ButtonLoading";
 
 type LoginFormData = z.infer<typeof userLoginValidationSchema>;
 
@@ -27,6 +28,7 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
   const navigate = useRouter();
   const { user, setUser } = useAuth();
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     if (user) {
@@ -40,14 +42,19 @@ export function LoginForm({
 
   const handleLogin = async (loginPayload: LoginFormData) => {
     try {
+      setIsLoading(true)
       const { data } = await api.post("/api/auth/login", loginPayload);
       if (data?.user) {
         setUser(data?.user);
         navigate.push("/dashboard");
       }
+      setIsLoading(false)
       reset();
     } catch (error) {
       console.log(error);
+      setIsLoading(false)
+    } finally {
+      setIsLoading(false)
     }
   };
 
@@ -96,7 +103,11 @@ export function LoginForm({
                 <Button
                   type="submit"
                   className="w-full text-textColor text-base font-normal p-5">
-                  Login
+                  {isLoading ? (
+                    <>
+                      <ButtonLoading />
+                    </>
+                  ) : (<h1>Login</h1>)}
                 </Button>
               </Field>
 
