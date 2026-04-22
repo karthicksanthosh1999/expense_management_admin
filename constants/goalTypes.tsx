@@ -10,7 +10,6 @@ export type EGoalStatus = "ALL" | "COMPLETED" | "INACTIVE" | "ACTIVE";
 
 export interface IGoalDashboard {
   status: EGoalStatus;
-  count: number;
 }
 
 export interface IGoalType {

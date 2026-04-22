@@ -42,7 +42,7 @@ export default function GlobalHeader({ children }: TProps) {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="bg-card flex h-20 shrink-0 items-center gap-2 border-b px-4">
+        <header className="bg-card sticky z-50 top-0 w-full flex h-20 shrink-0 items-center gap-2 border-b px-4">
           <SidebarTrigger className="-ml-1" size={"lg"} />
           <Separator
             orientation="vertical"

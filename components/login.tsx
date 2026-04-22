@@ -19,6 +19,7 @@ import { useAuth } from "@/context/hooks/authHooks";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import ButtonLoading from "./loders/ButtonLoading";
+import AuthCarasole from "./auth-carasole";
 
 type LoginFormData = z.infer<typeof userLoginValidationSchema>;
 
@@ -28,7 +29,7 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
   const navigate = useRouter();
   const { user, setUser } = useAuth();
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -42,19 +43,19 @@ export function LoginForm({
 
   const handleLogin = async (loginPayload: LoginFormData) => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const { data } = await api.post("/api/auth/login", loginPayload);
       if (data?.user) {
         setUser(data?.user);
         navigate.push("/dashboard");
       }
-      setIsLoading(false)
+      setIsLoading(false);
       reset();
     } catch (error) {
       console.log(error);
-      setIsLoading(false)
+      setIsLoading(false);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
@@ -107,7 +108,9 @@ export function LoginForm({
                     <>
                       <ButtonLoading />
                     </>
-                  ) : (<h1>Login</h1>)}
+                  ) : (
+                    <h1>Login</h1>
+                  )}
                 </Button>
               </Field>
 
@@ -118,12 +121,8 @@ export function LoginForm({
             </FieldGroup>
           </form>
 
-          <div className="relative hidden bg-muted md:block">
-            <img
-              src="/placeholder.svg"
-              alt="Image"
-              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-            />
+          <div className="relative hidden bg-muted md:block h-full">
+            <AuthCarasole />
           </div>
         </CardContent>
       </Card>

@@ -48,6 +48,33 @@ export const useCreateTransactionHook = () => {
     },
   });
 };
+// UPDATE TRANSACTION HOOK
+export const useUpdateTransactionHook = () => {
+  const queryClient = useQueryClient();
+  return useMutation<
+    IApiResponse<ITransaction>,
+    AxiosError,
+    TTransactionValidationSchemaType
+  >({
+    mutationFn: updateTransactionAPI,
+    onMutate: () => {
+      toast.loading("Transaction Updating...", {
+        id: "create-transaction",
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      toast.success("Transaction Update Successfully", {
+        id: "create-transaction",
+      });
+    },
+    onError: () => {
+      toast.error("Something Went Wrong", {
+        id: "create-transaction",
+      });
+    },
+  });
+};
 
 // CREATE TRANSACTION API
 const createTransactionAPI = async (
@@ -65,4 +92,12 @@ const filterTransactionApi = async (
     `/api/transaction/filters?type=${filterData?.type}&category=${filterData?.category}&page=${filterData?.page}&limit=${filterData?.limit}&startDate=${filterData?.startDate}&endDate=${filterData?.endDate}`,
   );
   return data?.data;
+};
+
+// UPDATE TRANSACTION API
+const updateTransactionAPI = async (
+  transactionData: TTransactionValidationSchemaType,
+): Promise<IApiResponse<ITransaction>> => {
+  const { data } = await api.put("/api/transaction", transactionData);
+  return data;
 };

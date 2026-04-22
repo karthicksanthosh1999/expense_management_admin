@@ -47,6 +47,7 @@ const page = () => {
         open={transactionFormOpen}
         setOpen={setTransactionFormOpen}
         formType={selectedFormType}
+        mode="CREATE"
       />
     </div>
   );

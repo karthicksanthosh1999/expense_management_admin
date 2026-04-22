@@ -41,7 +41,7 @@ export const transactionCategories = [
   {
     icon: <ShoppingBag size={18} />,
     label: "Shopping",
-    value: "shopping",
+    value: "shop",
   },
   {
     icon: <Hamburger size={18} />,

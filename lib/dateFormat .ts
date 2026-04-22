@@ -5,3 +5,9 @@ export const dateFormat = (date: Date) => {
     year: "numeric",
   });
 };
+
+// ONLY FOR UPDATE FORM DATE INPUT
+export const formatDateForInput = (date?: string | Date) => {
+  if (!date) return "";
+  return new Date(date).toISOString().split("T")[0];
+};

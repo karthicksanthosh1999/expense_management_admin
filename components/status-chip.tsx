@@ -12,13 +12,13 @@ const StatusChip = ({ status }: TProps) => {
       );
     case "INCOME":
       return (
-        <p className="text-color text-sm font-semibold bg-linear-to-r from-green-500 to-cyan-400 p-2 rounded-lg w-fit">
-          Income
+        <p className="text-green-500 text-sm p-2 rounded-lg border border-green-500">
+          INCOME
         </p>
       );
     case "ALL":
       return (
-        <p className="text-color text-sm font-semibold bg-linear-to-r from-green-500 to-cyan-400 p-2 rounded-lg w-fit">
+        <p className="text-green-500 text-sm p-2 rounded-lg border border-green-500">
           Income
         </p>
       );

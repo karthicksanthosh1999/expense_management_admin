@@ -2,11 +2,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import StatusChip from "@/components/status-chip";
 import { Separator } from "@/components/ui/separator";
 import DataLoader from "@/components/loders/DataLoader";
-import {
-  ITransaction,
-  ITransactionFilteredResponse,
-} from "@/constants/transactionsTypes";
-import { format } from "date-fns";
+import { ITransactionFilteredResponse } from "@/constants/transactionsTypes";
 import {
   Dialog,
   DialogContent,
@@ -18,6 +14,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CategoryIcon } from "@/lib/icon-center";
 import { dateFormat } from "@/lib/dateFormat ";
+import { TransactionForm } from "./form-transaction";
+import { TTransactionValidationSchemaType } from "@/validation_schema/transaction-validatino";
 
 type props = {
   loading: boolean;
@@ -26,8 +24,13 @@ type props = {
 
 const TransactionHistory = ({ transactionData, loading }: props) => {
   const [transactionModelOpen, setTransactionModelOpen] = useState(false);
+  const [transactionUpdateModelOpen, setTransactionUpdateModelOpen] =
+    useState(false);
+  const [selectedTransaction, setSelectedTransaction] =
+    useState<TTransactionValidationSchemaType | null>(null);
 
-  const [transaction, setTransaction] = useState<ITransaction | null>(null);
+  const [transaction, setTransaction] =
+    useState<TTransactionValidationSchemaType | null>(null);
   const handleModelClose = () => {
     setTransactionModelOpen(false);
     setTransaction(null);
@@ -36,12 +39,18 @@ const TransactionHistory = ({ transactionData, loading }: props) => {
   const handleModelOpen = () => {
     setTransactionModelOpen(true);
   };
+
+  const handleGoalEdit = (data: TTransactionValidationSchemaType) => {
+    setTransactionUpdateModelOpen(true);
+    setSelectedTransaction(data);
+  };
+
   return (
     <>
       <Dialog
         open={transactionModelOpen}
         onOpenChange={setTransactionModelOpen}>
-        <Card onClick={handleModelOpen} className="w-full h-250">
+        <Card className="w-full h-250">
           <CardContent>
             <CardHeader className="flex items-center justify-between">
               <h1 className="text-2xl font-semibold text-color">
@@ -63,14 +72,17 @@ const TransactionHistory = ({ transactionData, loading }: props) => {
             </div>
             <section className="space-y-3">
               {transactionData?.transactions &&
-                transactionData?.transactions.length === 0 ? (
+              transactionData?.transactions.length === 0 ? (
                 <div className="flex items-center justify-center min-h-screen">
                   <h1 className="text-xl font-normal">No Transaction Found</h1>
                 </div>
               ) : (
                 transactionData?.transactions.map((item, idx) => (
                   <div
-                    onClick={() => setTransaction(item)}
+                    onClick={() => {
+                      handleModelOpen();
+                      setTransaction(item);
+                    }}
                     key={idx}
                     className="flex items-center justify-between border border-blue-900 hover:border-primary p-3 cursor-pointer rounded-xl transaction ease-in-out duration-500 hover:translate-y-1">
                     <div className="flex items-center gap-5">
@@ -82,7 +94,7 @@ const TransactionHistory = ({ transactionData, loading }: props) => {
                           </h1>
                         </div>
                         <p className="text-gray-300 tracking-wider font-semibold mt-2">
-                          {format(item.transactionDate, "dd-mm-yyyy")}
+                          {dateFormat(item?.transactionDate!) ?? "N/A"}
                         </p>
                       </div>
                     </div>
@@ -97,9 +109,9 @@ const TransactionHistory = ({ transactionData, loading }: props) => {
                         }}>
                         ${item.amount.toString()}
                       </h1>
-                      <p className="text-color text-lg font-semibold">
+                      <span className="text-color text-lg font-semibold">
                         <StatusChip status={item.transactionType} />
-                      </p>
+                      </span>
                     </div>
                   </div>
                 ))
@@ -135,11 +147,11 @@ const TransactionHistory = ({ transactionData, loading }: props) => {
                 <CardContent className="space-y-3">
                   <div className="flex items-center justify-between text-sm">
                     <p>Transaction Type:</p>
-                    <p>
+                    <span>
                       {transaction?.transactionType && (
                         <StatusChip status={transaction.transactionType} />
                       )}
-                    </p>
+                    </span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <p>Transaction Category:</p>
@@ -163,13 +175,22 @@ const TransactionHistory = ({ transactionData, loading }: props) => {
               <Button
                 variant={"default"}
                 className="h-10 w-30 text-white"
-                onClick={handleModelClose}>
-                Close
+                onClick={() => handleGoalEdit(transaction!)}>
+                Edit
               </Button>
             </div>
           </section>
         </DialogContent>
       </Dialog>
+      {selectedTransaction && (
+        <TransactionForm
+          formType={selectedTransaction?.transactionType}
+          mode="UPDATE"
+          open={transactionUpdateModelOpen}
+          setOpen={setTransactionUpdateModelOpen}
+          existingTransactionData={selectedTransaction}
+        />
+      )}
     </>
   );
 };

@@ -1,6 +1,7 @@
 import z from "zod";
 
 export const transactionValidationSchema = z.object({
+  id: z.uuid().optional(),
   amount: z.string({ message: "Amount is required" }),
   message: z.string({ message: "Description is required" }),
   transactionType: z.enum(["INCOME", "EXPENSE"], {

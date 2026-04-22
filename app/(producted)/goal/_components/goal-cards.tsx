@@ -7,18 +7,27 @@ import targetIcon from "@/sources/icons/target.png";
 import incomeIcon from "@/sources/icons/income.png";
 import { goalStatusCount } from "../_actions/goal-status";
 import { useEffect, useState } from "react";
-import { IGoalDashboard } from "@/constants/goalTypes";
+import { EGoalStatus, IGoalDashboard } from "@/constants/goalTypes";
+import ButtonLoading from "@/components/loders/ButtonLoading";
 
 const GoalCards = () => {
-  const [goalDash, setGoalDash] = useState<IGoalDashboard>({
-    status: "",
-    count: 0,
+  const [goalDash, setGoalDash] = useState({
+    state: "ALL" | "COMPLETED" | "INACTIVE" | "ACTIVE",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
-    goalStatusCount().then((res) => {
-      setGoalDash(res);
-    });
+    goalStatusCount()
+      .then((res) => {
+        setIsLoading(true);
+        setGoalDash(res);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
   }, []);
 
   console.log(goalDash);
@@ -32,7 +41,7 @@ const GoalCards = () => {
             <div className="mt-5">
               <p className="text-gray-400">Active Goals</p>
               <h1 className="text-4xl font-semibold">
-                {goalDash.count ?? "0"}
+                {goalDash.ACTIVE ?? "0"}
               </h1>
             </div>
           </div>
@@ -48,7 +57,7 @@ const GoalCards = () => {
             <div className="mt-5">
               <p className="text-gray-400">Completed</p>
               <h1 className="text-4xl font-semibold">
-                {goalDash.count ?? "0"}
+                {isLoading ? <ButtonLoading /> : (goalDash.COMPLETED ?? "0")}
               </h1>
             </div>
           </div>
@@ -77,7 +86,9 @@ const GoalCards = () => {
             <Image src={incomeIcon} alt="image" height={50} width={50} />
             <div className="mt-5">
               <p className="text-gray-400">Income</p>
-              <h1 className="text-4xl font-semibold">10</h1>
+              <h1 className="text-4xl font-semibold">
+                {goalDash?.INACTIVE ?? 0}
+              </h1>
             </div>
           </div>
           <h1 className="bg-linear-to-r from-teal-500 to-teal-500 w-fit p-2 text-lg font-normal rounded-lg">

@@ -27,16 +27,29 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useCreateTransactionHook } from "../_hooks/transaction-hook";
+import {
+  useCreateTransactionHook,
+  useUpdateTransactionHook,
+} from "../_hooks/transaction-hook";
 import { categoryConfig } from "@/lib/icon-center";
+import { formatDateForInput } from "@/lib/dateFormat ";
 
 interface TProps extends IModelPropsType {
   formType: TTransactionType;
+  mode: "CREATE" | "UPDATE";
+  existingTransactionData?: TTransactionValidationSchemaType;
 }
 
-export function TransactionForm({ open, setOpen, formType }: TProps) {
+export function TransactionForm({
+  open,
+  setOpen,
+  formType,
+  mode,
+  existingTransactionData,
+}: TProps) {
   const { user } = useAuth();
   const { mutate } = useCreateTransactionHook();
+  const { mutate: updateTransactionMutation } = useUpdateTransactionHook();
 
   const {
     formState: { errors },
@@ -53,16 +66,37 @@ export function TransactionForm({ open, setOpen, formType }: TProps) {
   });
 
   useEffect(() => {
-    if (user?.id) {
+    if (existingTransactionData) {
       reset({
+        amount: existingTransactionData?.amount,
+        category: existingTransactionData?.category,
+        message: existingTransactionData?.message,
+        transactionDate: formatDateForInput(
+          existingTransactionData?.transactionDate,
+        ),
+        transactionType: existingTransactionData?.transactionType,
+        id: existingTransactionData.id,
+        userId: user?.id,
+      });
+    }
+  }, [existingTransactionData, reset, user]);
+
+  useEffect(() => {
+    if (user?.id) {
+      reset((preV) => ({
+        ...preV,
         userId: user.id,
         transactionType: formType,
-      });
+      }));
     }
   }, [user, formType, reset]);
 
   const handleTransaction = (data: TTransactionValidationSchemaType) => {
-    mutate(data);
+    if (mode === "CREATE") {
+      mutate(data);
+    } else {
+      updateTransactionMutation(data);
+    }
     handleClose();
   };
   const handleClose = () => {
@@ -76,7 +110,7 @@ export function TransactionForm({ open, setOpen, formType }: TProps) {
         <form onSubmit={handleSubmit(handleTransaction)}>
           <DialogHeader>
             <DialogTitle className={"text-2xl capitalize"}>
-              {formType.toLocaleLowerCase()} Transaction
+              {formType.toString().toLowerCase()} Transaction
             </DialogTitle>
           </DialogHeader>
           <FieldGroup className="my-3">
@@ -108,7 +142,10 @@ export function TransactionForm({ open, setOpen, formType }: TProps) {
                 render={({ field }) => (
                   <Select onValueChange={field.onChange} value={field.value}>
                     <SelectTrigger className="w-full h-12">
-                      <SelectValue placeholder="Select category" />
+                      <SelectValue
+                        className={"capitalize"}
+                        placeholder="Select category"
+                      />
                     </SelectTrigger>
                     <SelectContent className={"p-1 "}>
                       {Object.keys(categoryConfig).map((item) => (
@@ -138,15 +175,15 @@ export function TransactionForm({ open, setOpen, formType }: TProps) {
             <Button
               variant="outline"
               type="button"
-              className={"text-textColor text-base font-normal p-5"}
+              className={"text-textColor text-sm font-normal p-5"}
               onClick={handleClose}>
               Cancel
             </Button>
             <Button
               variant="default"
               type="submit"
-              className={"text-textColor text-base font-normal p-5"}>
-              Add Transaction
+              className={"text-textColor text-sm font-normal p-5"}>
+              {mode === "CREATE" ? "Add" : "Update"} Transaction
             </Button>
           </div>
         </form>
