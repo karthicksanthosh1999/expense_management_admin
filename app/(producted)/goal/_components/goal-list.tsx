@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { IGoalFilterType } from "@/constants/goalTypes";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import DataLoader from "@/components/loders/DataLoader";
+import DataLoader from "@/components/loaders/DataLoader";
 
 const GoalList = () => {
   const defaultValues: IGoalFilterType = {
@@ -67,8 +67,9 @@ const GoalList = () => {
                     key={item.value}
                     type="button"
                     onClick={() => updateFilter("status", item.value)}
-                    className={`rounded-xl border px-4 py-2 text-sm border-primary font-medium transition cursor-pointer ${isActive ? "bg-primary text-white" : "hover:bg-input/40"
-                      }`}>
+                    className={`rounded-xl border px-4 py-2 text-sm border-primary font-medium transition cursor-pointer ${
+                      isActive ? "bg-primary text-white" : "hover:bg-input/40"
+                    }`}>
                     {item.title}
                   </button>
                 );

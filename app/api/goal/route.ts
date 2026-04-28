@@ -58,7 +58,6 @@ export const DELETE = asyncHandler(async (req: Request) => {
 export const PUT = asyncHandler(async (req: Request) => {
   const body = await req.json();
   const { userId, title, goalAmount, currentAmount, goalStatus, id } = body;
-  console.log(body);
   const goal = await prisma.goal.update({
     where: { id },
     data: {

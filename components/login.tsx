@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/hooks/authHooks";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import ButtonLoading from "./loders/ButtonLoading";
+import ButtonLoading from "./loaders/ButtonLoading";
 import AuthCarasole from "./auth-carasole";
 
 type LoginFormData = z.infer<typeof userLoginValidationSchema>;

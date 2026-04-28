@@ -3,7 +3,6 @@ import GoalCard from "./_components/goal-card";
 import {
   calenderIcon,
   pieChartIcon,
-  plusIcon,
   trendingUpIcon,
   trendingDownIcon,
   walletIcon,
@@ -11,10 +10,15 @@ import {
 import Link from "next/link";
 import { transactionAmount } from "./_actions/transactionAmount";
 import TopTransactionsCard from "../transactions/_components/top-transactions";
+import AiSuggestionCard from "./_components/ai_suggestion";
+import { Suspense } from "react";
+import AiSuggestionCardSkeleton from "@/components/loaders/AiCardSkalitonLoader";
+import { BotMessageSquare, ComputerIcon, Goal } from "lucide-react";
+import aiIcon from "@/sources/icons/ai.png";
+import Image from "next/image";
 
 const page = async () => {
   const { expense, income, total, balance } = await transactionAmount();
-
   const cardData = [
     {
       title: "Total Expense",
@@ -42,7 +46,7 @@ const page = async () => {
     {
       id: "0",
       link: "",
-      icon: plusIcon,
+      icon: Goal,
       title: "Goal",
       description: "Create a new saving goal",
     },
@@ -108,6 +112,12 @@ const page = async () => {
           </Card>
         ))}
       </div>
+
+      {/* AI SUGGESTION CARD */}
+      <Suspense fallback={<AiSuggestionCardSkeleton />}>
+        <AiSuggestionCard />
+      </Suspense>
+
       {/* GOAL CARD */}
       <div className="flex md:flex-row flex-col w-full gap-5 items-start">
         <div className="md:max-w-[75%] w-full">
@@ -118,7 +128,7 @@ const page = async () => {
         </div>
       </div>
     </>
-  )
+  );
 };
 
 export default page;
