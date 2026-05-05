@@ -7,13 +7,12 @@ import targetIcon from "@/sources/icons/target.png";
 import incomeIcon from "@/sources/icons/income.png";
 import { goalStatusCount } from "../_actions/goal-status";
 import { useEffect, useState } from "react";
-import ButtonLoading from "@/components/loaders/ButtonLoading";
+import { EGoalStatus, IGoalDashboard } from "@/constants/goalTypes";
+import ButtonLoading from "@/components/loders/ButtonLoading";
 
 const GoalCards = () => {
   const [goalDash, setGoalDash] = useState({
-    COMPLETED: 0,
-    INACTIVE: 0,
-    ACTIVE: 0,
+    state: "ALL" | "COMPLETED" | "INACTIVE" | "ACTIVE",
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +21,6 @@ const GoalCards = () => {
     goalStatusCount()
       .then((res) => {
         setIsLoading(true);
-        console.log(res);
         setGoalDash(res);
         setIsLoading(false);
       })
@@ -31,6 +29,8 @@ const GoalCards = () => {
         setIsLoading(false);
       });
   }, []);
+
+  console.log(goalDash);
 
   return (
     <div className="flex md:flex-nowrap flex-wrap items-center md:justify-between justify-center gap-5">

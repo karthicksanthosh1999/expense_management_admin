@@ -21,6 +21,7 @@ import {
   Headset,
   Layers2,
   LayoutDashboard,
+  PiggyBank,
   Settings,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -55,6 +56,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             isActive: pathName === "/goal",
           },
           {
+            title: "Budgets",
+            url: "/budget",
+            icon: PiggyBank,
+            isActive: pathName === "/budget",
+          },
+          {
             title: "Settings",
             url: "/settings",
             icon: Settings,
@@ -84,10 +91,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 {item.items.map(({ icon: Icon, title, url, isActive }) => (
                   <SidebarMenuItem key={title} className="p-2 ">
                     <SidebarMenuButton
-                      className={`flex items-center gap-2 py-2 px-2 text-lg font-normal transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] rounded-md ${isActive
-                        ? "bg-[#0B1020] text-white"
-                        : "text-gray-400 hover:text-textColor hover:bg-[#1D1A27] hover:translate-x-0.75"
-                        }`}
+                      className={`flex items-center gap-2 py-2 px-2 text-lg font-normal transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] rounded-md ${
+                        isActive
+                          ? "bg-[#0B1020] text-white"
+                          : "text-gray-400 hover:text-textColor hover:bg-[#1D1A27] hover:translate-x-0.75"
+                      }`}
                       isActive={isActive}
                       render={<Link href={url} />}>
                       {Icon && <Icon size={18} />}
@@ -96,7 +104,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   </SidebarMenuItem>
                 ))}
               </SidebarMenu>
-
             </SidebarGroupContent>
           </SidebarGroup>
         ))}

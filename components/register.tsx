@@ -16,7 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import ButtonLoading from "./loaders/ButtonLoading";
+import ButtonLoading from "./loders/ButtonLoading";
 import { useState } from "react";
 import AuthCarasole from "./auth-carasole";
 

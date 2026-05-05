@@ -5,7 +5,7 @@ import { topFiveTransaction } from "../_actions/top_transaction";
 import { useEffect, useState } from "react";
 import { ITransaction } from "@/constants/transactionsTypes";
 import { CategoryIcon } from "@/lib/icon-center";
-import DataLoader from "@/components/loaders/DataLoader";
+import DataLoader from "@/components/loders/DataLoader";
 
 const TopTransactionsCard = () => {
   const [isLoading, setIsLoading] = useState(false);

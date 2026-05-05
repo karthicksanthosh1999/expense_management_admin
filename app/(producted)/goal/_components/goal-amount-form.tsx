@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,21 +15,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useCreateGoalAmountHook } from "../_hooks/goal-hook";
-import {
-  goalAmountValidationSchema,
-  TGoalAmountValidationSchema,
-} from "@/validation_schema/goal-validation";
-import { Separator } from "@/components/ui/separator";
+import { goalAmountValidationSchema, TGoalAmountValidationSchema } from "@/validation_schema/goal-validation";
 
 interface IPtops {
   open: boolean;
   setOpen: (open: boolean) => void;
-  goalId: string;
+  goalId: string
 }
 
 export function GoalAmountForm({ open, setOpen, goalId }: IPtops) {
   const { user } = useAuth();
-  const { mutate } = useCreateGoalAmountHook();
+  const { mutate } = useCreateGoalAmountHook()
   const {
     formState: { errors },
     reset,
@@ -43,56 +39,49 @@ export function GoalAmountForm({ open, setOpen, goalId }: IPtops) {
     },
   });
   useEffect(() => {
-    if (user?.id && goalId) {
+    if (user?.id) {
       reset({
         userId: user.id,
-        goalId,
+        goalId
       });
     }
-  }, [user, goalId, reset]);
+  }, [user, reset]);
 
   const handleGoal = (data: TGoalAmountValidationSchema) => {
+    console.log(data)
     mutate(data);
-    setOpen(false);
+    handleClose();
   };
 
   const handleClose = () => {
     setOpen(false);
-    reset({
-      amount: "",
-      userId: user?.id,
-      goalId,
-    });
+    reset();
   };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-sm bg-card border border-highlight">
-        <DialogHeader>
-          <DialogTitle>Add Amount</DialogTitle>
-        </DialogHeader>
-        <form onSubmit={handleSubmit(handleGoal)}>
-          <Separator />
+      <form onSubmit={handleSubmit(handleGoal)}>
+        <DialogContent className="sm:max-w-sm bg-card">
+          <DialogHeader>
+            <DialogTitle>Add Amount</DialogTitle>
+          </DialogHeader>
           <FieldGroup>
             <Field>
               <Label htmlFor="amount">Amount</Label>
-              <input type="hidden" {...register("userId")} />
-              <input type="hidden" {...register("goalId")} />
               <Input
                 id="amount"
-                type="number"
-                step="0.01"
-                {...register("amount", { valueAsNumber: true })}
+                type="text"
+                {...register("amount")}
                 placeholder="0.00"
+                className="h-10 text-xl font-normal"
               />
-              <FieldContent>
-                {errors?.amount?.message && errors?.amount.message}
-              </FieldContent>
+              <FieldContent>{errors?.amount?.message && errors?.amount.message}</FieldContent>
             </Field>
           </FieldGroup>
           <div className="flex items-center justify-center gap-5">
             <Button
               variant="outline"
-              type="reset"
+              type="button"
               className={"text-textColor text-sm font-normal p-5"}
               onClick={handleClose}>
               Cancel
@@ -104,8 +93,8 @@ export function GoalAmountForm({ open, setOpen, goalId }: IPtops) {
               Add Amount
             </Button>
           </div>
-        </form>
-      </DialogContent>
-    </Dialog>
+        </DialogContent>
+      </form>
+    </Dialog >
   );
 }

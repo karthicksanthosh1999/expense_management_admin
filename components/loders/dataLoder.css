@@ -1,0 +1,23 @@
+@keyframes rgb-move {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 200% 50%;
+    }
+}
+
+.animate-rgb {
+    background: linear-gradient(90deg,
+            #ff0000,
+            #ff7a00,
+            #ffd600,
+            #00ff87,
+            #00cfff,
+            #7a00ff,
+            #ff00c8,
+            #ff0000);
+    background-size: 200% 100%;
+    animation: rgb-move 2s linear infinite;
+}

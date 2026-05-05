@@ -12,7 +12,7 @@ import { transactionAmount } from "./_actions/transactionAmount";
 import TopTransactionsCard from "../transactions/_components/top-transactions";
 import AiSuggestionCard from "./_components/ai_suggestion";
 import { Suspense } from "react";
-import AiSuggestionCardSkeleton from "@/components/loaders/AiCardSkalitonLoader";
+import AiSuggestionCardSkeleton from "@/components/loders/AiCardSkalitonLoader";
 import { BotMessageSquare, ComputerIcon, Goal } from "lucide-react";
 import aiIcon from "@/sources/icons/ai.png";
 import Image from "next/image";
@@ -114,9 +114,9 @@ const page = async () => {
       </div>
 
       {/* AI SUGGESTION CARD */}
-      <Suspense fallback={<AiSuggestionCardSkeleton />}>
+      {/* <Suspense fallback={<AiSuggestionCardSkeleton />}>
         <AiSuggestionCard />
-      </Suspense>
+      </Suspense> */}
 
       {/* GOAL CARD */}
       <div className="flex md:flex-row flex-col w-full gap-5 items-start">

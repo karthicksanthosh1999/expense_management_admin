@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import StatusChip from "@/components/status-chip";
 import { Separator } from "@/components/ui/separator";
-import DataLoader from "@/components/loaders/DataLoader";
+import DataLoader from "@/components/loders/DataLoader";
 import { ITransactionFilteredResponse } from "@/constants/transactionsTypes";
 import {
   Dialog,

@@ -1,22 +1,22 @@
 "use client";
-import GoalCard from "./goal-card";
-import { useFilterGoals } from "../_hooks/goal-hook";
+import BudgetCard from "./budget-card";
+import { useFilterGoals } from "../_hooks/budget-hook";
 import { useEffect, useState } from "react";
-import { IGoalFilterType } from "@/constants/goalTypes";
+import { IBudgetFilterType } from "@/constants/budgetTypes";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import DataLoader from "@/components/loders/DataLoader";
 
-const TransactionList = () => {
-  const defaultValues: IGoalFilterType = {
+const BudgetList = () => {
+  const defaultValues: IBudgetFilterType = {
     status: "ALL",
     limit: 10,
     page: 1,
   };
 
   const [appliedFilters, setAppliedFilters] =
-    useState<IGoalFilterType>(defaultValues);
-  const [filters, setFilters] = useState<IGoalFilterType>(defaultValues);
+    useState<IBudgetFilterType>(defaultValues);
+  const [filters, setFilters] = useState<IBudgetFilterType>(defaultValues);
 
   const { data: goalList, isLoading } = useFilterGoals(appliedFilters);
 
@@ -38,18 +38,18 @@ const TransactionList = () => {
     },
     {
       id: "1",
-      title: "ACTIVE",
-      value: "ACTIVE",
+      title: "ON_TRACK",
+      value: "ON_TRACK",
     },
     {
       id: "2",
-      title: "INACTIVE",
-      value: "INACTIVE",
+      title: "WARNING",
+      value: "WARNING",
     },
     {
       id: "3",
-      title: "COMPLETED",
-      value: "COMPLETED",
+      title: "EXCEEDED",
+      value: "EXCEEDED",
     },
   ];
 
@@ -94,11 +94,13 @@ const TransactionList = () => {
           goalList &&
           goalList.goals.map((item) => (
             <div key={item.id} className="w-full">
-              <GoalCard
-                goalAmount={item.goalAmount}
-                goalStatus={item.goalStatus}
-                title={item.title}
-                currentAmount={item.currentAmount}
+              <BudgetCard
+                amount={item.amount}
+                status={item.status}
+                notes={item.notes}
+                alert={item.alert}
+                category={item.category}
+                period={item.period}
                 userId={item.userId}
                 id={item?.id}
               />
@@ -110,4 +112,4 @@ const TransactionList = () => {
   );
 };
 
-export default TransactionList;
+export default BudgetList;

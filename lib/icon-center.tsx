@@ -26,6 +26,8 @@ import {
   Car,
   Utensils,
   Hamburger,
+  ChartNoAxesCombined,
+  CircleStar,
 } from "lucide-react";
 
 export const categoryConfig = {
@@ -59,6 +61,14 @@ export const categoryConfig = {
   },
   rent: {
     icon: Home,
+    bg: "bg-linear-to-r from-red-500 to-orange-500",
+  },
+  sip: {
+    icon: ChartNoAxesCombined,
+    bg: "bg-linear-to-r from-red-500 to-orange-500",
+  },
+  gold: {
+    icon: CircleStar,
     bg: "bg-linear-to-r from-red-500 to-orange-500",
   },
 };

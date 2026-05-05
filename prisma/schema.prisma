@@ -19,6 +19,7 @@ model User {
   goalsHistory GoalHistory[]
   tokens       Token[]
   transactions Transaction[]
+  budgets      Budgets[]
 }
 
 model Token {
@@ -77,9 +78,30 @@ model GoalHistory {
   @@index([goalId])
 }
 
+model Budgets {
+  id       String       @id @default(uuid())
+  userId   String
+  category String
+  amount   Decimal      @db.Decimal(10, 2)
+  period   String
+  status   BudgetStatus @default(ON_TRACK)
+  alert    String
+  notes    String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
 enum TransactionType {
   INCOME
   EXPENSE
+}
+
+enum BudgetStatus {
+  ON_TRACK
+  WARNING
+  EXCEEDED
 }
 
 enum GoalStatus {
