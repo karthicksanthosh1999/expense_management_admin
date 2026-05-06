@@ -83,7 +83,7 @@ model Budgets {
   userId   String
   category String
   amount   Decimal      @db.Decimal(10, 2)
-  period   String
+  period   Period       @default(MONTHLY)
   status   BudgetStatus @default(ON_TRACK)
   alert    String
   notes    String?
@@ -96,6 +96,12 @@ model Budgets {
 enum TransactionType {
   INCOME
   EXPENSE
+}
+
+enum Period {
+  WEEKLY
+  MONTHLY
+  YEARLY
 }
 
 enum BudgetStatus {

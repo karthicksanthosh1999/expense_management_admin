@@ -1,3 +1,5 @@
+"use client";
+
 import SecondHeader from "@/components/second-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -7,10 +9,13 @@ import {
   walletIcon,
 } from "@/lib/icon-center";
 import { BadgeCheck, Plus, TriangleAlert } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import BudgetList from "./_components/budget-list";
+import BudgetModel from "./_components/budget-model";
 
 const page = () => {
+  const [addBudgetModelOpen, setAddBudgetModelOpen] = useState(false);
+
   const cardData = [
     {
       title: "Total Expense",
@@ -40,7 +45,8 @@ const page = () => {
         <Button
           className={
             "font-normal text-base py-5 px-5 bg-primary text-white hover:bg-primary"
-          }>
+          }
+          onClick={() => setAddBudgetModelOpen(true)}>
           <Plus size={50} />
           New Budget
         </Button>
@@ -65,6 +71,12 @@ const page = () => {
       </div>
 
       <BudgetList />
+
+      <BudgetModel
+        mode="CREATE"
+        open={addBudgetModelOpen}
+        setOpen={setAddBudgetModelOpen}
+      />
     </>
   );
 };
