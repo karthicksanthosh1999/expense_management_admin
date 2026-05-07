@@ -1,4 +1,3 @@
-import { Card } from "@/components/ui/card";
 import GoalCard from "./_components/goal-card";
 import {
   calenderIcon,
@@ -16,32 +15,11 @@ import AiSuggestionCardSkeleton from "@/components/loders/AiCardSkalitonLoader";
 import { BotMessageSquare, ComputerIcon, Goal } from "lucide-react";
 import aiIcon from "@/sources/icons/ai.png";
 import Image from "next/image";
+import { Card } from "@/components/ui/card";
+import AmountCard from "./_components/amount-card";
+import { AmountChart } from "./_components/amount-chart";
 
 const page = async () => {
-  const { expense, income, total, balance } = await transactionAmount();
-  const cardData = [
-    {
-      title: "Total Expense",
-      amount: expense,
-      icon: trendingDownIcon,
-    },
-    {
-      title: "Total Income",
-      amount: income,
-      icon: trendingUpIcon,
-    },
-    {
-      title: "Total Amount",
-      amount: total,
-      icon: walletIcon,
-    },
-    {
-      title: "Balance",
-      amount: balance,
-      icon: walletIcon,
-    },
-  ];
-
   const quickAction = [
     {
       id: "0",
@@ -72,27 +50,9 @@ const page = async () => {
       description: "Detailed insights",
     },
   ];
-
   return (
     <>
-      <h1 className="text-fontColor text-xl font-semibold">Transactions</h1>
-      <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 place-items-center justify-center">
-        {cardData.map(({ amount, icon: Icon, title }, idx) => (
-          <Card
-            className="max-w-sm w-full p-5 shadow-lg hover:shadow-blue-500"
-            key={idx}>
-            <div>
-              <div className="w-fit">
-                <Icon category="home" />
-              </div>
-              <div className="mt-5">
-                <p className="text-gray-400">{title}</p>
-                <h1 className="text-4xl font-semibold">₹{amount.toString()}</h1>
-              </div>
-            </div>
-          </Card>
-        ))}
-      </div>
+      <AmountCard />
       {/* QUICK ACTION CARD */}
       <h1 className="text-fontColor text-xl font-semibold">Quick Action</h1>
       <div className="grid grid-cols-4 gap-5">
@@ -112,12 +72,12 @@ const page = async () => {
           </Card>
         ))}
       </div>
-
       {/* AI SUGGESTION CARD */}
-      {/* <Suspense fallback={<AiSuggestionCardSkeleton />}> */}
-      {/* <AiSuggestionCard /> */}
-      {/* </Suspense> */}
-
+      {/* <Suspense fallback={<AiSuggestionCardSkeleton />}>
+        <AiSuggestionCard />
+      </Suspense> */}
+      {/* AMOUNT CHART */}
+      <AmountChart />
       {/* GOAL CARD */}
       <div className="flex md:flex-row flex-col w-full gap-5 items-start">
         <div className="md:max-w-[75%] w-full">
