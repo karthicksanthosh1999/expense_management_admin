@@ -21,12 +21,12 @@ import {
   Headset,
   Layers2,
   LayoutDashboard,
-  PiggyBank,
   Settings,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { NavUser } from "./app-navuser";
 import { useAuth } from "@/context/hooks/authHooks";
+import { Card, CardContent } from "./ui/card";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathName = usePathname();
@@ -56,12 +56,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             isActive: pathName === "/goal",
           },
           {
-            title: "Budgets",
-            url: "/budget",
-            icon: PiggyBank,
-            isActive: pathName === "/budget",
-          },
-          {
             title: "Settings",
             url: "/settings",
             icon: Settings,
@@ -83,6 +77,24 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <VersionSwitcher />
       </SidebarHeader>
       <SidebarContent className="bg-card">
+        <Card className="m-2">
+          <CardContent>
+            <div>
+              <div className="flex justify-between">
+                <h3 className="text-gray-400 text-lg font-normal">
+                  Total balance
+                </h3>
+                <span className="relative flex size-3">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
+                  <span className="relative inline-flex size-3 rounded-full bg-highlight"></span>
+                </span>
+              </div>
+              <h1 className="text-highlight font-semibold text-base">
+                ₹10,0000
+              </h1>
+            </div>
+          </CardContent>
+        </Card>
         {data.navMain.map((item) => (
           <SidebarGroup key={item.title}>
             <SidebarGroupLabel>{item.title}</SidebarGroupLabel>

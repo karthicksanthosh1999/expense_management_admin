@@ -114,9 +114,9 @@ const page = async () => {
       </div>
 
       {/* AI SUGGESTION CARD */}
-      {/* <Suspense fallback={<AiSuggestionCardSkeleton />}>
-        <AiSuggestionCard />
-      </Suspense> */}
+      {/* <Suspense fallback={<AiSuggestionCardSkeleton />}> */}
+      {/* <AiSuggestionCard /> */}
+      {/* </Suspense> */}
 
       {/* GOAL CARD */}
       <div className="flex md:flex-row flex-col w-full gap-5 items-start">
