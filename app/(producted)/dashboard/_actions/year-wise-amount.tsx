@@ -4,7 +4,7 @@
 import { getUserFromToken } from "@/lib/getUser";
 import { prisma } from "@/lib/prisma";
 
-export async function getMonthlyTransactions() {
+export async function getYearWiseTransactions() {
   const user = await getUserFromToken();
 
   try {
