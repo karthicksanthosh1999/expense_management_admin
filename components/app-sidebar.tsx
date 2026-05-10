@@ -27,10 +27,45 @@ import { usePathname } from "next/navigation";
 import { NavUser } from "./app-navuser";
 import { useAuth } from "@/context/hooks/authHooks";
 import { Card, CardContent } from "./ui/card";
+import { getDefaultDates } from "@/lib/getCurrentMonth";
+import { formatted } from "@/lib/amount-converter";
+
+// ✅ Types
+type Filters = {
+  startDate: Date | undefined;
+  endDate: Date | undefined;
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathName = usePathname();
   const { user } = useAuth();
+  const { startDate: defaultStart, endDate: defaultEnd } = getDefaultDates();
+
+  const [filters, setFilters] = React.useState<Filters>({
+    startDate: defaultStart,
+    endDate: defaultEnd,
+  });
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [amountData, setAmountData] = React.useState<{ balance: number }>({
+    balance: 0,
+  });
+
+  // ✅ Fetch function
+  const fetchData = async (customFilters: Filters = filters) => {
+    try {
+      setLoading(true);
+      // const res = await transactionAmount(customFilters);
+      setAmountData("");
+    } catch (err) {
+      console.error("Fetch error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchData();
+  }, []);
   const data = {
     navMain: [
       {
@@ -90,7 +125,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </span>
               </div>
               <h1 className="text-highlight font-semibold text-base">
-                ₹10,0000
+                {formatted(amountData?.balance ?? 0)}
               </h1>
             </div>
           </CardContent>

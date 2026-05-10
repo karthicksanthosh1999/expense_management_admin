@@ -27,3 +27,16 @@ export const transactionFilterValidationSchema = z.object({
 export type TTransactionFilterValidationSchemaType = z.infer<
   typeof transactionFilterValidationSchema
 >;
+
+export const recurringTransactionValidationSchema = z.object({
+  id: z.uuid().optional(),
+  userId: z.uuid({ message: "UserId is required" }),
+  amount: z.string({ message: "Amount is required" }),
+  message: z.string({ message: "Description is required" }),
+  category: z.string({ message: "Category type is required" }),
+  frequency: z.enum(["DAILY", "WEEKLY", "MONTHLY", "YEARLY"]),
+  nextRunDate: z.string().transform((val) => new Date(val)),
+});
+export type recurringTransactionValidationSchemaType = z.infer<
+  typeof recurringTransactionValidationSchema
+>;

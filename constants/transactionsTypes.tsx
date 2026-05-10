@@ -43,3 +43,19 @@ export interface ITransactionsResponseType {
     email: string;
   };
 }
+
+export interface ITopTransactionType {
+  amount: number;
+  category: string;
+}
+
+export interface IOverallAmountType {
+  expense: number;
+  income: number;
+  balance: number;
+}
+
+export interface IOverallAmountInputType {
+  startDate: Date | undefined;
+  endDate: Date | undefined;
+}

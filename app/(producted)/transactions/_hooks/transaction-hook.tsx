@@ -1,8 +1,10 @@
 import {
+  IOverallAmountType,
+  IOverallAmountInputType,
+  ITopTransactionType,
   ITransaction,
   ITransactionFilteredResponse,
   ITransactionFilterType,
-  ITransactionsResponseType,
 } from "@/constants/transactionsTypes";
 import api from "@/lib/api";
 import { IApiResponse } from "@/lib/constants";
@@ -12,12 +14,29 @@ import { AxiosError } from "axios";
 import toast from "react-hot-toast";
 
 // FILTER TRANSACTION HOOK
-
 export const useFilterTransaction = (filterData: ITransactionFilterType) => {
   return useQuery({
     queryKey: ["transactions", filterData],
     queryFn: () => filterTransactionApi(filterData),
     enabled: !!filterData,
+  });
+};
+
+// TOP TRANSACTION HOOK
+export const useTopTransactionHook = () => {
+  return useQuery({
+    queryKey: ["top-transaction"],
+    queryFn: topTransactionApi,
+  });
+};
+
+// OVERALL TRANSACTION DETAILS
+export const useOverAllTransactionDetailsHook = (
+  dates: IOverallAmountInputType,
+) => {
+  return useQuery({
+    queryKey: ["transactions-amount", dates],
+    queryFn: () => overallAmountDetails(dates),
   });
 };
 
@@ -99,5 +118,21 @@ const updateTransactionAPI = async (
   transactionData: TTransactionValidationSchemaType,
 ): Promise<IApiResponse<ITransaction>> => {
   const { data } = await api.put("/api/transaction", transactionData);
+  return data;
+};
+
+// TOP-TRANSACTION API
+const topTransactionApi = async (): Promise<
+  IApiResponse<ITopTransactionType[]>
+> => {
+  const { data } = await api.get("/api/transaction/top-transaction");
+  return data;
+};
+
+// OVERALL AMOUNT DETAILS
+const overallAmountDetails = async (
+  dates: IOverallAmountInputType,
+): Promise<IApiResponse<IOverallAmountType>> => {
+  const { data } = await api.post("/api/transaction/top-transaction", dates);
   return data;
 };

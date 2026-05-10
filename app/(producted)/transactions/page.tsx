@@ -23,14 +23,14 @@ const page = () => {
       <SecondHeader currentPage="Transaction">
         <div className="space-x-3">
           <Button
-            className={"text-sm text-textColor p-5"}
-            onClick={() => handleTransactionFormOpen("INCOME")}>
-            Add Income
-          </Button>
-          <Button
-            className={"text-sm text-textColor p-5"}
+            className={"text-sm text-white p-5"}
             onClick={() => handleTransactionFormOpen("EXPENSE")}>
             Add Expense
+          </Button>
+          <Button
+            className={"text-sm text-white p-5"}
+            onClick={() => handleTransactionFormOpen("INCOME")}>
+            Add Income
           </Button>
         </div>
       </SecondHeader>

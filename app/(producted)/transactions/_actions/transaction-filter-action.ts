@@ -13,17 +13,17 @@ export const transactionFilter = async ({
   try {
     const where: any = {};
 
-    // ✅ Type filter (Income / Expense)
+    // Type filter (Income / Expense)
     if (type && type !== "ALL") {
       where.type = type;
     }
 
-    // ✅ Category filter
+    // Category filter
     if (category && category !== "all") {
       where.category = category;
     }
 
-    // ✅ Date range filter
+    // Date range filter
     if (startDate || endDate) {
       where.createdAt = {};
 
@@ -36,7 +36,7 @@ export const transactionFilter = async ({
       }
     }
 
-    // ✅ Pagination
+    // Pagination
     const skip = (page - 1) * limit;
 
     const [transactions, total] = await Promise.all([

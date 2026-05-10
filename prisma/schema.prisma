@@ -7,19 +7,20 @@ datasource db {
 }
 
 model User {
-  id           String        @id @default(uuid())
-  name         String
-  mobile       String        @unique
-  email        String        @unique
-  password     String
-  profileImage String?
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  goals        Goal[]
-  goalsHistory GoalHistory[]
-  tokens       Token[]
-  transactions Transaction[]
-  budgets      Budgets[]
+  id                    String                 @id @default(uuid())
+  name                  String
+  mobile                String                 @unique
+  email                 String                 @unique
+  password              String
+  profileImage          String?
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  goals                 Goal[]
+  goalsHistory          GoalHistory[]
+  tokens                Token[]
+  transactions          Transaction[]
+  budgets               Budgets[]
+  recurringTransactions RecurringTransaction[]
 }
 
 model Token {
@@ -44,9 +45,43 @@ model Transaction {
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
   category        String
-  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  recurringId String?
+  recurring   RecurringTransaction? @relation(fields: [recurringId], references: [id])
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+}
+
+model RecurringTransaction {
+  id              String          @id @default(uuid())
+  userId          String
+  transactionType TransactionType @default(EXPENSE)
+  amount          Decimal         @db.Decimal(10, 2)
+  message         String
+  category        String
+
+  frequency   Frequency
+  startDate   DateTime
+  endDate     DateTime?
+  nextRunDate DateTime
+
+  isActive Boolean @default(true)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  transactions Transaction[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Frequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
 }
 
 model Goal {
