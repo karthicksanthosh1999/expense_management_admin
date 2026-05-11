@@ -61,11 +61,10 @@ model RecurringTransaction {
   amount          Decimal         @db.Decimal(10, 2)
   message         String
   category        String
-
-  frequency   Frequency
-  startDate   DateTime
-  endDate     DateTime?
-  nextRunDate DateTime
+  frequency       Frequency
+  startDate       DateTime
+  endDate         DateTime?
+  nextRunDate     DateTime
 
   isActive Boolean @default(true)
 

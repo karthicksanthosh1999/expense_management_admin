@@ -29,6 +29,8 @@ import { useAuth } from "@/context/hooks/authHooks";
 import { Card, CardContent } from "./ui/card";
 import { getDefaultDates } from "@/lib/getCurrentMonth";
 import { formatted } from "@/lib/amount-converter";
+import { useOverAllTransactionDetailsHook } from "@/app/(producted)/transactions/_hooks/transaction-hook";
+import ButtonLoading from "./loaders/ButtonLoading";
 
 // ✅ Types
 type Filters = {
@@ -39,33 +41,13 @@ type Filters = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathName = usePathname();
   const { user } = useAuth();
+
   const { startDate: defaultStart, endDate: defaultEnd } = getDefaultDates();
 
-  const [filters, setFilters] = React.useState<Filters>({
+  const { data: amountDetails, isLoading } = useOverAllTransactionDetailsHook({
     startDate: defaultStart,
     endDate: defaultEnd,
   });
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const [amountData, setAmountData] = React.useState<{ balance: number }>({
-    balance: 0,
-  });
-
-  // ✅ Fetch function
-  const fetchData = async (customFilters: Filters = filters) => {
-    try {
-      setLoading(true);
-      // const res = await transactionAmount(customFilters);
-      setAmountData("");
-    } catch (err) {
-      console.error("Fetch error:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    fetchData();
-  }, []);
   const data = {
     navMain: [
       {
@@ -124,9 +106,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <span className="relative inline-flex size-3 rounded-full bg-highlight"></span>
                 </span>
               </div>
-              <h1 className="text-highlight font-semibold text-base">
-                {formatted(amountData?.balance ?? 0)}
-              </h1>
+              {isLoading ? (
+                <div className="py-2 float-start">
+                  <ButtonLoading />
+                </div>
+              ) : (
+                <h1 className="text-highlight font-semibold text-base">
+                  {formatted(amountDetails?.data?.balance ?? 0)}
+                </h1>
+              )}
             </div>
           </CardContent>
         </Card>

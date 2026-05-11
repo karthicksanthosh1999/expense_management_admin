@@ -10,9 +10,17 @@ export const POST = asyncHandler(async (req: Request) => {
   if (!validatedData) {
     throw new AppError("Fill the all transactions inputs", 400);
   }
-  const { amount, category, message, userId, frequency, nextRunDate } =
-    validatedData;
-  const transaction = await prisma.transaction.create({
+  const {
+    amount,
+    category,
+    message,
+    userId,
+    frequency,
+    nextRunDate,
+    startDate,
+  } = validatedData;
+  const convertedDate = new Date(startDate);
+  const transaction = await prisma.recurringTransaction.create({
     data: {
       userId,
       amount,
@@ -20,6 +28,7 @@ export const POST = asyncHandler(async (req: Request) => {
       message,
       frequency,
       nextRunDate,
+      startDate: convertedDate,
     },
   });
 
@@ -27,6 +36,16 @@ export const POST = asyncHandler(async (req: Request) => {
     message: "Transaction Created Successfully",
     status: true,
     statusCode: 201,
+    data: transaction,
+  });
+});
+
+export const GET = asyncHandler(async (req: Request) => {
+  const transaction = await prisma.recurringTransaction.findMany();
+  return NextResponse.json({
+    message: "Transaction Get Successfully",
+    status: true,
+    statusCode: 200,
     data: transaction,
   });
 });

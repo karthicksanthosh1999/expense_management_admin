@@ -35,6 +35,8 @@ export const recurringTransactionValidationSchema = z.object({
   message: z.string({ message: "Description is required" }),
   category: z.string({ message: "Category type is required" }),
   frequency: z.enum(["DAILY", "WEEKLY", "MONTHLY", "YEARLY"]),
+  startDate: z.string({ message: "startDate is req" }),
+
   nextRunDate: z.string().transform((val) => new Date(val)),
 });
 export type recurringTransactionValidationSchemaType = z.infer<
