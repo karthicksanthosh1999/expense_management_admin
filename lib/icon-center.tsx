@@ -220,21 +220,21 @@ export const pieChartIcon = ({ size = 23 }: IconProps) => {
 };
 export const trendingUpIcon = ({ size = 23 }: IconProps) => {
   return (
-    <div className="bg-linear-to-r from-indigo-400 to-cyan-400 p-2 rounded-lg">
+    <div className="bg-linear-to-r from-green-500 to-green-400 p-2 rounded-lg">
       <TrendingUp size={size} className="text-white" />
     </div>
   );
 };
 export const trendingDownIcon = ({ size = 23 }: IconProps) => {
   return (
-    <div className="bg-linear-to-r from-indigo-400 to-cyan-400 p-2 rounded-lg">
+    <div className="bg-linear-to-r from-red-400 to-red-400 p-2 rounded-lg">
       <TrendingDown size={size} className="text-white" />
     </div>
   );
 };
 export const walletIcon = ({ size = 23 }: IconProps) => {
   return (
-    <div className="bg-linear-to-r from-indigo-400 to-cyan-400 p-2 rounded-lg">
+    <div className="bg-linear-to-r from-violet-600 to-violet-400 p-2 rounded-lg">
       <Wallet size={size} className="text-white" />
     </div>
   );
