@@ -8,6 +8,8 @@ export interface ITransactionFilterType {
   category?: string;
   startDate?: Date;
   endDate?: Date;
+  total?: number;
+  totalPages?: number;
 }
 
 export interface ITransactionFilteredResponse {

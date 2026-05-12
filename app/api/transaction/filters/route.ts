@@ -16,10 +16,10 @@ export const POST = asyncHandler(async (req: Request) => {
 
   const skip = (page - 1) * limit;
 
-  // ✅  Default week range
+  // Default week range
   let { start, end } = getCurrentWeekRange();
 
-  // ✅ Override if user passes dates
+  // Override if user passes dates
   if (
     startDateParam &&
     endDateParam &&
@@ -38,7 +38,7 @@ export const POST = asyncHandler(async (req: Request) => {
     }
   }
 
-  // 🔥 Dynamic filter
+  // Dynamic filter
   const where: any = {
     transactionDate: {
       gte: start,

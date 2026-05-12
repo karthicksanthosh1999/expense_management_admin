@@ -28,7 +28,7 @@ const GoalCard = ({
   const [addAmountModelOpen, setAddAmountModelOpen] = useState(false);
   const [historyModelOpen, setHistoryModelOpen] = useState(false);
   const [updateGoalModelOpen, setUpdateGoalModelOpen] = useState(false);
-  const [selectedGoal, setSelectedGoal] = useState<IGoalType | null>(null)
+  const [selectedGoal, setSelectedGoal] = useState<IGoalType | null>(null);
 
   // HOOKS
   const { mutate } = useDeleteGoalHook();
@@ -40,19 +40,25 @@ const GoalCard = ({
     }
   };
 
-
   const percentage =
     goalAmount && Number(goalAmount) > 0
       ? Math.min(
-        100,
-        Math.round((Number(currentAmount || 0) / Number(goalAmount)) * 100),
-      )
+          100,
+          Math.round((Number(currentAmount || 0) / Number(goalAmount)) * 100),
+        )
       : 0;
 
   const handleGoal = () => {
-    setUpdateGoalModelOpen(true)
-    setSelectedGoal({ goalAmount, goalStatus, title, userId, currentAmount, id })
-  }
+    setUpdateGoalModelOpen(true);
+    setSelectedGoal({
+      goalAmount,
+      goalStatus,
+      title,
+      userId,
+      currentAmount,
+      id,
+    });
+  };
 
   return (
     <>
@@ -64,7 +70,9 @@ const GoalCard = ({
                 <Image src={moneyIcon} alt="icons" width={50} height={50} />
                 <div className="">
                   <h1 className="text-xl font-semibold">{title}</h1>
-                  <Badge variant="default" className="uppercase text-white text-xs p-3 mt-2">
+                  <Badge
+                    variant="default"
+                    className="uppercase text-white text-xs p-3 mt-2">
                     {goalStatus}
                   </Badge>
                 </div>
@@ -117,7 +125,9 @@ const GoalCard = ({
                 onClick={() => setAddAmountModelOpen(true)}>
                 Add Amount
               </Button>
-              <Button variant={"outline"} className="p-4 text-sm"
+              <Button
+                variant={"outline"}
+                className="p-4 text-sm"
                 onClick={() => setHistoryModelOpen(true)}>
                 Details
               </Button>
@@ -131,8 +141,7 @@ const GoalCard = ({
           deleteDataId={id!}
           handleDelete={confirmDelete}
         />
-        {
-          id &&
+        {id && (
           <>
             <GoalAmountForm
               open={addAmountModelOpen}
@@ -145,16 +154,15 @@ const GoalCard = ({
               goalId={id}
             />
           </>
-        }
-        {
-          selectedGoal &&
+        )}
+        {selectedGoal && (
           <GoalModel
             mode="UPDATE"
             open={updateGoalModelOpen}
             setOpen={setUpdateGoalModelOpen}
             existingGoalData={selectedGoal}
           />
-        }
+        )}
       </Card>
     </>
   );

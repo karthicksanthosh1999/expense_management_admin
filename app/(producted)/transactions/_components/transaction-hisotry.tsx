@@ -7,7 +7,10 @@ import {
 import StatusChip from "@/components/status-chip";
 import { Separator } from "@/components/ui/separator";
 import DataLoader from "@/components/loders/DataLoader";
-import { ITransactionFilteredResponse } from "@/constants/transactionsTypes";
+import {
+  ITransactionFilteredResponse,
+  ITransactionFilterType,
+} from "@/constants/transactionsTypes";
 import {
   Dialog,
   DialogContent,
@@ -15,20 +18,38 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CategoryIcon } from "@/lib/icon-center";
 import { dateFormat } from "@/lib/dateFormat ";
 import { TransactionForm } from "./form-transaction";
 import { TTransactionValidationSchemaType } from "@/validation_schema/transaction-validatino";
-import { Pagination } from "@/components/ui/pagination";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import CardPagination from "@/components/card-pagination";
 
 type props = {
   loading: boolean;
   transactionData: ITransactionFilteredResponse;
+  appliedFilters: ITransactionFilterType;
+  setAppliedFilters: React.Dispatch<
+    React.SetStateAction<ITransactionFilterType>
+  >;
 };
 
-const TransactionHistory = ({ transactionData, loading }: props) => {
+const TransactionHistory = ({
+  transactionData,
+  loading,
+  setAppliedFilters,
+  appliedFilters,
+}: props) => {
   const [transactionModelOpen, setTransactionModelOpen] = useState(false);
   const [transactionUpdateModelOpen, setTransactionUpdateModelOpen] =
     useState(false);
@@ -125,7 +146,22 @@ const TransactionHistory = ({ transactionData, loading }: props) => {
             </section>
           </CardContent>
           <CardFooter className="bg-card">
-            <Pagination />
+            <CardPagination
+              totalData={appliedFilters.total ?? 0}
+              currentPage={appliedFilters.page ?? 0}
+              totalPages={appliedFilters.totalPages ?? 0}
+              rowsPerPage={appliedFilters.limit ?? 0}
+              onPageChange={(page) =>
+                setAppliedFilters((prev) => ({ ...prev, page }))
+              }
+              onRowsChange={(limit) =>
+                setAppliedFilters((prev) => ({
+                  ...prev,
+                  limit,
+                  page: 1,
+                }))
+              }
+            />
           </CardFooter>
         </Card>
 
