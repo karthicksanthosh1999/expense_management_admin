@@ -69,7 +69,7 @@ export const categoryConfig = {
   },
   gold: {
     icon: CircleStar,
-    bg: "bg-linear-to-r from-red-500 to-orange-500",
+    bg: "bg-gradient-to-r from-yellow-300 to-yellow-400",
   },
 };
 

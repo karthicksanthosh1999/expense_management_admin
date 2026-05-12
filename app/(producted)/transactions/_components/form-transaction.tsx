@@ -33,6 +33,7 @@ import {
 } from "../_hooks/transaction-hook";
 import { categoryConfig } from "@/lib/icon-center";
 import { formatDateForInput } from "@/lib/dateFormat ";
+import CategoryHorizontalPicker from "@/components/category-pickert";
 
 interface TProps extends IModelPropsType {
   formType: TTransactionType;
@@ -136,29 +137,7 @@ export function TransactionForm({
             </Field>
             <Field>
               <Label htmlFor="category">Category</Label>
-              <Controller
-                control={control}
-                name="category"
-                render={({ field }) => (
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <SelectTrigger className="w-full h-12">
-                      <SelectValue
-                        className={"capitalize"}
-                        placeholder="Select category"
-                      />
-                    </SelectTrigger>
-                    <SelectContent className={"p-1 "}>
-                      {Object.keys(categoryConfig).map((item) => (
-                        <SelectItem
-                          value={item}
-                          className={"capitalize cursor-pointer"}>
-                          {item}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
-              />
+              <CategoryHorizontalPicker control={control} />
             </Field>
             <Field>
               <Label htmlFor="date">Date</Label>

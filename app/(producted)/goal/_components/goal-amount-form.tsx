@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,17 +15,20 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useCreateGoalAmountHook } from "../_hooks/goal-hook";
-import { goalAmountValidationSchema, TGoalAmountValidationSchema } from "@/validation_schema/goal-validation";
+import {
+  goalAmountValidationSchema,
+  TGoalAmountValidationSchema,
+} from "@/validation_schema/goal-validation";
 
 interface IPtops {
   open: boolean;
   setOpen: (open: boolean) => void;
-  goalId: string
+  goalId: string;
 }
 
 export function GoalAmountForm({ open, setOpen, goalId }: IPtops) {
   const { user } = useAuth();
-  const { mutate } = useCreateGoalAmountHook()
+  const { mutate } = useCreateGoalAmountHook();
   const {
     formState: { errors },
     reset,
@@ -42,13 +45,12 @@ export function GoalAmountForm({ open, setOpen, goalId }: IPtops) {
     if (user?.id) {
       reset({
         userId: user.id,
-        goalId
+        goalId,
       });
     }
   }, [user, reset]);
 
   const handleGoal = (data: TGoalAmountValidationSchema) => {
-    console.log(data)
     mutate(data);
     handleClose();
   };
@@ -75,7 +77,9 @@ export function GoalAmountForm({ open, setOpen, goalId }: IPtops) {
                 placeholder="0.00"
                 className="h-10 text-xl font-normal"
               />
-              <FieldContent>{errors?.amount?.message && errors?.amount.message}</FieldContent>
+              <FieldContent>
+                {errors?.amount?.message && errors?.amount.message}
+              </FieldContent>
             </Field>
           </FieldGroup>
           <div className="flex items-center justify-center gap-5">
@@ -95,6 +99,6 @@ export function GoalAmountForm({ open, setOpen, goalId }: IPtops) {
           </div>
         </DialogContent>
       </form>
-    </Dialog >
+    </Dialog>
   );
 }

@@ -1,4 +1,9 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
 import StatusChip from "@/components/status-chip";
 import { Separator } from "@/components/ui/separator";
 import DataLoader from "@/components/loders/DataLoader";
@@ -16,6 +21,7 @@ import { CategoryIcon } from "@/lib/icon-center";
 import { dateFormat } from "@/lib/dateFormat ";
 import { TransactionForm } from "./form-transaction";
 import { TTransactionValidationSchemaType } from "@/validation_schema/transaction-validatino";
+import { Pagination } from "@/components/ui/pagination";
 
 type props = {
   loading: boolean;
@@ -50,26 +56,26 @@ const TransactionHistory = ({ transactionData, loading }: props) => {
       <Dialog
         open={transactionModelOpen}
         onOpenChange={setTransactionModelOpen}>
-        <Card className="w-full h-250">
-          <CardContent>
-            <CardHeader className="flex items-center justify-between">
-              <h1 className="text-2xl font-semibold text-color">
-                Transaction History
-              </h1>
-              <p className="text-gray-400">
-                Showing {transactionData?.pagination?.page}-
-                {transactionData?.pagination?.totalPages} of{" "}
-                {transactionData?.pagination?.total} transactions
-              </p>
-            </CardHeader>
-            <div className="relative">
-              <Separator className={"my-5"} />
-              {loading && (
-                <div className="absolute top-1 left-0 w-full">
-                  <DataLoader />
-                </div>
-              )}
-            </div>
+        <Card className="w-full">
+          <CardHeader className="flex items-center justify-between">
+            <h1 className="text-2xl font-semibold text-color">
+              Transaction History
+            </h1>
+            <p className="text-gray-400">
+              Showing {transactionData?.pagination?.page}-
+              {transactionData?.pagination?.totalPages} of{" "}
+              {transactionData?.pagination?.total} transactions
+            </p>
+          </CardHeader>
+          <div className="relative">
+            <Separator className={"my-5"} />
+            {loading && (
+              <div className="absolute top-1 left-0 w-full">
+                <DataLoader />
+              </div>
+            )}
+          </div>
+          <CardContent className="h-250 overflow-auto">
             <section className="space-y-3">
               {transactionData?.transactions &&
               transactionData?.transactions.length === 0 ? (
@@ -118,6 +124,9 @@ const TransactionHistory = ({ transactionData, loading }: props) => {
               )}
             </section>
           </CardContent>
+          <CardFooter className="bg-card">
+            <Pagination />
+          </CardFooter>
         </Card>
 
         {/* TRANSACTION MODEL */}

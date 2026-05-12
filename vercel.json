@@ -1,8 +1,8 @@
 {
   "crons": [
     {
-      "path": "/api/cron/recurring",
-      "schedule": "0 0 * * *"
+      "path": "/app/api/transaction/recurrition",
+      "schedule": "* * * * *"
     }
   ]
 }
