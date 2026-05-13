@@ -83,13 +83,12 @@ const AmountCard = () => {
   return (
     <div>
       <h1 className="text-fontColor text-xl font-semibold">Filter</h1>
-
       <Card className="mt-3">
         <CardContent>
           <form onSubmit={handleSubmit}>
             <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
-              <div className="space-y-2">
-                <Label>Start Date</Label>
+              <div className="space-y-2 flex gap-5 items-center">
+                <Label>Start Date:</Label>
                 <DatePicker
                   value={filters.startDate}
                   onChange={(date) => updateFilter("startDate", date)}
@@ -97,8 +96,8 @@ const AmountCard = () => {
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label>End Date</Label>
+              <div className="space-y-2 flex gap-5 items-center">
+                <Label>End Date:</Label>
                 <DatePicker
                   value={filters.endDate}
                   onChange={(date) => updateFilter("endDate", date)}
@@ -106,18 +105,18 @@ const AmountCard = () => {
                 />
               </div>
 
-              <div className="flex items-end gap-2">
+              <div className="flex items-end gap-2 h-full">
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className="px-8 text-white">
+                  className="px-8 text-white text-sm h-full font-normal">
                   Apply
                 </Button>
 
                 <Button
                   type="button"
                   onClick={handleReset}
-                  className="bg-orange-400 hover:bg-orange-500 text-white px-8">
+                  className="bg-orange-400 hover:bg-orange-500 text-sm text-white px-8 h-full font-normal">
                   Reset
                 </Button>
               </div>

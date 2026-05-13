@@ -6,18 +6,17 @@ import "./index.css";
 
 const GoalCard = async () => {
   const goalList = await topGoalList();
-
   return (
     <Card className="w-full">
-      <CardContent className="h-63.75 overflow-auto">
+      <CardContent>
         <div className="flex items-center  justify-between">
           <h1 className="text-textColor text-lg font-semibold">My Goal</h1>
           <Link href={"/goal"} className="hover:text-text-Color">
             <h1 className="text-gray-400 text-sm">See All</h1>
           </Link>
         </div>
-        <Separator />
-        <div className="space-y-3 mt-5 ">
+        <Separator className='my-2' />
+        <div className="space-y-3 mt-5 h-100 overflow-auto">
           {goalList.map(
             ({ currentAmount, goalAmount, id, title, percentage }) => (
               <div

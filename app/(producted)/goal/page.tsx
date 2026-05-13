@@ -14,7 +14,7 @@ const page = () => {
       <SecondHeader currentPage="Goal">
         <Button
           className={
-            "font-normal text-base py-5 px-5 bg-primary text-white hover:bg-primary"
+            "font-semibold text-sm py-5 px-5 bg-primary text-white hover:bg-primary"
           }
           onClick={() => setAddGoalModelOpen(true)}>
           New Goal

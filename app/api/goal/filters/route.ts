@@ -12,7 +12,7 @@ export const POST = asyncHandler(async (req: Request) => {
 
   const skip = (page - 1) * limit;
 
-  // 🔥 Dynamic filter
+  // Dynamic filter
   const where: any = {};
 
   const normalizedType = goalStatus?.toUpperCase();

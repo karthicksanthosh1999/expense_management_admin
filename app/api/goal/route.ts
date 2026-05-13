@@ -31,6 +31,17 @@ export const POST = asyncHandler(async (req: Request) => {
   });
 });
 
+/**
+ * @swagger
+ * /api/hello:
+ *   get:
+ *    tag:
+ *      - Goals
+ *     description: Returns the hello world
+ *     responses:
+ *       200:
+ *         description: Hello World!
+ */
 export const GET = asyncHandler(async () => {
   const transactions = await prisma.goal.findMany();
   return NextResponse.json({

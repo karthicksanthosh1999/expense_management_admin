@@ -20,7 +20,7 @@ const page = async () => {
       </Suspense> */}
 
       {/* AMOUNT CHART */}
-      <AmountChart />
+      {/* <AmountChart /> */}
 
       {/* GOAL CARD */}
       <div className="flex md:flex-row flex-col w-full gap-5 items-start">

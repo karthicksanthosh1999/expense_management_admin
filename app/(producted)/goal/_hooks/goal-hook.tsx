@@ -3,6 +3,7 @@ import {
   IGoalFilteredResponse,
   IGoalFilterType,
   IGoalType,
+  IStatusTypes,
 } from "@/constants/goalTypes";
 import api from "@/lib/api";
 import { IApiResponse } from "@/lib/constants";
@@ -194,6 +195,14 @@ export const useDeleteGoalHook = () => {
   });
 };
 
+// GET GOAL DASHBOARD AMOUNT HOOK
+export const useGetDashboardAmountHook = () => {
+  return useQuery({
+    queryKey: ["goals"],
+    queryFn:getGoalDashboardAmountApi,
+  });
+};
+
 // CREATE GOALS API
 const createGoalAPI = async (
   goalData: TGoalValidationSchema,
@@ -259,5 +268,11 @@ const deleteGoalHistoryApi = async (id: {
   const { data } = await api.delete(`/api/goal/amount?goalId=${id}`, {
     data: id,
   });
+  return data;
+};
+
+// GET GOAL DASHBOARD AMOUNT DETAILS
+const getGoalDashboardAmountApi = async (): Promise<IApiResponse<IStatusTypes>> => {
+  const { data } = await api.get(`/api/goal/dashboard`);
   return data;
 };

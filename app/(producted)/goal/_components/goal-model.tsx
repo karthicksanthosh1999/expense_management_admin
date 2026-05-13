@@ -104,14 +104,14 @@ const GoalModel = ({ open, setOpen, mode, existingGoalData }: TProps) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className={"bg-card max-w-2xl"}>
+      <DialogContent className={"bg-card max-w-2xl border border-highlight"}>
         <form onSubmit={handleSubmit(handleGoal)}>
           <DialogHeader>
-            <DialogTitle className={"text-2xl"}>
+            <DialogTitle className={"text-lg"}>
               {mode === "UPDATE" ? "Update" : "Create"} Goal
             </DialogTitle>
           </DialogHeader>
-          <Separator className="" />
+          <Separator className="my-2" />
           <FieldGroup className="my-3">
             <Field>
               <Label htmlFor="title">Title</Label>
@@ -175,16 +175,16 @@ const GoalModel = ({ open, setOpen, mode, existingGoalData }: TProps) => {
           </FieldGroup>
           <div className="flex items-center justify-center gap-5">
             <Button
-              variant="outline"
+              variant="destructive"
               type="button"
-              className={"text-textColor text-base font-normal p-5"}
+              className={"text-textColor text-sm font-normal p-5"}
               onClick={handleClose}>
               Cancel
             </Button>
             <Button
               variant="default"
               type="submit"
-              className={"text-textColor text-base font-normal p-5"}>
+              className={"text-white text-sm font-normal p-5"}>
               {mode === "UPDATE" ? "Update" : "Add"} Goal
             </Button>
           </div>

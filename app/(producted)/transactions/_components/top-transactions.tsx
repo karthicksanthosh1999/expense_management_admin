@@ -8,7 +8,7 @@ import { useTopTransactionHook } from "../_hooks/transaction-hook";
 const TopTransactionsCard = () => {
   const { data: topTransactions, isLoading } = useTopTransactionHook();
   return (
-    <Card className="w-full h-125 ">
+    <Card className="w-full h-125">
       <CardContent>
         <CardHeader className="font-textColor font-semibold text-2xl">
           Top Spending
@@ -21,7 +21,7 @@ const TopTransactionsCard = () => {
             </div>
           )}
         </div>
-        <section className="mt-3 p-5 space-y-5">
+        <section className="mt-3 md:p-5 p-0 space-y-5">
           {topTransactions && topTransactions.data.length === 0 ? (
             <div className="flex items-center justify-center min-h-[50vh]">
               No Transaction Found
@@ -45,7 +45,7 @@ const TopTransactionsCard = () => {
                   </div>
                 </div>
                 <div>
-                  <h1 className="font-textColor font-semibold text-xl">
+                  <h1 className="font-textColor font-semibold md:text-xl text-base">
                     ${item.amount.toString()}
                   </h1>
                 </div>
