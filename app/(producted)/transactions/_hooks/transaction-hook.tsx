@@ -67,6 +67,30 @@ export const useCreateTransactionHook = () => {
     },
   });
 };
+
+// DELETE TRANSACTION HOOK
+export const useDeleteTransactionHook = () => {
+  const queryClient = useQueryClient();
+  return useMutation<IApiResponse<ITransaction>, AxiosError, { id: string }>({
+    mutationFn: deleteTransactionAPI,
+    onMutate: () => {
+      toast.loading("Transaction Deleting...", {
+        id: "create-transaction",
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      toast.success("Transaction Delete Successfully", {
+        id: "create-transaction",
+      });
+    },
+    onError: () => {
+      toast.error("Something Went Wrong", {
+        id: "create-transaction",
+      });
+    },
+  });
+};
 // UPDATE TRANSACTION HOOK
 export const useUpdateTransactionHook = () => {
   const queryClient = useQueryClient();
@@ -100,6 +124,14 @@ const createTransactionAPI = async (
   transactionData: TTransactionValidationSchemaType,
 ): Promise<IApiResponse<ITransaction>> => {
   const { data } = await api.post("/api/transaction", transactionData);
+  return data;
+};
+
+// DELETE TRANSACTION API
+const deleteTransactionAPI = async (
+  id: string,
+): Promise<IApiResponse<ITransaction>> => {
+  const { data } = await api.delete("/api/transaction", id);
   return data;
 };
 

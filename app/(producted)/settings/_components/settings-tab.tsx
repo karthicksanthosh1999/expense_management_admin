@@ -11,13 +11,14 @@ import { SunMoon, User2 } from "lucide-react";
 import ThemeCard from "./theme-card";
 import ProfileCard from "./profile-card";
 import SecurityCard from "./security-card";
+import ReportCard from "./report-card";
 
 const tabs = [
   {
     name: "Profile",
     value: "profile",
     icon: User2,
-    content:
+    content: (
       <>
         <div className="flex items-start gap-5 w-full">
           <div className="w-full">
@@ -28,6 +29,7 @@ const tabs = [
           </div>
         </div>
       </>
+    ),
   },
   {
     name: "Appearance",
@@ -40,13 +42,20 @@ const tabs = [
     ),
   },
   {
-    name: "Account",
-    value: "account",
+    name: "Report",
+    value: "report",
     icon: SunMoon,
     content: (
       <>
+        <ReportCard />
       </>
     ),
+  },
+  {
+    name: "Account",
+    value: "account",
+    icon: SunMoon,
+    content: <></>,
   },
 ];
 
