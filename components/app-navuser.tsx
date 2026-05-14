@@ -29,15 +29,19 @@ export function NavUser({
     email: string
   }
 }) {
+  console.log(user?.name)
+ if(!user){
+  console.log("Loading")
+ }
   return (
     <SidebarMenu>
       <SidebarMenuItem>
         <SidebarSeparator />
         <SidebarMenuButton className="cursor-pointer h-full text-center mt-1 text-base font-normal">
           <Avatar>
-            <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+            <AvatarFallback>{user?.name?.charAt(0) ?? "N/A"}</AvatarFallback>
           </Avatar>
-          {user.name}
+          {user?.name ?? "N/A"}
           <AlertDialog>
             <AlertDialogTrigger>
               <Button variant="outline">

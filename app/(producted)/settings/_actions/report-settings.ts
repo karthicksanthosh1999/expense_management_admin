@@ -1,5 +1,7 @@
 import { prisma } from "@/lib/prisma";
 
+interface IRportSettings
+
 export const reportSettings = async () => {
   try {
     const settings = await prisma.settings.upsert({

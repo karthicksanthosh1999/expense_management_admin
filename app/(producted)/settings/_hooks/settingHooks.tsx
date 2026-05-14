@@ -13,7 +13,6 @@ export const useGetSettingsHooks = (id:string) => {
         queryFn: () => getSettingsApi(id),
     })
 }
-
 // UPDATE SETTING HOOK
 export const useUpdateSettingHook = () => {
   const queryClient = useQueryClient();

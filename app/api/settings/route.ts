@@ -16,7 +16,7 @@ export const GET = asyncHandler(async (req: Request) => {
   }
 
   return NextResponse.json({
-    message: "Settings retrieved successfully",
+    message: "Settings Retrieved Successfully",
     data: settings,
     statusCode: 200,
   });
@@ -44,6 +44,25 @@ export const PUT = asyncHandler(async (req: Request) => {
 
   return NextResponse.json({
     message: "Settings saved successfully",
+    data: settings,
+    statusCode: 200,
+  });
+});
+
+  // DELETE SETTINGS
+export const DELETE = asyncHandler(async (req: Request) => {
+  const { searchParams } = new URL(req.url);
+  const userId = searchParams.get("userId") as string;
+
+  const settings = await prisma.settings.delete({
+    where: { userId },
+  });
+  if (!settings) {
+    throw new AppError("Settings not found", 404);
+  }
+
+  return NextResponse.json({
+    message: "Settings Delete Successfully",
     data: settings,
     statusCode: 200,
   });

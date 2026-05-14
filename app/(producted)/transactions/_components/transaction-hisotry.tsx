@@ -17,7 +17,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { X } from "lucide-react";
+import { Eye, X, Trash, Pencil } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CategoryIcon } from "@/lib/icon-center";
@@ -25,6 +25,16 @@ import { dateFormat } from "@/lib/dateFormat ";
 import { TransactionForm } from "./form-transaction";
 import { TTransactionValidationSchemaType } from "@/validation_schema/transaction-validatino";
 import CardPagination from "@/components/card-pagination";
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuGroup,
+  ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu"
+import { useDeleteTransactionHook } from "../_hooks/transaction-hook";
+import DeleteModel from "@/components/delete-model";
 
 type props = {
   loading: boolean;
@@ -41,14 +51,18 @@ const TransactionHistory = ({
   setAppliedFilters,
   appliedFilters,
 }: props) => {
-  const [transactionModelOpen, setTransactionModelOpen] = useState(false);
-  const [transactionUpdateModelOpen, setTransactionUpdateModelOpen] =
-    useState(false);
-  const [selectedTransaction, setSelectedTransaction] =
-    useState<TTransactionValidationSchemaType | null>(null);
 
-  const [transaction, setTransaction] =
-    useState<TTransactionValidationSchemaType | null>(null);
+  const [transactionModelOpen, setTransactionModelOpen] = useState(false);
+  const [transactionUpdateModelOpen, setTransactionUpdateModelOpen] =useState(false);
+  const [transactionDeleteModelOpen, setTransactionDeleteModelOpen] =useState(false);
+  const [selectedTransaction, setSelectedTransaction] = useState<TTransactionValidationSchemaType | null>(null);
+  const [selectedTransactionId, setSelectedTransactionId] = useState<string | null>(null);
+  const [transaction, setTransaction] = useState<TTransactionValidationSchemaType | null>(null);
+
+  const { mutate } = useDeleteTransactionHook()
+
+
+
   const handleModelClose = () => {
     setTransactionModelOpen(false);
     setTransaction(null);
@@ -62,6 +76,19 @@ const TransactionHistory = ({
     setTransactionUpdateModelOpen(true);
     setSelectedTransaction(data);
   };
+
+  const handleDelete = (id: string) => {
+      setSelectedTransactionId(id)
+      setTransactionDeleteModelOpen(true)
+  }
+
+  const handleConfirmDelete = () => {
+    if(selectedTransactionId){
+      mutate(selectedTransactionId)
+      setSelectedTransactionId(null)
+       setTransactionUpdateModelOpen(false);
+    }
+  }
 
   return (
     <>
@@ -96,6 +123,8 @@ const TransactionHistory = ({
                 </div>
               ) : (
                 transactionData?.transactions.map((item, idx) => (
+                  <ContextMenu>
+                  <ContextMenuTrigger>
                   <div
                     onClick={() => {
                       handleModelOpen();
@@ -132,6 +161,32 @@ const TransactionHistory = ({
                       </span>
                     </div>
                   </div>
+                  </ContextMenuTrigger>
+                    <ContextMenuContent className={'space-y-1 w-50'}>
+                    <ContextMenuItem>
+                      <X/>
+                      Back
+                    </ContextMenuItem>
+                    <Separator/>
+                  <ContextMenuGroup>
+                    <ContextMenuLabel>Events</ContextMenuLabel>
+                    <ContextMenuItem             onClick={() => {
+                      handleModelOpen();
+                      setTransaction(item);
+                    }}>
+                      <Eye/>
+                      View
+                    </ContextMenuItem>
+                    <ContextMenuItem onClick={()=>handleGoalEdit(item!)}>
+                      <Pencil/>
+                      Update</ContextMenuItem>
+                    <ContextMenuItem onClick={()=>handleDelete(item?.id!)}>
+                      <Trash/>
+                      Delete
+                    </ContextMenuItem>
+                  </ContextMenuGroup>
+                  </ContextMenuContent>
+                  </ContextMenu>
                 ))
               )}
             </section>
@@ -157,7 +212,7 @@ const TransactionHistory = ({
         </Card>
 
         {/* TRANSACTION MODEL */}
-        <DialogContent className="sm:max-w-lg bg-card">
+        <DialogContent className="sm:max-w-lg bg-card border border-highlight">
           <DialogHeader>
             <div className="flex justify-between items-center">
               <DialogTitle className="text-2xl font-semibold">
@@ -165,7 +220,7 @@ const TransactionHistory = ({
               </DialogTitle>
               <X onClick={handleModelClose} className="cursor-pointer" />
             </div>
-            <Separator />
+            <Separator className={'my-2'} />
           </DialogHeader>
           <section>
             <div className="flex items-center justify-center flex-col gap-2">
@@ -205,7 +260,7 @@ const TransactionHistory = ({
               <Button variant={"outline"} className="h-10 w-30">
                 Download Recept
               </Button>
-              <Button variant={"destructive"} className="h-10 w-30">
+              <Button variant={"destructive"} className="h-10 w-30" onClick={()=>handleDelete(transaction?.id!)}>
                 Delete
               </Button>
               <Button
@@ -227,6 +282,16 @@ const TransactionHistory = ({
           existingTransactionData={selectedTransaction}
         />
       )}
+        {selectedTransactionId && (
+          <DeleteModel 
+          deleteDataId={selectedTransactionId}
+          name="Transaction"
+          open={transactionDeleteModelOpen}
+          setOpen={setTransactionDeleteModelOpen}
+          handleDelete={handleConfirmDelete}
+          />
+        )
+      }
     </>
   );
 };

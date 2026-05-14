@@ -15,12 +15,23 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "react-hot-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Currency } from "@prisma/client";
+import { useGetSettingsHooks, useUpdateSettingHook } from "../_hooks/settingHooks";
+import { useAuth } from "@/context/hooks/authHooks";
+
+interface ICurrency {
+    label : string
+    value : Currency
+  }
+
 
 const ReportCard = () => {
-  const [currency, setCurrency] = useState("");
+  const [currency, setCurrency] = useState<Currency>("INR");
   const [weeklyReport, setWeeklyReport] = useState(false);
-  const currencyList = [
+  const { user } = useAuth()
+
+  const currencyList:ICurrency[] = [
     {
       label: "INR",
       value: "INR",
@@ -34,22 +45,39 @@ const ReportCard = () => {
       value: "USD",
     },
   ];
+  const { mutate } = useUpdateSettingHook();
+  const { data } = useGetSettingsHooks(user?.id);
 
-  const handleSettingsChange = (
-    type: "currency" | "report",
-    value: string | boolean,
-  ) => {
+useEffect(() => {
+  if (data?.data) {
+    setCurrency(data.data.currency as Currency);
+
+    setWeeklyReport(
+      data.data.enable_monthly_transaction_report as boolean
+    );
+  }
+}, [data]);
+const handleSettingsChange = async (
+  type: "currency" | "report",
+  value: Currency | boolean,
+) => {
+  try {
     if (type === "currency") {
-      setCurrency(value as string);
-      toast.success(`Currency changed to ${value}`);
-      console.log("Currency:", value, "Weekly Report:", weeklyReport);
+      const selectedCurrency = value as Currency;
+      setCurrency(selectedCurrency);
+      mutate({ currency:selectedCurrency, enable_monthly_transaction_report: weeklyReport, notes:"Sample", userId: user?.id });
     }
+
     if (type === "report") {
-      setWeeklyReport(value as boolean);
-      toast.success(value ? "Weekly report enabled" : "Weekly report disabled");
-      console.log("Currency:", currency, "Weekly Report:", value);
+      const reportEnabled = value as boolean;
+      setWeeklyReport(reportEnabled);
+      mutate({ currency, enable_monthly_transaction_report: reportEnabled, notes:"Sample", userId: user?.id });
     }
-  };
+  } catch (error) {
+    console.error(error);
+    toast.error("Failed to update settings");
+  }
+};
 
   return (
     <Card className="max-w-lg">
@@ -67,7 +95,7 @@ const ReportCard = () => {
               <Select
                 value={currency}
                 onValueChange={(value) =>
-                  handleSettingsChange("currency", value)
+                  handleSettingsChange("currency", value as Currency)
                 }>
                 <SelectTrigger className="cursor-pointer w-full max-w-48">
                   <SelectValue placeholder="Select a currency" />
