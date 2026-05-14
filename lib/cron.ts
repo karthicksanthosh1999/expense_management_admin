@@ -34,7 +34,7 @@ export function startRecurringTransactionCron() {
 
   global.recurringCronStarted = true;
 
-  cron.schedule("* * * * *", async () => {
+  cron.schedule("0 10 * * *", async () => {
     console.log("Running recurring transaction cron...");
 
     const today = new Date();

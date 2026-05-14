@@ -18,21 +18,12 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CategoryIcon } from "@/lib/icon-center";
 import { dateFormat } from "@/lib/dateFormat ";
 import { TransactionForm } from "./form-transaction";
 import { TTransactionValidationSchemaType } from "@/validation_schema/transaction-validatino";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import CardPagination from "@/components/card-pagination";
 
 type props = {
@@ -89,9 +80,9 @@ const TransactionHistory = ({
             </p>
           </CardHeader>
           <div className="relative">
-            <Separator className={"my-5"} />
+            <Separator className={""} />
             {loading && (
-              <div className="absolute top-1 left-0 w-full">
+              <div className="absolute top-0 left-0 w-full">
                 <DataLoader />
               </div>
             )}
