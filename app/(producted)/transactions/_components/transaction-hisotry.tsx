@@ -32,7 +32,7 @@ import {
   ContextMenuItem,
   ContextMenuLabel,
   ContextMenuTrigger,
-} from "@/components/ui/context-menu"
+} from "@/components/ui/context-menu";
 import { useDeleteTransactionHook } from "../_hooks/transaction-hook";
 import DeleteModel from "@/components/delete-model";
 
@@ -51,17 +51,20 @@ const TransactionHistory = ({
   setAppliedFilters,
   appliedFilters,
 }: props) => {
-
   const [transactionModelOpen, setTransactionModelOpen] = useState(false);
-  const [transactionUpdateModelOpen, setTransactionUpdateModelOpen] =useState(false);
-  const [transactionDeleteModelOpen, setTransactionDeleteModelOpen] =useState(false);
-  const [selectedTransaction, setSelectedTransaction] = useState<TTransactionValidationSchemaType | null>(null);
-  const [selectedTransactionId, setSelectedTransactionId] = useState<string | null>(null);
-  const [transaction, setTransaction] = useState<TTransactionValidationSchemaType | null>(null);
+  const [transactionUpdateModelOpen, setTransactionUpdateModelOpen] =
+    useState(false);
+  const [transactionDeleteModelOpen, setTransactionDeleteModelOpen] =
+    useState(false);
+  const [selectedTransaction, setSelectedTransaction] =
+    useState<TTransactionValidationSchemaType | null>(null);
+  const [selectedTransactionId, setSelectedTransactionId] = useState<
+    string | null
+  >(null);
+  const [transaction, setTransaction] =
+    useState<TTransactionValidationSchemaType | null>(null);
 
-  const { mutate } = useDeleteTransactionHook()
-
-
+  const { mutate } = useDeleteTransactionHook();
 
   const handleModelClose = () => {
     setTransactionModelOpen(false);
@@ -78,17 +81,17 @@ const TransactionHistory = ({
   };
 
   const handleDelete = (id: string) => {
-      setSelectedTransactionId(id)
-      setTransactionDeleteModelOpen(true)
-  }
+    setSelectedTransactionId(id);
+    setTransactionDeleteModelOpen(true);
+  };
 
   const handleConfirmDelete = () => {
-    if(selectedTransactionId){
-      mutate(selectedTransactionId)
-      setSelectedTransactionId(null)
-       setTransactionUpdateModelOpen(false);
+    if (selectedTransactionId) {
+      mutate(selectedTransactionId);
+      setSelectedTransactionId(null);
+      setTransactionUpdateModelOpen(false);
     }
-  }
+  };
 
   return (
     <>
@@ -124,68 +127,74 @@ const TransactionHistory = ({
               ) : (
                 transactionData?.transactions.map((item, idx) => (
                   <ContextMenu>
-                  <ContextMenuTrigger>
-                  <div
-                    onClick={() => {
-                      handleModelOpen();
-                      setTransaction(item);
-                    }}
-                    key={idx}
-                    className="flex items-center justify-between border border-blue-900 hover:border-primary p-3 cursor-pointer rounded-xl transaction ease-in-out duration-500 hover:translate-y-1">
-                    <div className="flex items-center gap-5">
-                      <div className="flex flex-col items-start">
-                        <div className="flex items-center gap-3">
-                          <CategoryIcon category={item?.category!} size={20} />
-                          <h1 className="text-color text-lg font-semibold tracking-wider w-fit">
-                            {item.message}
-                          </h1>
+                    <ContextMenuTrigger>
+                      <div
+                        onClick={() => {
+                          handleModelOpen();
+                          setTransaction(item);
+                        }}
+                        key={idx}
+                        className="flex items-center justify-between border border-blue-900 hover:border-primary p-3 cursor-pointer rounded-xl transaction ease-in-out duration-500 hover:translate-y-1">
+                        <div className="flex items-center gap-5">
+                          <div className="flex flex-col items-start">
+                            <div className="flex items-center gap-3">
+                              <CategoryIcon
+                                category={item?.category!}
+                                size={20}
+                              />
+                              <h1 className="text-color text-lg font-semibold tracking-wider w-fit">
+                                {item.message}
+                              </h1>
+                            </div>
+                            <p className="text-gray-300 tracking-wider font-semibold mt-2">
+                              {dateFormat(item?.transactionDate!) ?? "N/A"}
+                            </p>
+                          </div>
                         </div>
-                        <p className="text-gray-300 tracking-wider font-semibold mt-2">
-                          {dateFormat(item?.transactionDate!) ?? "N/A"}
-                        </p>
+                        <div>
+                          <h1
+                            className="text-lg font-semibold"
+                            style={{
+                              color:
+                                item.transactionType === "EXPENSE"
+                                  ? "#fb2c36"
+                                  : "oklch(72.3% 0.219 149.579)",
+                            }}>
+                            ${item.amount.toString()}
+                          </h1>
+                          <span className="text-color text-lg font-semibold">
+                            <StatusChip status={item.transactionType} />
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                    <div>
-                      <h1
-                        className="text-lg font-semibold"
-                        style={{
-                          color:
-                            item.transactionType === "EXPENSE"
-                              ? "#fb2c36"
-                              : "oklch(72.3% 0.219 149.579)",
-                        }}>
-                        ${item.amount.toString()}
-                      </h1>
-                      <span className="text-color text-lg font-semibold">
-                        <StatusChip status={item.transactionType} />
-                      </span>
-                    </div>
-                  </div>
-                  </ContextMenuTrigger>
-                    <ContextMenuContent className={'space-y-1 w-50'}>
-                    <ContextMenuItem>
-                      <X/>
-                      Back
-                    </ContextMenuItem>
-                    <Separator/>
-                  <ContextMenuGroup>
-                    <ContextMenuLabel>Events</ContextMenuLabel>
-                    <ContextMenuItem             onClick={() => {
-                      handleModelOpen();
-                      setTransaction(item);
-                    }}>
-                      <Eye/>
-                      View
-                    </ContextMenuItem>
-                    <ContextMenuItem onClick={()=>handleGoalEdit(item!)}>
-                      <Pencil/>
-                      Update</ContextMenuItem>
-                    <ContextMenuItem onClick={()=>handleDelete(item?.id!)}>
-                      <Trash/>
-                      Delete
-                    </ContextMenuItem>
-                  </ContextMenuGroup>
-                  </ContextMenuContent>
+                    </ContextMenuTrigger>
+                    <ContextMenuContent className={"space-y-1 w-50"}>
+                      <ContextMenuItem>
+                        <X />
+                        Close
+                      </ContextMenuItem>
+                      <Separator />
+                      <ContextMenuGroup>
+                        <ContextMenuLabel>Events</ContextMenuLabel>
+                        <ContextMenuItem
+                          onClick={() => {
+                            handleModelOpen();
+                            setTransaction(item);
+                          }}>
+                          <Eye />
+                          View
+                        </ContextMenuItem>
+                        <ContextMenuItem onClick={() => handleGoalEdit(item!)}>
+                          <Pencil />
+                          Update
+                        </ContextMenuItem>
+                        <ContextMenuItem
+                          onClick={() => handleDelete(item?.id!)}>
+                          <Trash />
+                          Delete
+                        </ContextMenuItem>
+                      </ContextMenuGroup>
+                    </ContextMenuContent>
                   </ContextMenu>
                 ))
               )}
@@ -220,7 +229,7 @@ const TransactionHistory = ({
               </DialogTitle>
               <X onClick={handleModelClose} className="cursor-pointer" />
             </div>
-            <Separator className={'my-2'} />
+            <Separator className={"my-2"} />
           </DialogHeader>
           <section>
             <div className="flex items-center justify-center flex-col gap-2">
@@ -260,7 +269,10 @@ const TransactionHistory = ({
               <Button variant={"outline"} className="h-10 w-30">
                 Download Recept
               </Button>
-              <Button variant={"destructive"} className="h-10 w-30" onClick={()=>handleDelete(transaction?.id!)}>
+              <Button
+                variant={"destructive"}
+                className="h-10 w-30"
+                onClick={() => handleDelete(transaction?.id!)}>
                 Delete
               </Button>
               <Button
@@ -282,16 +294,15 @@ const TransactionHistory = ({
           existingTransactionData={selectedTransaction}
         />
       )}
-        {selectedTransactionId && (
-          <DeleteModel 
+      {selectedTransactionId && (
+        <DeleteModel
           deleteDataId={selectedTransactionId}
           name="Transaction"
           open={transactionDeleteModelOpen}
           setOpen={setTransactionDeleteModelOpen}
           handleDelete={handleConfirmDelete}
-          />
-        )
-      }
+        />
+      )}
     </>
   );
 };

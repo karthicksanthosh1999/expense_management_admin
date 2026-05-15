@@ -39,6 +39,6 @@ export const recurringTransactionValidationSchema = z.object({
 
   nextRunDate: z.string().transform((val) => new Date(val)),
 });
-export type recurringTransactionValidationSchemaType = z.infer<
+export type TRecurringTransactionValidationSchemaType = z.infer<
   typeof recurringTransactionValidationSchema
 >;

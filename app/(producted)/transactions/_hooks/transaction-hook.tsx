@@ -91,6 +91,7 @@ export const useDeleteTransactionHook = () => {
     },
   });
 };
+
 // UPDATE TRANSACTION HOOK
 export const useUpdateTransactionHook = () => {
   const queryClient = useQueryClient();
@@ -131,7 +132,7 @@ const createTransactionAPI = async (
 const deleteTransactionAPI = async (
   id: string,
 ): Promise<IApiResponse<ITransaction>> => {
-  const { data } = await api.delete("/api/transaction", {data : {id}});
+  const { data } = await api.delete("/api/transaction", { data: { id } });
   return data;
 };
 
@@ -166,5 +167,11 @@ const overallAmountDetails = async (
   dates: IOverallAmountInputType,
 ): Promise<IApiResponse<IOverallAmountType>> => {
   const { data } = await api.post("/api/transaction/top-transaction", dates);
+  return data;
+};
+
+// RECURRING TRANSACTION API
+const createRecurringTransaction = (  transactionData: TTransactionValidationSchemaType,):Promise<IApiResponse<>> => {
+  const { data } = await api.post(`/api/transaction/recurrition`);
   return data;
 };

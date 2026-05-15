@@ -14,8 +14,8 @@ import { IModelPropsType } from "@/constants/CommonTypes";
 import { useAuth } from "@/context/hooks/authHooks";
 import { TTransactionType } from "@/lib/constants";
 import {
-  transactionValidationSchema,
-  TTransactionValidationSchemaType,
+  recurringTransactionValidationSchema,
+  TRecurringTransactionValidationSchemaType,
 } from "@/validation_schema/transaction-validatino";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
@@ -26,14 +26,15 @@ import {
 } from "../_hooks/transaction-hook";
 import { formatDateForInput } from "@/lib/dateFormat ";
 import CategoryHorizontalPicker from "@/components/category-pickert";
+import { IRecurringTransaction } from "@/constants/transactionsTypes";
 
 interface TProps extends IModelPropsType {
-  formType: TTransactionType;
+  formType: IRecurringTransaction;
   mode: "CREATE" | "UPDATE";
-  existingTransactionData?: TTransactionValidationSchemaType;
+  existingTransactionData?: TRecurringTransactionValidationSchemaType;
 }
 
-export function TransactionForm({
+export function RecurringTransactionForm({
   open,
   setOpen,
   formType,
@@ -45,7 +46,7 @@ export function TransactionForm({
   const { mutate: updateTransactionMutation } = useUpdateTransactionHook();
 
   const { reset, handleSubmit, register, control } = useForm({
-    resolver: zodResolver(transactionValidationSchema),
+    resolver: zodResolver(recurringTransactionValidationSchema),
     defaultValues: {
       userId: user?.id,
       transactionType: formType,
@@ -58,10 +59,9 @@ export function TransactionForm({
         amount: existingTransactionData?.amount,
         category: existingTransactionData?.category,
         message: existingTransactionData?.message,
-        transactionDate: formatDateForInput(
-          existingTransactionData?.transactionDate,
-        ),
-        transactionType: existingTransactionData?.transactionType,
+        startDate: formatDateForInput(existingTransactionData?.startDate),
+        nextRunDate: formatDateForInput(existingTransactionData?.nextRunDate),
+        frequency: existingTransactionData.frequency,
         id: existingTransactionData.id,
         userId: user?.id,
       });
@@ -78,7 +78,9 @@ export function TransactionForm({
     }
   }, [user, formType, reset]);
 
-  const handleTransaction = (data: TTransactionValidationSchemaType) => {
+  const handleTransaction = (
+    data: TRecurringTransactionValidationSchemaType,
+  ) => {
     if (mode === "CREATE") {
       mutate(data);
     } else {

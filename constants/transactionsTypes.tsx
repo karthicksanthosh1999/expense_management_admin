@@ -1,5 +1,6 @@
 import { Decimal } from "@prisma/client/runtime/client";
 import { TTransactionType } from "./CommonTypes";
+import { Frequency } from "@prisma/client";
 
 export interface ITransactionFilterType {
   page?: number;
@@ -29,6 +30,18 @@ export interface ITransaction {
   category: string;
   transactionDate: Date;
   transactionType: TTransactionType;
+}
+
+export interface IRecurringTransaction {
+  id: string;
+  amount: Decimal | String;
+  message: string;
+  category: string;
+  startDate: Date;
+  endDate?: Date;
+  nextRunDate: Date;
+  frequency: Frequency;
+  isActive?: Boolean;
 }
 
 export interface ITransactionsResponseType {

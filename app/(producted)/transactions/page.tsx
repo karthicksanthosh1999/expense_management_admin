@@ -32,6 +32,11 @@ const page = () => {
             onClick={() => handleTransactionFormOpen("INCOME")}>
             Add Income
           </Button>
+          <Button
+            className={"text-sm text-white p-5"}
+            onClick={() => handleTransactionFormOpen("EXPENSE")}>
+            Add Recurring
+          </Button>
         </div>
       </SecondHeader>
       <div className="flex md:flex-row flex-col items-start gap-5 w-full">
