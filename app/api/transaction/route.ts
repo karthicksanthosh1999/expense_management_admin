@@ -30,6 +30,31 @@ export const POST = asyncHandler(async (req: Request) => {
     })
 });
 
+/**
+ * @swagger
+ * /api/transaction:
+ *   get:
+ *     tags:
+ *       - Transactions
+ *     summary: Get All Transactions Data
+ *     description: Retrieve the list of transactions.
+ *     operationId: getTransactions
+ *     responses:
+ *       200:
+ *         description: Transactions fetched successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Transactions fetched successfully
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ */
 export const GET = asyncHandler(async () => {
     const transactions = await prisma.transaction.findMany();
     return NextResponse.json({

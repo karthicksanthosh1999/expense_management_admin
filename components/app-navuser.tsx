@@ -29,10 +29,7 @@ export function NavUser({
     email: string
   }
 }) {
-  console.log(user?.name)
- if(!user){
-  console.log("Loading")
- }
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>

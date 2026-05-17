@@ -33,14 +33,28 @@ export const POST = asyncHandler(async (req: Request) => {
 
 /**
  * @swagger
- * /api/hello:
+ * /api/goal:
  *   get:
- *    tag:
- *      - Goals
- *     description: Returns the hello world
+ *     tags:
+ *       - Goals
+ *     summary: Get goal data
+ *     description: Retrieve the list of goals.
+ *     operationId: getGoals
  *     responses:
  *       200:
- *         description: Hello World!
+ *         description: Goals fetched successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Goals fetched successfully
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
  */
 export const GET = asyncHandler(async () => {
   const transactions = await prisma.goal.findMany();

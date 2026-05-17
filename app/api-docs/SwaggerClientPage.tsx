@@ -2,7 +2,7 @@
 
 import SwaggerUI from 'swagger-ui-react';
 import 'swagger-ui-react/swagger-ui.css';
-import "./swaggerClientPage.css"
+import "./swagger-dark.css"
 
 type Props = {
   spec: Record<string, any>,

@@ -80,11 +80,11 @@ export default function TransactionFilters() {
           <div className="h-full flex flex-col justify-start items-start space-y-3">
             <Label>Transaction Type:</Label>
             <div className="flex flex-wrap gap-3">
-              {tabsList.map((item) => {
+              {tabsList.map((item, idx) => {
                 const isActive = filters.type === item.value;
                 return (
                   <button
-                    key={item.value}
+                    key={idx}
                     type="button"
                     onClick={() => updateFilter("type", item.value)}
                     className={`rounded-xl border px-4 py-2 text-sm border-primary font-medium transition cursor-pointer ${

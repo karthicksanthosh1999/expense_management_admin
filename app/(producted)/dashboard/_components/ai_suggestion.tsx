@@ -1,19 +1,14 @@
 'use client'
+
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { getMonthlyInsights } from '../_actions/monthly-Insights';
-import { generateAIInsights } from '@/lib/models/ai_insight_model';
 import { Separator } from '@/components/ui/separator';
 import { BotMessageSquare } from 'lucide-react';
 import { motion } from "framer-motion";
+import { useWeeklyAnalysisHook } from '../_hooks/ai-hook';
+import AiSuggestionCardSkeleton from '@/components/loaders/AiCardSkalitonLoader';
 
-const AiSuggestionCard = async () => {
-    const details = await getMonthlyInsights();
-    const aiInsights = await generateAIInsights(details);
-
-    let result = {
-        ...details,
-        aiInsights
-    }
+const AiSuggestionCard = () => {
+    const { data, isLoading } = useWeeklyAnalysisHook();
 
     return (
         <>
@@ -22,7 +17,6 @@ const AiSuggestionCard = async () => {
                     <CardHeader>
                         <div className="flex items-center gap-2">
                             <h1 className="text-fontColor text-xl font-semibold">AI Insights</h1>
-
                             <motion.div
                                 animate={{
                                     scale: [1, 1.1, 1],
@@ -39,10 +33,27 @@ const AiSuggestionCard = async () => {
                         </div>
                     </CardHeader>
                     <Separator className='my-2' />
-                    <div className="p-4 text-white rounded-xl">
-                        <pre className="text-sm whitespace-pre-wrap">
-                            {result.aiInsights}
-                        </pre>
+                <div className="p-4 text-white rounded-xl h-50 overflow-auto">
+                    {isLoading ? (
+                       <AiSuggestionCardSkeleton />
+                    ) : (
+                        <div className="space-y-3">
+                        {data?.data
+                            ?.split("\n")
+                            ?.filter((line) => line.trim() !== "")
+                            ?.map((line, index) => (
+                            <div key={index} className="flex items-start gap-2"                            >
+                                <span className="mt-1 text-green-400">
+                                •
+                                </span>
+
+                                <p className="text-sm leading-6">
+                                {line.replace(/\*/g, "")}
+                                </p>
+                            </div>
+                            ))}
+                        </div>
+                    )}
                     </div>
                 </CardContent>
             </Card>

@@ -5,6 +5,7 @@ import {
   ITransaction,
   ITransactionFilteredResponse,
   ITransactionFilterType,
+  ITransactionPieChartType,
 } from "@/constants/transactionsTypes";
 import api from "@/lib/api";
 import { IApiResponse } from "@/lib/constants";
@@ -19,6 +20,13 @@ export const useFilterTransaction = (filterData: ITransactionFilterType) => {
     queryKey: ["transactions", filterData],
     queryFn: () => filterTransactionApi(filterData),
     enabled: !!filterData,
+  });
+};
+
+export const useSpendingPieChartHook = () => {
+  return useQuery({
+    queryKey: ["pi-chart"],
+    queryFn: spendingPieChartApi,
   });
 };
 
@@ -170,8 +178,10 @@ const overallAmountDetails = async (
   return data;
 };
 
-// RECURRING TRANSACTION API
-const createRecurringTransaction = (  transactionData: TTransactionValidationSchemaType,):Promise<IApiResponse<>> => {
-  const { data } = await api.post(`/api/transaction/recurrition`);
+// SPENDING PIE-CHART TRANSACTIONS API
+const spendingPieChartApi = async (): Promise<
+  IApiResponse<ITransactionPieChartType[]>
+> => {
+  const { data } = await api.get(`/api/transaction/charts/spending-pie-chart`);
   return data;
 };

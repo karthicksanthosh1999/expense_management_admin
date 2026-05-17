@@ -42,6 +42,7 @@ export const exportPdf = (data: ITransaction[], user: IUser) => {
       0: { halign: "center" },
       1: { halign: "center" },
       2: { halign: "center" },
+      3: { halign: "center" },
     },
   });
 

@@ -15,9 +15,9 @@ const page = async () => {
       <AmountCard />
 
       {/* AI SUGGESTION CARD */}
-      {/* <Suspense fallback={<AiSuggestionCardSkeleton />}>
+      <Suspense fallback={<AiSuggestionCardSkeleton />}>
         <AiSuggestionCard />
-      </Suspense> */}
+      </Suspense>
 
       {/* AMOUNT CHART */}
       {/* <AmountChart /> */}

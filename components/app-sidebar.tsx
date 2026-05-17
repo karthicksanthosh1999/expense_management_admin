@@ -32,12 +32,6 @@ import { formatted } from "@/lib/amount-converter";
 import { useOverAllTransactionDetailsHook } from "@/app/(producted)/transactions/_hooks/transaction-hook";
 import ButtonLoading from "./loaders/ButtonLoading";
 
-// ✅ Types
-type Filters = {
-  startDate: Date | undefined;
-  endDate: Date | undefined;
-};
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathName = usePathname();
   const { user } = useAuth();
@@ -126,10 +120,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 {item.items.map(({ icon: Icon, title, url, isActive }) => (
                   <SidebarMenuItem key={title} className="p-2 ">
                     <SidebarMenuButton
-                      className={`flex items-center gap-2 py-2 px-2 text-lg font-normal transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] rounded-md ${
+                      className={`flex items-center gap-2 py-2 px-2 text-base font-normal transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] rounded-md ${
                         isActive
-                          ? "bg-[#0B1020] text-white"
-                          : "text-gray-400 hover:text-textColor hover:bg-[#1D1A27] hover:translate-x-0.75"
+                          ? "bg-highlight text-white hover:bg-highlight"
+                          : "text-gray-400 hover:text-white hover:bg-highlight hover:translate-x-0.75"
                       }`}
                       isActive={isActive}
                       render={<Link href={url} />}>

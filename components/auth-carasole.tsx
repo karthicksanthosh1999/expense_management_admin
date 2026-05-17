@@ -6,6 +6,11 @@ import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { EffectFade, Autoplay } from "swiper/modules";
+import slide1 from '@/sources/images/slide1.jpg'
+import slide2 from '@/sources/images/slide2.jpg'
+import slide3 from '@/sources/images/slide3.jpg'
+import slide4 from '@/sources/images/slide1.jpg'
+import Image from "next/image";
 
 export default function AuthCarasole() {
   return (
@@ -24,27 +29,31 @@ export default function AuthCarasole() {
         modules={[EffectFade, Autoplay]}
         className="h-full w-full">
         <SwiperSlide className="h-full w-full">
-          <img
+          <Image
             className="w-full h-full"
-            src="https://swiperjs.com/demos/images/abstract-1.jpg"
+            src={slide1}
+            alt="slid1"
           />
         </SwiperSlide>
         <SwiperSlide className="h-full w-full">
-          <img
+          <Image
             className="w-full h-full"
-            src="https://swiperjs.com/demos/images/abstract-2.jpg"
+            src={slide2}
+            alt="slid1"
           />
         </SwiperSlide>
         <SwiperSlide className="h-full w-full">
-          <img
+          <Image
             className="w-full h-full"
-            src="https://swiperjs.com/demos/images/abstract-3.jpg"
+            src={slide3}
+            alt="slid1"
           />
         </SwiperSlide>
         <SwiperSlide className="h-full w-full">
-          <img
+          <Image
             className="w-full h-full"
-            src="https://swiperjs.com/demos/images/abstract-4.jpg"
+            src={slide4}
+            alt="slid1"
           />
         </SwiperSlide>
       </Swiper>

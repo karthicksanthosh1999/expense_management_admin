@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import TopTransactionsCard from "./_components/top-transactions";
-import { TransactionChart } from "./_components/transaction-chart";
+import TransactionChart from "./_components/transaction-chart";
 import FilterTransactions from "./_components/filter-transaction";
 import SecondHeader from "@/components/second-header";
 import { Button } from "@/components/ui/button";
@@ -31,11 +31,6 @@ const page = () => {
             className={"text-sm text-white p-5"}
             onClick={() => handleTransactionFormOpen("INCOME")}>
             Add Income
-          </Button>
-          <Button
-            className={"text-sm text-white p-5"}
-            onClick={() => handleTransactionFormOpen("EXPENSE")}>
-            Add Recurring
           </Button>
         </div>
       </SecondHeader>

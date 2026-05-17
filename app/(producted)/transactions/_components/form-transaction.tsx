@@ -10,6 +10,13 @@ import {
 import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { IModelPropsType } from "@/constants/CommonTypes";
 import { useAuth } from "@/context/hooks/authHooks";
 import { TTransactionType } from "@/lib/constants";
@@ -44,7 +51,13 @@ export function TransactionForm({
   const { mutate } = useCreateTransactionHook();
   const { mutate: updateTransactionMutation } = useUpdateTransactionHook();
 
-  const { reset, handleSubmit, register, control } = useForm({
+  const {
+    formState: { errors },
+    reset,
+    handleSubmit,
+    register,
+    control,
+  } = useForm({
     resolver: zodResolver(transactionValidationSchema),
     defaultValues: {
       userId: user?.id,
