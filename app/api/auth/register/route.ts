@@ -3,7 +3,7 @@ import { AppError } from "@/lib/errors";
 import { prisma } from "@/lib/prisma";
 import { userValidationSchema } from "@/validation_schema/user-validation";
 import bcrypt from "bcrypt";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export const POST = asyncHandler(async (req: Request) => {
 
@@ -39,4 +39,44 @@ export const POST = asyncHandler(async (req: Request) => {
         message: "User created successfully",
         user,
     });
+});
+
+export const PUT = asyncHandler(async (req: NextRequest) => {
+  const body = await req.json();
+
+  const { email, mobile, name, password, id} = userValidationSchema.parse(body);
+
+  const existingUser = await prisma.user.findUnique({
+    where: {
+      id
+    },
+  });
+
+  if (!existingUser) {
+    throw new AppError("User does not exist", 400);
+  }
+
+  let hashedPassword = existingUser.password;
+
+  if (password) {
+    hashedPassword = await bcrypt.hash(password, 10);
+  }
+
+  const updatedUser = await prisma.user.update({
+    where: {
+      id: existingUser.id,
+    },
+    data: {
+      email,
+      mobile,
+      name,
+      password: hashedPassword,
+    },
+  });
+
+  return NextResponse.json({
+    success: true,
+    message: "User updated successfully",
+    data: updatedUser
+  });
 });

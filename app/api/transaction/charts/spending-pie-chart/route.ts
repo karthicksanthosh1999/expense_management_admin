@@ -1,8 +1,12 @@
 import { asyncHandler } from "@/lib/async-handler";
+import { getDefaultDates } from "@/lib/getCurrentMonth";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export const GET = asyncHandler(async()=>{
+
+
+    const { startDate,endDate } =getDefaultDates()
 
     const transactions = await prisma.transaction.groupBy(
         {
@@ -11,7 +15,11 @@ export const GET = asyncHandler(async()=>{
                 amount: true
             },
             where: {
-                transactionType: "EXPENSE"
+                transactionType: "EXPENSE",
+                transactionDate: {
+                    gte: startDate,
+                    lte: endDate
+                }
             }
         }
     );

@@ -22,6 +22,7 @@ model User {
   budgets               Budgets[]
   settings              Settings[]
   recurringTransactions RecurringTransaction[]
+  otp                   OTPVerification[]
 }
 
 model Token {
@@ -35,6 +36,23 @@ model Token {
 
   @@index([userId])
 }
+
+model OTPVerification {
+  id        String   @id @default(uuid())
+  userId    String?
+  email     String?
+  mobile    String?
+  otp       String
+  expiresAt DateTime
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([email])
+  @@index([mobile])
+}
+
 
 model Transaction {
   id              String          @id @default(uuid())

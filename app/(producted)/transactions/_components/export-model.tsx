@@ -64,7 +64,6 @@ export function ExportModel({ open, setOpen, transactions }: TProps) {
                         <span className="text-sm font-normal text-center">Excel</span>
                     </button>
                 </div>
-                <Separator />
                 <div className="flex items-center justify-center">
                     <button className="transaction duration-300 ease-in-out cursor-pointer px-4 py-2 text-base rounded-lg border border-highlight hover:bg-blue-600 hover:text-white" onClick={() => setOpen(false)}>Close</button>
                 </div>

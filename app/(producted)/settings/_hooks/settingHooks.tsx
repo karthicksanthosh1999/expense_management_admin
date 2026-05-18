@@ -51,3 +51,11 @@ export const updateSettingApi = async(settingData: TSettingValidationSchema):Pro
     const {data} = await api.put("/api/settings", settingData);
     return data;
 }
+
+// SEND OTP
+export const sendOTPApi = async(email : string):Promise<IApiResponse<null>> => {
+  const {data} = await api.post(`/api/auth/send-otp`, email);
+  return data
+}
+
+// VERIFY OTP

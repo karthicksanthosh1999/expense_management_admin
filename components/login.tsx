@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import ButtonLoading from "./loders/ButtonLoading";
 import AuthCarasole from "./auth-carasole";
+import OTPForm from "./otp-form";
 
 type LoginFormData = z.infer<typeof userLoginValidationSchema>;
 
@@ -29,7 +30,9 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
   const navigate = useRouter();
   const { user, setUser } = useAuth();
+
   const [isLoading, setIsLoading] = useState(false);
+  const [otpFormOpen, setOTPpFormOpen] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -89,9 +92,12 @@ export function LoginForm({
               <Field>
                 <div className="flex items-center">
                   <FieldLabel>Password</FieldLabel>
-                  <a className="ml-auto text-sm underline-offset-2 hover:underline">
+                  <Button
+                    variant={"link"}
+                    onClick={() => setOTPpFormOpen(true)}
+                    className="ml-auto text-sm underline-offset-2 hover:underline">
                     Forgot your password?
-                  </a>
+                  </Button>
                 </div>
                 <Input
                   type="password"
@@ -126,6 +132,7 @@ export function LoginForm({
           </div>
         </CardContent>
       </Card>
+      <OTPForm open={otpFormOpen} close={setOTPpFormOpen} />
     </div>
   );
 }

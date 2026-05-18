@@ -25,7 +25,7 @@ export const useFilterTransaction = (filterData: ITransactionFilterType) => {
 
 export const useSpendingPieChartHook = () => {
   return useQuery({
-    queryKey: ["pi-chart"],
+    queryKey: ["pi-chart","transactions"],
     queryFn: spendingPieChartApi,
   });
 };
@@ -33,7 +33,7 @@ export const useSpendingPieChartHook = () => {
 // TOP TRANSACTION HOOK
 export const useTopTransactionHook = () => {
   return useQuery({
-    queryKey: ["top-transaction"],
+    queryKey: ["top-transaction","transactions"],
     queryFn: topTransactionApi,
   });
 };

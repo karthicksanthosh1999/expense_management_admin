@@ -28,6 +28,7 @@ import {
   Hamburger,
   ChartNoAxesCombined,
   CircleStar,
+  Stethoscope,
 } from "lucide-react";
 
 export const categoryConfig = {
@@ -70,6 +71,10 @@ export const categoryConfig = {
   gold: {
     icon: CircleStar,
     bg: "bg-gradient-to-r from-yellow-300 to-yellow-400",
+  },
+  medical: {
+    icon: Stethoscope,
+    bg: "bg-gradient-to-r from-blue-300 to-blue-400",
   },
 };
 
@@ -249,6 +254,13 @@ export const KeyIcon = ({ size = 23 }: IconProps) => {
 export const verifiedIcon = ({ size = 23 }: IconProps) => {
   return (
     <div className="bg-linear-to-r from-indigo-400 to-cyan-400 p-2 rounded-lg">
+      <ShieldCheck size={size} className="text-white" />
+    </div>
+  );
+};
+export const UserIcon = ({ size = 23 }: IconProps) => {
+  return (
+    <div className="bg-linear-to-r from-orange-400 to-red-400 p-2 rounded-lg">
       <ShieldCheck size={size} className="text-white" />
     </div>
   );
