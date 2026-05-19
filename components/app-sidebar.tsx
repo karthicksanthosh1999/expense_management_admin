@@ -18,6 +18,7 @@ import {
 import Link from "next/link";
 import {
   ArrowRightLeft,
+  ChartColumnIncreasing,
   Headset,
   Layers2,
   LayoutDashboard,
@@ -65,6 +66,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             url: "/goal",
             icon: Layers2,
             isActive: pathName === "/goal",
+          },
+          {
+            title: "Budget",
+            url: "/budget",
+            icon: ChartColumnIncreasing,
+            isActive: pathName === "/budget",
           },
           {
             title: "Settings",

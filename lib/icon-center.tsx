@@ -29,6 +29,7 @@ import {
   ChartNoAxesCombined,
   CircleStar,
   Stethoscope,
+  FileBracesCorner,
 } from "lucide-react";
 
 export const categoryConfig = {
@@ -251,9 +252,9 @@ export const KeyIcon = ({ size = 23 }: IconProps) => {
     </div>
   );
 };
-export const verifiedIcon = ({ size = 23 }: IconProps) => {
+export const VerifiedIcon = ({ size = 23 }: IconProps) => {
   return (
-    <div className="bg-linear-to-r from-indigo-400 to-cyan-400 p-2 rounded-lg">
+    <div className="bg-linear-to-r from-green-600 to-green-400 p-2 rounded-lg">
       <ShieldCheck size={size} className="text-white" />
     </div>
   );
@@ -262,6 +263,13 @@ export const UserIcon = ({ size = 23 }: IconProps) => {
   return (
     <div className="bg-linear-to-r from-orange-400 to-red-400 p-2 rounded-lg">
       <ShieldCheck size={size} className="text-white" />
+    </div>
+  )
+};
+export const FileBracesCornerIcon = ({ size = 23 }: IconProps) => {
+  return (
+    <div className="bg-linear-to-r from-orange-400 to-red-400 p-2 rounded-lg">
+      <FileBracesCorner size={size} className="text-white" />
     </div>
   );
 };

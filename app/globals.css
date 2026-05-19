@@ -130,3 +130,26 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #ccc;
+  height: 2px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #875DF5;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+

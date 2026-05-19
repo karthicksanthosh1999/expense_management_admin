@@ -1,9 +1,8 @@
 // UPDATE PASSWORD
 
-import { IUser } from "@/constants/UserTypes";
+import { IOTPTypes, IUser } from "@/constants/UserTypes";
 import api from "@/lib/api";
 import { IApiResponse } from "@/lib/constants";
-import { TUserValidationSchema } from "@/validation_schema/user-validation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "react-hot-toast";
@@ -11,11 +10,11 @@ import { toast } from "react-hot-toast";
 // UPDATE USER HOOK
 export const useUpdateUserHook = () => {
   const queryClient = useQueryClient();
-  return useMutation<IApiResponse<IUser>, AxiosError, TUserValidationSchema>({
+  return useMutation<IApiResponse<IUser>, AxiosError, IOTPTypes>({
     mutationFn: updateUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user"] });
-      toast.success("User Created Successfully", {
+      toast.success("Password Updated Successfully", {
         id: "create-goals",
       });
     },
@@ -28,8 +27,9 @@ export const useUpdateUserHook = () => {
 };
 
 export const updateUser = async (
-  user: TUserValidationSchema,
+  otp: IOTPTypes,
 ): Promise<IApiResponse<IUser>> => {
-  const { data } = await api.put(`/api/auth/register`, user);
+  console.log(otp)
+  const { data } = await api.post(`/api/auth/verify-otp`, otp);
   return data;
 };

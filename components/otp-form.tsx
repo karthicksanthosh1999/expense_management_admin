@@ -8,51 +8,71 @@ import { Dialog, DialogContent, DialogHeader } from "./ui/dialog";
 import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
 import { useUpdateUserHook } from "@/app/(auth)/verification-page/_hooks/verificationHook";
+import { FormEvent, useState } from "react";
+import { useAuth } from "@/context/hooks/authHooks";
 
 interface IProps {
   open: boolean;
   close: (open: boolean) => void;
+  otpLoading: boolean
 }
 
-const OTPForm = ({ close, open }: IProps) => {
+const OTPForm = ({ close, open, otpLoading }: IProps) => {
+
   const { mutate, isPending } = useUpdateUserHook();
-  const handleSubmit = () => {
-    console.log("Submitted");
+  const { user, loading } = useAuth()
+
+  const [otp, setOtp] = useState("");
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    mutate({otp, email: user?.email})
+    console.log(otp)
   };
+
   return (
     <Dialog open={open} onOpenChange={close}>
+      {
+        otpLoading ? (
+          <>
+            <p>Loading....</p>
+          </>
+        ) : (
       <DialogContent className={"w-full"}>
-        <DialogHeader className="font-semibold text-xl">
-          Enter Your OTP Number
+        <DialogHeader className="font-semibold text-xl text-center">
+          Enter OTP 
         </DialogHeader>
         <Separator />
-        <form className="space-y-5" onClick={handleSubmit}>
-          <InputOTP maxLength={6}>
+          <InputOTP 
+            maxLength={6}             
+            value={otp}
+            onChange={(value) => setOtp(value)}
+            >
             <InputOTPGroup>
-              <InputOTPSlot index={0} />
-              <InputOTPSlot index={1} />
-              <InputOTPSlot index={2} />
+              <InputOTPSlot className="size-12 text-2xl" index={0} />
+              <InputOTPSlot className="size-12 text-2xl" index={1} />
+              <InputOTPSlot className="size-12 text-2xl" index={2} />
             </InputOTPGroup>
             <InputOTPSeparator />
             <InputOTPGroup>
-              <InputOTPSlot index={3} />
-              <InputOTPSlot index={4} />
-              <InputOTPSlot index={5} />
+              <InputOTPSlot className="size-12 text-2xl" index={3} />
+              <InputOTPSlot className="size-12 text-2xl" index={4} />
+              <InputOTPSlot className="size-12 text-2xl" index={5} />
             </InputOTPGroup>
           </InputOTP>
-          <div className="flex items-center justify-center w-full">
-            <Button type="submit" className="text-white w-full">
-              Submit
-            </Button>
-            <Button
-              type="reset"
-              className="text-white w-full"
-              onClick={() => close(false)}>
-              Close
-            </Button>
+          <div className="flex items-center justify-center">
+              <Button
+                type="reset"
+                variant='outline'
+                className="text-white w-fit text-base"
+                onClick={() => close(false)}>
+                Close
+              </Button>
           </div>
-        </form>
       </DialogContent>
+        )
+      }
+
     </Dialog>
   );
 };

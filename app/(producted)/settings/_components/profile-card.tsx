@@ -12,6 +12,7 @@ import {
   TUserValidationSchema,
   userValidationSchema,
 } from "@/validation_schema/user-validation";
+import ProfileImage from "@/components/profile-image";
 
 const ProfileCard = () => {
   const [editMode, setEditMode] = useState(true);
@@ -58,6 +59,7 @@ const ProfileCard = () => {
     <Card>
       <CardContent>
         <CardTitle className="text-2xl">Profile Information</CardTitle>
+        <ProfileImage />
         <form className="p-6 md:p-8" onSubmit={handleSubmit(handleRegister)}>
           <FieldGroup>
             <Field>

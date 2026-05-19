@@ -122,7 +122,6 @@ export default function TransactionFilters() {
               {transactionCategories.map(({ icon: Icon, label, value }) => {
                 const isActive = filters.category === value;
                 return (
-                  <>
                     <button
                       key={value}
                       type="button"
@@ -133,7 +132,6 @@ export default function TransactionFilters() {
                       {Icon}
                       {label}
                     </button>
-                  </>
                 );
               })}
             </div>

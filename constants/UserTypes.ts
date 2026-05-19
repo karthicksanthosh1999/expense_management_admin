@@ -4,9 +4,17 @@ export interface IUser {
   email: string;
   password: string;
   id: string;
+  verifiedEmail?: boolean;
+  profileImage?: string;
 }
 
 export interface IDecodeUser {
   data: IUser;
   message: string;
+}
+
+
+export interface IOTPTypes {
+  email : string,
+  otp : string,
 }

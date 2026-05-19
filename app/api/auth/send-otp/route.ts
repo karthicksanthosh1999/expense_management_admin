@@ -7,8 +7,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const POST = asyncHandler(async(req: NextRequest) => {
     const body = await req.json()
-    const { email } = body;
-
+    const { email } = body; 
+    console.log(email)
     if(!email){
         throw new AppError("Email id is required", 400)
     };

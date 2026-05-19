@@ -1,0 +1,66 @@
+import { IBudgetFilteredResponse, IBudgetFilterType, IBudgetType } from "@/constants/budgetTypes";
+import api from "@/lib/api";
+import { IApiResponse } from "@/lib/constants";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { toast } from "react-hot-toast";
+
+// FILTER TRANSACTION HOOK
+export const useFilterBudget = (filterData: IBudgetFilterType) => {
+  return useQuery({
+    queryKey: ["budgets", filterData],
+    queryFn: () => filterBudgetApi(filterData),
+    enabled: !!filterData,
+  });
+};
+
+// CREATE TRANSACTION HOOK
+export const useCreateBudgetHook = () => {
+  const queryClient = useQueryClient();
+  return useMutation<
+    IApiResponse<IBudgetType>,
+    AxiosError,
+    IBudgetType
+  >({
+    mutationFn: createBudgetApi,
+    onMutate: () => {
+      toast.loading("Budget Creating...", {
+        id: "create-budget",
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["budgets"] });
+      toast.success("Budget Created Successfully", {
+        id: "create-budget",
+      });
+    },
+    onError: () => {
+      toast.error("Something Went Wrong", {
+        id: "create-budget",
+      });
+    },
+  });
+};
+
+
+
+
+// CREATE TRANSACTION API
+const createBudgetApi = async(budget: IBudgetType):Promise<IApiResponse<IBudgetType>> => {
+    const { data } = await api.post(`/api/budget`, budget);
+    return data
+}
+
+// DELETE TRANSACTION API
+const deleteBudgetApi = async (  id: string ): Promise<IApiResponse<IBudgetType>> => {
+  const { data } = await api.delete("/api/budget", { data: { id } });
+  return data;
+};
+
+// FILTER TRANSACTION API
+const filterBudgetApi = async (filterData: IBudgetFilterType): Promise<IBudgetFilteredResponse> => {
+  const { data } = await api.post(
+    `/api/budget/filters?status=${filterData?.status}&period=${filterData?.period}&page=${filterData?.page}&limit=${filterData?.limit}`,
+  );
+  return data?.data;
+};

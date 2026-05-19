@@ -65,9 +65,6 @@ const TransactionChart = () => {
     <div className="bg-white dark:bg-zinc-900 rounded-2xl p-5 shadow-md">
       <div className="mb-4">
         <h2 className="text-xl font-semibold">Transactions Overview</h2>
-        <p className="text-sm text-gray-500">
-          Category wise transaction summary
-        </p>
       </div>
     <Separator className={'my-2'}/>
       <div className="flex justify-center">

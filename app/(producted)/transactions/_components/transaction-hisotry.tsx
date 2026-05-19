@@ -61,8 +61,6 @@ const TransactionHistory = ({
 
   const { mutate } = useDeleteTransactionHook()
 
-
-
   const handleModelClose = () => {
     setTransactionModelOpen(false);
     setTransaction(null);
@@ -80,13 +78,14 @@ const TransactionHistory = ({
   const handleDelete = (id: string) => {
       setSelectedTransactionId(id)
       setTransactionDeleteModelOpen(true)
+       setTransactionModelOpen(false);
   }
 
   const handleConfirmDelete = () => {
     if(selectedTransactionId){
       mutate(selectedTransactionId)
       setSelectedTransactionId(null)
-       setTransactionUpdateModelOpen(false);
+      setTransactionUpdateModelOpen(false);
     }
   }
 

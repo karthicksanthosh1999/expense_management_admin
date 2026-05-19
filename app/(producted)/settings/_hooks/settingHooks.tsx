@@ -54,8 +54,7 @@ export const updateSettingApi = async(settingData: TSettingValidationSchema):Pro
 
 // SEND OTP
 export const sendOTPApi = async(email : string):Promise<IApiResponse<null>> => {
-  const {data} = await api.post(`/api/auth/send-otp`, email);
+  const payload = {email}
+  const {data} = await api.post(`/api/auth/send-otp`, payload);
   return data
 }
-
-// VERIFY OTP

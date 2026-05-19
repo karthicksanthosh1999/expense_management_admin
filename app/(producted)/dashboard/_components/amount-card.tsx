@@ -14,6 +14,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import DataLoader from "@/components/loders/DataLoader";
 import { useOverAllTransactionDetailsHook } from "@/app/(producted)/transactions/_hooks/transaction-hook";
+import { Plus } from "lucide-react";
 
 type Filters = {
   startDate: Date | undefined;
@@ -65,12 +66,6 @@ const AmountCard = () => {
       amount: amountDetails?.data?.income ?? 0,
       icon: trendingUpIcon,
       iconCategory: "income" as const,
-    },
-    {
-      title: "Total Amount",
-      amount: amountDetails?.data?.balance ?? 0,
-      icon: walletIcon,
-      iconCategory: "total" as const,
     },
     {
       title: "Balance",
@@ -129,7 +124,7 @@ const AmountCard = () => {
         Transactions
       </h1>
 
-      <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-3">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-3">
         {cardData.map(({ amount, icon: Icon, title, iconCategory }, idx) => (
           <Card key={idx} className="w-full p-5 shadow-lg">
             <div className="space-y-3">

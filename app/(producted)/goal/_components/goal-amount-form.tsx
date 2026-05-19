@@ -62,8 +62,8 @@ export function GoalAmountForm({ open, setOpen, goalId }: IPtops) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="sm:max-w-sm bg-card">
       <form onSubmit={handleSubmit(handleGoal)}>
-        <DialogContent className="sm:max-w-sm bg-card">
           <DialogHeader>
             <DialogTitle>Add Amount</DialogTitle>
           </DialogHeader>
@@ -97,8 +97,8 @@ export function GoalAmountForm({ open, setOpen, goalId }: IPtops) {
               Add Amount
             </Button>
           </div>
-        </DialogContent>
       </form>
+        </DialogContent>
     </Dialog>
   );
 }

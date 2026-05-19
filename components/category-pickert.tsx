@@ -2,6 +2,7 @@
 
 import { categoryConfig } from "@/lib/icon-center";
 import { Controller } from "react-hook-form";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 
 type Props = {
   control: any;
@@ -15,11 +16,10 @@ export default function CategoryHorizontalPicker({ control }: Props) {
       render={({ field }) => (
         <div className="w-full">
           {/* Horizontal Scroll */}
-          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x">
+          <div className="flex items-center overflow-x-scroll auto gap-3 h-20 pb-2 snap-x">
             {Object.entries(categoryConfig).map(([key, config]) => {
               const Icon = config.icon;
               const active = field.value === key;
-
               return (
                 <button
                   key={key}
@@ -46,7 +46,6 @@ export default function CategoryHorizontalPicker({ control }: Props) {
                     className={`bg-linear-to-r ${config.bg} p-2 rounded-xl text-white`}>
                     <Icon size={15} />
                   </div>
-
                   <span className="text-sm capitalize">{key}</span>
                 </button>
               );

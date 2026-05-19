@@ -6,8 +6,8 @@ export const budgetValidationSchema = z.object({
   category: z.string({ message: "Category is required" }),
   amount: z.coerce.number({ message: "Amount is required" }),
   period: z.enum(["WEEKLY", "MONTHLY", "YEARLY"]).default("MONTHLY"),
-  status: z.enum(["ON_TRACK", "WARNING", "EXCEEDED"]).default("ON_TRACK"),
-  alert: z.string({ message: "Alert is required" }),
+  status: z.enum(["ON_TRACK", "WARNING", "EXCEEDED"]).default("ON_TRACK").optional(),
+  alert: z.number({ message: "Alert is required" }),
   notes: z.string({ message: "Notes is required" }),
 });
 
