@@ -24,6 +24,8 @@ import { Slider } from "@/components/ui/slider";
 import { Period } from "@prisma/client";
 import { IBudgetType } from "@/constants/budgetTypes";
 import { useCreateBudgetHook } from "../_hooks/budget-hooks";
+import { Separator } from "@/components/ui/separator";
+
 
 interface TProps extends IModelPropsType {
   mode: "CREATE" | "UPDATE";
@@ -83,12 +85,14 @@ export default function BudgetForm({
       <DialogContent className="bg-card border border-highlight h-auto">
         <form onSubmit={handleSubmit(handleBudget)}>
           <DialogHeader>
-            <DialogTitle className={"text-2xl capitalize"}>
+            <DialogTitle className={"text-xl capitalize"}>
               {mode === "CREATE" ? "Create" : "Update"} Budget
             </DialogTitle>
           </DialogHeader>
-        <FieldGroup className="my-3">
 
+      <Separator className='my-2'/>
+
+        <FieldGroup className="my-3">
         {/* CATEGORY */}
             <Field>
               <Label htmlFor="category">Category</Label>

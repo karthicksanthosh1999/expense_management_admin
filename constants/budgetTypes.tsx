@@ -21,12 +21,20 @@ export interface IBudgetType {
   notes: string;
 }
 
+export interface IBudgetFilterResponseType extends IBudgetType {
+  usedPercentage: number,
+  remaining: string,
+  spent: string,
+}
+
 export interface IBudgetFilteredResponse {
-  goals: IBudgetType[];
-  pagination: {
-    total: number;
-    page: number;
-    limit: number;
-    totalPages: number;
-  };
+  data: {
+    budgets: IBudgetFilterResponseType[];
+    pagination: {
+      total: number;
+      page: number;
+      limit: number;
+      totalPages: number;
+    };
+  }
 }

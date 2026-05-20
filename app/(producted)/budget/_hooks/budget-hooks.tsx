@@ -62,5 +62,5 @@ const filterBudgetApi = async (filterData: IBudgetFilterType): Promise<IBudgetFi
   const { data } = await api.post(
     `/api/budget/filters?status=${filterData?.status}&period=${filterData?.period}&page=${filterData?.page}&limit=${filterData?.limit}`,
   );
-  return data?.data;
+  return data;
 };

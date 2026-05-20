@@ -1,12 +1,20 @@
-import React, { useEffect } from 'react'
+
 import { useFilterBudget } from '../_hooks/budget-hooks';
 import { Card, CardContent } from '@/components/ui/card';
-import { EllipsisVertical, Menu, ShoppingBag } from 'lucide-react';
+import { EllipsisVertical } from 'lucide-react';
 import { FileBracesCornerIcon } from "@/lib/icon-center";
-import { Separator } from '@/components/ui/separator';
 import { Progress } from '@/components/ui/progress';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import "./index.css";
 import { Button } from '@/components/ui/button';
-import "./index.css"
 
 function BudgetCards() {
     const { data }  = useFilterBudget(
@@ -18,44 +26,60 @@ function BudgetCards() {
         }
     );
 
-    console.log(data)
-
   return (
-    <div>
-      <Card className="max-w-[50%]">
-        <CardContent>
-            {/* HEADER */}
-            <div className="flex items-center justify-between">
-                <div className="flex items-center gap-5">
-                    <div className="w-fit">
-                        <FileBracesCornerIcon category="shopping" size={30} />
-                    </div>
-                    <div className="space-y-1">
-                        <h1 className="text-xl font-semibold">Shopping</h1>
-                        <p className="text-xs text-textColor">Weekly Budget</p>
-                    </div>
-                </div>
-              <EllipsisVertical className="cursor-pointer dark:text-gray-500" />
-            </div>
-            <div className='my-5'/>
-            {/* BODY SECTION */}
-            <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                    <p className="dark:text-gray-400 text-gray-700">Spent</p>
-                    <h1 className="font-normal">$523 / $800</h1>
-                </div>
-                <Progress
-                  value={50}
-                  id="progress-upload"
-                  className="w-full progress-fill"
-                />
-                <div className="flex items-center justify-between">
-                    <p className="text-green-700 font-semibold text-sm">Used 32%</p>
-                    <h1 className="font-normal dark:text-gray-400 text-gray-700">Remaining $277</h1>
-                </div>
-            </div>
-        </CardContent>
-      </Card>
+    <div className='grid md:grid-cols-2 grid-cols-1 w-full gap-5'>
+        {
+            data && data?.data?.budgets?.map((item) =>(
+                <Card className="w-full" key={item?.id}>
+                    <CardContent>
+                        {/* HEADER */}
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-5">
+                                <div className="w-fit">
+                                    <FileBracesCornerIcon category="shopping" size={30} />
+                                </div>
+                                <div className="space-y-1">
+                                    <h1 className="text-xl font-semibold capitalize">{item?.category}</h1>
+                                    <p className="text-xs text-textColor capitalize">{item?.period} Budget</p>
+                                </div>
+                            </div>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger>
+                                        <button type='button'>
+                                            <EllipsisVertical className="cursor-pointer dark:text-gray-500 dark:hover:text-white hover:text-gray-800" />
+                                        </button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent>
+                                        <DropdownMenuGroup>
+                                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                        <DropdownMenuItem>View</DropdownMenuItem>
+                                        <DropdownMenuItem>Delete</DropdownMenuItem>
+                                        <DropdownMenuItem>Update</DropdownMenuItem>
+                                        </DropdownMenuGroup>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                        </div>
+                        <div className='my-5'/>
+                        {/* BODY SECTION */}
+                        <div className="space-y-2">
+                            <div className="flex items-center justify-between">
+                                <p className="dark:text-gray-400 text-gray-700">Spent</p>
+                                <h1 className="font-normal">₹{item?.spent} / ₹{item?.amount.toString()}</h1>
+                            </div>
+                            <Progress
+                                value={item?.usedPercentage}
+                                id="progress-upload"
+                                className=''
+                            />
+                            <div className="flex items-center justify-between">
+                                <p className="text-green-700 font-semibold text-sm">Used {item?.usedPercentage}%</p>
+                                <h1 className="font-normal dark:text-gray-400 text-gray-700">Remaining ₹{item?.remaining}</h1>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+            ))
+        }
     </div>
   )
 }
