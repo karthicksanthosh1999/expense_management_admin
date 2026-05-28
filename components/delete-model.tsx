@@ -11,7 +11,6 @@ import { Button } from "./ui/button";
 type TType = {
   name: string;
   open: boolean;
-  deleteDataId: string;
   setOpen: (open: boolean) => void;
   handleDelete: () => void;
 };
@@ -20,7 +19,6 @@ const DeleteModel = ({
   name,
   open,
   setOpen,
-  deleteDataId,
   handleDelete,
 }: TType) => {
   return (

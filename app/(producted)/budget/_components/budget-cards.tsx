@@ -1,5 +1,6 @@
+'use client';
 
-import { useFilterBudget } from '../_hooks/budget-hooks';
+import { useDeleteBudgetHook, useFilterBudget } from '../_hooks/budget-hooks';
 import { Card, CardContent } from '@/components/ui/card';
 import { EllipsisVertical } from 'lucide-react';
 import { FileBracesCornerIcon } from "@/lib/icon-center";
@@ -10,13 +11,23 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import DeleteModel from '@/components/delete-model';
+import { useState } from 'react';
 import "./index.css";
-import { Button } from '@/components/ui/button';
+import ViewBudget from './view-budget';
+import { IBudgetFilterResponseType } from '@/constants/budgetTypes';
 
 function BudgetCards() {
+    
+    const { mutate } = useDeleteBudgetHook();
+
+    const [selectedId, setSelectedId] = useState<string | null>(null);
+    const [deleteModelOpen, setDeleteModelOpen] = useState(false)
+    const [viewModelOpen, setViewModelOpen] = useState(false);
+    const [selectedBudget, setSelectedBudget]=useState<IBudgetFilterResponseType | null>(null);
+
     const { data }  = useFilterBudget(
         {
             period:"MONTHLY",
@@ -25,6 +36,24 @@ function BudgetCards() {
             page:1
         }
     );
+
+    const handleDelete = (id:string) => {
+        setSelectedId(id)
+        setDeleteModelOpen(true)
+    }
+
+    const handleConfirmDelete = () => {
+        if(selectedId){
+            mutate(selectedId)
+        }
+        setSelectedId(null);
+        setDeleteModelOpen(false);
+    };
+
+    const handleViewModel = (budget:IBudgetFilterResponseType) => {
+        setViewModelOpen(true);
+        setSelectedBudget(budget);
+    };
 
   return (
     <div className='grid md:grid-cols-2 grid-cols-1 w-full gap-5'>
@@ -52,8 +81,8 @@ function BudgetCards() {
                                     <DropdownMenuContent>
                                         <DropdownMenuGroup>
                                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                        <DropdownMenuItem>View</DropdownMenuItem>
-                                        <DropdownMenuItem>Delete</DropdownMenuItem>
+                                        <DropdownMenuItem onClick={()=>handleViewModel(item)}>View</DropdownMenuItem>
+                                        <DropdownMenuItem onClick={()=>handleDelete(item?.id!)}>Delete</DropdownMenuItem>
                                         <DropdownMenuItem>Update</DropdownMenuItem>
                                         </DropdownMenuGroup>
                                     </DropdownMenuContent>
@@ -80,6 +109,23 @@ function BudgetCards() {
                 </Card>
             ))
         }
+        { selectedId &&
+            <DeleteModel
+                name='Budget'
+                open={deleteModelOpen}
+                setOpen={setDeleteModelOpen}
+                handleDelete={handleConfirmDelete}
+            />
+        }
+        {
+        selectedBudget &&
+        
+        <ViewBudget
+        open={viewModelOpen}
+        setOpen={setViewModelOpen}
+        budget={selectedBudget}
+        />
+    }
     </div>
   )
 }
