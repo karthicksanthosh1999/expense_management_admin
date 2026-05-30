@@ -8,6 +8,7 @@ import StatusChip from "@/components/status-chip";
 import { Separator } from "@/components/ui/separator";
 import DataLoader from "@/components/loders/DataLoader";
 import {
+  ITransaction,
   ITransactionFilteredResponse,
   ITransactionFilterType,
 } from "@/constants/transactionsTypes";
@@ -57,7 +58,7 @@ const TransactionHistory = ({
   const [transactionDeleteModelOpen, setTransactionDeleteModelOpen] =useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState<TTransactionValidationSchemaType | null>(null);
   const [selectedTransactionId, setSelectedTransactionId] = useState<string | null>(null);
-  const [transaction, setTransaction] = useState<TTransactionValidationSchemaType | null>(null);
+  const [transaction, setTransaction] = useState<ITransaction | null>(null);
 
   const { mutate } = useDeleteTransactionHook()
 
@@ -70,9 +71,12 @@ const TransactionHistory = ({
     setTransactionModelOpen(true);
   };
 
-  const handleGoalEdit = (data: TTransactionValidationSchemaType) => {
+  const handleGoalEdit = (data: ITransaction) => {
     setTransactionUpdateModelOpen(true);
-    setSelectedTransaction(data);
+    setSelectedTransaction({
+    ...data,
+    amount: data.amount.toString(),
+  });
   };
 
   const handleDelete = (id: string) => {
@@ -283,11 +287,10 @@ const TransactionHistory = ({
       )}
         {selectedTransactionId && (
           <DeleteModel 
-          deleteDataId={selectedTransactionId}
-          name="Transaction"
-          open={transactionDeleteModelOpen}
-          setOpen={setTransactionDeleteModelOpen}
-          handleDelete={handleConfirmDelete}
+            name="Transaction"
+            open={transactionDeleteModelOpen}
+            setOpen={setTransactionDeleteModelOpen}
+            handleDelete={handleConfirmDelete}
           />
         )
       }

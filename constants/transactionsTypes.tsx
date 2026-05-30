@@ -29,11 +29,12 @@ export interface ITransactionFilteredResponse {
 
 export interface ITransaction {
   id: string;
-  amount: Decimal | String;
+  amount: string | Decimal;
   message: string;
   category: string;
   transactionDate: Date;
   transactionType: TTransactionType;
+  userId?: string;
 }
 
 export interface ITransactionsResponseType {
