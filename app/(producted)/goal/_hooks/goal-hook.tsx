@@ -2,6 +2,7 @@ import {
   IGoalAmountType,
   IGoalFilteredResponse,
   IGoalFilterType,
+  IGoalStatusType,
   IGoalType
 } from "@/constants/goalTypes";
 import api from "@/lib/api";
@@ -271,7 +272,7 @@ const deleteGoalHistoryApi = async (id: {
 };
 
 // GET GOAL DASHBOARD AMOUNT DETAILS
-const getGoalDashboardAmountApi = async (): Promise<IApiResponse<IGoalType>> => {
+const getGoalDashboardAmountApi = async (): Promise<IApiResponse<IGoalStatusType>> => {
   const { data } = await api.get(`/api/goal/dashboard`);
   return data;
 };

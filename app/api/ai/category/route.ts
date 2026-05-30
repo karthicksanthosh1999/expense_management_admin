@@ -1,12 +1,11 @@
 import { categoryExpenseChain } from "@/lib/models/chains/categorizeExpenseChain";
-import { aiCategoryScheme } from "@/lib/models/schema/expenseSchema-validation";
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { startOfWeek, endOfWeek } from "date-fns";
+import { asyncHandler } from "@/lib/async-handler";
 
-export const GET = async(req: NextRequest, res: NextResponse) => {
-    try {
-        const startDate = startOfWeek(new Date(), {
+export const GET = asyncHandler(async(req:NextRequest)=>{
+    const startDate = startOfWeek(new Date(), {
             weekStartsOn: 1,
         });
 
@@ -81,14 +80,4 @@ export const GET = async(req: NextRequest, res: NextResponse) => {
                 data : aiResponse.content,
             }
         )
-    } catch (error) {
-        console.error(error);
-
-        return NextResponse.json(
-            {
-            success: false,
-            message: "AI categorization failed",
-            }
-        );
-    }
-}
+})

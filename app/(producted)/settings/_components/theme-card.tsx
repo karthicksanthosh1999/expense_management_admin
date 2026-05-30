@@ -64,7 +64,7 @@ const ThemeCard = () => {
                     <div className="flex items-start gap-5">
                       <div className="flex items-center gap-5">
                         <RadioGroupItem value={key} id={htmlId} />
-                        <Icon />
+                        <Icon category={title} />
                       </div>
                       <div>
                         <FieldTitle>{title}</FieldTitle>

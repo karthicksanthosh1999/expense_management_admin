@@ -28,7 +28,7 @@ export const exportToExcel = (
 
             // Format date
             if (DATE_FIELDS.includes(key) && value) {
-                value = dateFormat(value);
+                value = dateFormat(new Date(value.toString()));
             }
 
             // ✅ Apply custom header

@@ -6,7 +6,6 @@ import { useGetDashboardAmountHook } from "../_hooks/goal-hook";
 
 const GoalCards = () => {
   const { data: goalDash, isLoading } = useGetDashboardAmountHook();
-
   return (
     <div className="flex md:flex-nowrap flex-wrap items-center md:justify-between justify-center gap-5">
       <Card className="max-w-lg w-full p-5 shadow-lg hover:shadow-blue-500">

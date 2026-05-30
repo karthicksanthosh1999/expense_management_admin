@@ -78,9 +78,6 @@ const FAQCard = () => {
         </div>
         <div>
           <Accordion
-            type="single"
-            collapsible
-            defaultValue={1}
             className="w-full">
             {filteredCategoryList.map(
               ({ anser, category, icon: Icon, id, question }) => (
@@ -94,7 +91,7 @@ const FAQCard = () => {
                     className={
                       "flex items-center justify-center text-[15px] gap-3"
                     }>
-                    {Icon && <Icon />}
+                    {Icon && <Icon category={category} />}
                     {question}
                   </AccordionTrigger>
                   <AccordionContent className={"text-gray-400 text-[16px]"}>

@@ -138,7 +138,6 @@ const GoalCard = ({
           open={deleteModelOpen}
           setOpen={setDeleteModelOpen}
           name="Goal"
-          deleteDataId={id!}
           handleDelete={confirmDelete}
         />
         {id && (

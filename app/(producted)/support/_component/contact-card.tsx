@@ -32,7 +32,7 @@ const ContactCard = () => {
         {contactInfo.map(({ description, icon: Icon, id, title }) => (
           <div key={id} className="flex items-center justify-start gap-3 mt-2">
             <div>
-              <Icon />
+              <Icon category={title} />
             </div>
             <div className="space-y-1 p-1">
               <h4 className="text-textColor text-[16px] font-normal">

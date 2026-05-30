@@ -73,10 +73,7 @@ const TransactionHistory = ({
 
   const handleGoalEdit = (data: ITransaction) => {
     setTransactionUpdateModelOpen(true);
-    setSelectedTransaction({
-    ...data,
-    amount: data.amount.toString(),
-  });
+    setSelectedTransaction(data);
   };
 
   const handleDelete = (id: string) => {
@@ -180,10 +177,10 @@ const TransactionHistory = ({
                       <Eye/>
                       View
                     </ContextMenuItem>
-                    <ContextMenuItem onClick={()=>handleGoalEdit(item!)}>
+                    <ContextMenuItem onClick={()=>handleGoalEdit(item)}>
                       <Pencil/>
                       Update</ContextMenuItem>
-                    <ContextMenuItem onClick={()=>handleDelete(item?.id!)}>
+                    <ContextMenuItem onClick={()=>handleDelete(item?.id)}>
                       <Trash/>
                       Delete
                     </ContextMenuItem>

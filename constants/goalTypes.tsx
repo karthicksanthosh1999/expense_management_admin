@@ -28,6 +28,13 @@ export interface IGoalAmountType {
   createdAt?: Date;
 }
 
+export interface IGoalStatusType {
+  ACTIVE: number; 
+  INACTIVE: number; 
+  COMPLETED: number; 
+  TOTAL: number;
+}
+
 export interface IAddAmountType {
   goalId: string;
   currentAmount: string;

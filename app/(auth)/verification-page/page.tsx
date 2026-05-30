@@ -38,11 +38,11 @@ const page = () => {
     loginPayload: TUserRegisterValidationSchemaType,
   ) => {
     try {
-      const { data } = await updateUser({
-        ...user,
-        password: loginPayload.password,
-      });
-      console.log(data);
+      // const { data } = await updateUser({
+      //   ...user,
+      //   password: loginPayload.password,
+      // });
+      // console.log(data);
       reset();
     } catch (error) {
       console.log(error);

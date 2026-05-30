@@ -39,12 +39,12 @@ export interface ITransaction {
 
 export interface ITransactionsResponseType {
   id: string;
-  amount: string;
+  amount: string | Decimal;
   message: string;
   userId: string;
   category: string;
   transactionDate: Date;
-  transactionType: string;
+  transactionType: TTransactionType;
   user: {
     id: string;
     name: string;

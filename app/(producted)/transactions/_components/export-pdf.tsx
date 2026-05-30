@@ -7,21 +7,21 @@ import autoTable from "jspdf-autotable";
 export const exportPdf = (data: ITransaction[], user: IUser) => {
   const doc = new jsPDF();
 
-  // ✅ Title
+  // Title
   doc.setFontSize(16);
   doc.text("Transaction Report", 105, 15, { align: "center" });
 
-  // ✅ User Details (Top Left)
+  // User Details (Top Left)
   doc.setFontSize(10);
 
   doc.text(`Name: ${user?.name}`, 14, 25);
   doc.text(`Email: ${user?.email}`, 14, 30);
 
-  // ✅ Date / Metadata (Top Right)
+  // Date / Metadata (Top Right)
   doc.text(`Date: ${new Date().toLocaleDateString()}`, 150, 25);
   doc.text(`Phone: ${user?.mobile}`, 150, 30);
 
-  // ✅ Table
+  // Table
   autoTable(doc, {
     startY: 45,
 
@@ -29,7 +29,7 @@ export const exportPdf = (data: ITransaction[], user: IUser) => {
     body: data.map((item, index) => [
       index + 1,
       dateFormat(item.transactionDate),
-      item.amount,
+      item.amount.toString(),
       item.transactionType,
     ]),
 

@@ -18,7 +18,7 @@ import {
   TGoalValidationSchema,
 } from "@/validation_schema/goal-validation";
 import { Separator } from "@/components/ui/separator";
-import { IGoalType } from "@/constants/goalTypes";
+import { IGoalStatusType, IGoalType } from "@/constants/goalTypes";
 
 interface TProps {
   open: boolean;
@@ -27,22 +27,33 @@ interface TProps {
   existingGoalData?: IGoalType;
 }
 
+export enum GoalStatus {
+  ACTIVE = "ACTIVE",
+  INACTIVE = "INACTIVE",
+  COMPLETED = "COMPLETED",
+}
+interface IStautListType {
+  id: string,
+  title: string,
+  value: GoalStatus,
+}
+
 const GoalModel = ({ open, setOpen, mode, existingGoalData }: TProps) => {
-  const statusList = [
+  const statusList:IStautListType[] = [
     {
       id: "0",
       title: "Active",
-      value: "ACTIVE",
+      value: GoalStatus.ACTIVE,
     },
     {
       id: "1",
       title: "In-Active",
-      value: "INACTIVE",
+      value: GoalStatus.INACTIVE,
     },
     {
       id: "2",
       title: "Completed",
-      value: "COMPLETED",
+      value: GoalStatus.INACTIVE,
     },
   ];
 

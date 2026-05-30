@@ -18,6 +18,7 @@ import { IModelPropsType } from "@/constants/CommonTypes";
 import {
   useDeleteGoalAmountHook,
   useGetSingleGoalAmountHook,
+  useUpdateGoalAmountHook,
   useUpdateGoalHook,
 } from "../_hooks/goal-hook";
 import { dateFormat } from "@/lib/dateFormat ";
@@ -46,7 +47,7 @@ export function GoalAmountTimeline({ goalId, open, setOpen }: IPtops) {
 
   // HOOKS
   const { data } = useGetSingleGoalAmountHook(goalId);
-  const { mutate } = useUpdateGoalHook();
+  const { mutate } = useUpdateGoalAmountHook();
   const { mutate: goalHistoryDeleteMutation } = useDeleteGoalAmountHook();
 
   const {
