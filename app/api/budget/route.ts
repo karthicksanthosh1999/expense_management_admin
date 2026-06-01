@@ -86,22 +86,23 @@ export const DELETE = async (req: NextRequest) => {
 }
 
 export const PUT = async (req: NextRequest) => {
-    const { id, amount, message, transactionDate, transactionType, category } = await req.json();
+    const { id, amount, category, alert, notes, period, userId } = await req.json();
     if (!id) {
         return NextResponse.json({
             message: "Id is required",
             statusCode: 400
         })
     }
-    const transaction = await prisma.transaction.update(
+    const transaction = await prisma.budgets.update(
         {
             where: { id },
             data: {
                 amount,
-                message,
-                transactionDate,
-                transactionType,
                 category,
+                alert: String(alert),
+                notes,
+                period,
+                userId
             }
         }
     )

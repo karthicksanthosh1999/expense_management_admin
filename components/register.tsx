@@ -62,7 +62,7 @@ export function RegisterPage({
           <form className="p-6 md:p-8" onSubmit={handleSubmit(handleRegister)}>
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
-                <h1 className="text-2xl font-bold">Welcome to the JK-Tech</h1>
+                <h1 className="text-2xl font-bold">Welcome to the SK-Tech</h1>
                 <p className="text-balance text-muted-foreground">
                   User Register
                 </p>

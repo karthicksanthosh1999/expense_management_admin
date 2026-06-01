@@ -184,4 +184,5 @@ enum GoalStatus {
   ACTIVE
   INACTIVE
   COMPLETED
+  ALL
 }

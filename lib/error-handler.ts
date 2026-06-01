@@ -10,7 +10,7 @@ export function handleError(error: any) {
         return NextResponse.json(
             {
                 success: false,
-                error: error.errors,
+                error: error.toString(),
             },
             { status: 400 }
         );

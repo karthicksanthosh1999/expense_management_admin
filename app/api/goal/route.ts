@@ -2,6 +2,7 @@ import { asyncHandler } from "@/lib/async-handler";
 import { AppError } from "@/lib/errors";
 import { prisma } from "@/lib/prisma";
 import { goalValidationSchema } from "@/validation_schema/goal-validation";
+import { GoalStatus } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export const POST = asyncHandler(async (req: Request) => {
@@ -31,31 +32,6 @@ export const POST = asyncHandler(async (req: Request) => {
   });
 });
 
-/**
- * @swagger
- * /api/goal:
- *   get:
- *     tags:
- *       - Goals
- *     summary: Get goal data
- *     description: Retrieve the list of goals.
- *     operationId: getGoals
- *     responses:
- *       200:
- *         description: Goals fetched successfully.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Goals fetched successfully
- *                 data:
- *                   type: array
- *                   items:
- *                     type: object
- */
 export const GET = asyncHandler(async () => {
   const transactions = await prisma.goal.findMany();
   return NextResponse.json({

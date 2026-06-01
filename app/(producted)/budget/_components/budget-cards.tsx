@@ -16,8 +16,18 @@ import {
 import DeleteModel from '@/components/delete-model';
 import { useState } from 'react';
 import ViewBudget from './view-budget';
-import { IBudgetFilterResponseType } from '@/constants/budgetTypes';
+import { IBudgetFilterResponseType, IBudgetType } from '@/constants/budgetTypes';
+import BudgetForm from './budget-form';
+import { TBudgetValidationSchema } from '@/validation_schema/budget-validation';
 import "./index.css";
+
+
+enum EBudgetStatus {
+  ALL = "ALL",
+  EXCEEDED = "EXCEEDED",
+  ON_TRACK = "ON_TRACK",
+  WARNING = "WARNING",
+}
 
 function BudgetCards() {
     
@@ -25,8 +35,10 @@ function BudgetCards() {
 
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [deleteModelOpen, setDeleteModelOpen] = useState(false)
+    const [updateModelOpen, setUpdateModelOpen] = useState(false)
     const [viewModelOpen, setViewModelOpen] = useState(false);
     const [selectedBudget, setSelectedBudget]=useState<IBudgetFilterResponseType | null>(null);
+    const [selectedUpdateBudget, setUpdateSelectedBudget]=useState<TBudgetValidationSchema | null>(null);
 
     const { data }  = useFilterBudget(
         {
@@ -55,6 +67,10 @@ function BudgetCards() {
         setSelectedBudget(budget);
     };
 
+    const handleUpdateModel = (budget:TBudgetValidationSchema) => {
+        setUpdateModelOpen(true);
+        setUpdateSelectedBudget(budget);
+    };
   return (
     <div>
         {
@@ -90,7 +106,11 @@ function BudgetCards() {
                                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                                 <DropdownMenuItem onClick={()=>handleViewModel(item)}>View</DropdownMenuItem>
                                                 <DropdownMenuItem onClick={()=>handleDelete(item?.id!)}>Delete</DropdownMenuItem>
-                                                <DropdownMenuItem>Update</DropdownMenuItem>
+                                                <DropdownMenuItem onClick={()=>handleUpdateModel({  ...item, 
+                                                    amount: Number(item.amount), 
+                                                    alert: String(item.alert), 
+                                                    status: item.status === EBudgetStatus.ALL ? undefined : item.status})}>
+                                                        Update</DropdownMenuItem>
                                                 </DropdownMenuGroup>
                                             </DropdownMenuContent>
                                         </DropdownMenu>
@@ -128,12 +148,21 @@ function BudgetCards() {
             />
         }
         {
-        selectedBudget &&
-        
+    selectedBudget &&
         <ViewBudget
         open={viewModelOpen}
         setOpen={setViewModelOpen}
         budget={selectedBudget}
+        />
+    }
+
+        {
+    selectedUpdateBudget &&
+        <BudgetForm
+            mode="UPDATE"
+            open={updateModelOpen}
+            setOpen={setUpdateModelOpen}
+            existingBudgetData={selectedUpdateBudget}
         />
     }
     </div>

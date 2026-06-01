@@ -17,7 +17,7 @@ export interface IBudgetType {
   amount: Decimal | number;
   period: Period;
   status?: EBudgetStatus;
-  alert: number;
+  alert: string;
   notes: string;
 }
 

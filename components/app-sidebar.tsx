@@ -145,7 +145,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         ))}
       </SidebarContent>
       <SidebarFooter className="w-full">
-        {user && <NavUser user={user} />}
+        {user && <NavUser user={{ name: user.name, email: user.email, profileImage: user.profileImage ?? "" }} />}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

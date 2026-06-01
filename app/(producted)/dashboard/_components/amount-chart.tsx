@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/chart";
 import { useEffect, useState } from "react";
 import { getYearWiseTransactions } from "../_actions/year-wise-amount";
+import { Separator } from "@/components/ui/separator";
 
 export const description = "A line chart with dots";
 
@@ -49,13 +50,14 @@ export function AmountChart() {
   }, []);
 
   return (
-    <Card className="w-[50%]">
+    <Card className="w-full h-full">
       <CardHeader>
         <CardTitle>Income and Expense</CardTitle>
-        <CardDescription>January - June 2026</CardDescription>
+        <CardDescription>January - June {new Date().getFullYear()}</CardDescription>
       </CardHeader>
+      <Separator/>
       <CardContent>
-        <ChartContainer className="h-auto w-full" config={chartConfig}>
+        <ChartContainer className="h-full w-full" config={chartConfig}>
           <LineChart
             accessibilityLayer
             data={chartData}

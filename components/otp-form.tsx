@@ -26,7 +26,7 @@ const OTPForm = ({ close, open, otpLoading }: IProps) => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    mutate({otp, email: user?.email})
+    mutate({otp, email: user?.email as string})
     console.log(otp)
   };
 

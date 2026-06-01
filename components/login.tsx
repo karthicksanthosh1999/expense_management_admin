@@ -1,4 +1,5 @@
 "use client";
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -21,6 +22,8 @@ import Link from "next/link";
 import ButtonLoading from "./loders/ButtonLoading";
 import AuthCarasole from "./auth-carasole";
 import OTPForm from "./otp-form";
+import { toast } from "react-hot-toast";
+import axios from "axios";
 
 type LoginFormData = z.infer<typeof userLoginValidationSchema>;
 
@@ -44,23 +47,31 @@ export function LoginForm({
     resolver: zodResolver(userLoginValidationSchema),
   });
 
-  const handleLogin = async (loginPayload: LoginFormData) => {
-    try {
-      setIsLoading(true);
-      const { data } = await api.post("/api/auth/login", loginPayload);
-      if (data?.user) {
-        setUser(data?.user);
-        navigate.push("/dashboard");
-      }
-      setIsLoading(false);
-      reset();
-    } catch (error) {
-      console.log(error);
-      setIsLoading(false);
-    } finally {
-      setIsLoading(false);
+const handleLogin = async (loginPayload: LoginFormData) => {
+  try {
+    setIsLoading(true);
+
+    const { data } = await api.post("/api/auth/login", loginPayload);
+
+    if (data?.user) {
+      setUser(data.user);
+      toast.success(data.message || "Login successful");
+      navigate.push("/dashboard");
     }
-  };
+    reset();
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log(error.response?.data?.error);
+      toast.error(
+        error.response?.data?.message?.error || "Something went wrong"
+      );
+    } else {
+      toast.error("Unexpected error occurred");
+    }
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <div
@@ -132,7 +143,7 @@ export function LoginForm({
           </div>
         </CardContent>
       </Card>
-      <OTPForm open={otpFormOpen} close={setOTPpFormOpen} />
+      {/* <OTPForm open={otpFormOpen} close={setOTPpFormOpen} otpLoading={isLoading} /> */}
     </div>
   );
 }

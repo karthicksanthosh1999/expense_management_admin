@@ -37,7 +37,7 @@ export function ProfileDropdown({ logout, user }: TProps) {
       <DropdownMenuTrigger>
         <Button variant="ghost" size="icon" className="rounded-full">
           <Avatar>
-            <AvatarImage src={user?.profileImage} alt="shadcn" />
+            <AvatarImage src={user?.profileImage ?? ""} alt="shadcn" />
             <AvatarFallback>LR</AvatarFallback>
           </Avatar>
         </Button>

@@ -12,9 +12,9 @@ import {
 import { useNavigation } from "react-day-picker";
 
 type AuthContextType = {
-  user: IUser;
+  user: IUser | null;
   setUser: React.Dispatch<
-    React.SetStateAction<IUser>
+    React.SetStateAction<IUser | null>
   >;
   loading: boolean;
 };
@@ -29,13 +29,7 @@ type TProp = {
 export const AuthUserProvider = ({
   children,
 }: TProp) => {
-  const [user, setUser] = useState<IUser>({
-    email:"",
-    id:"",
-    mobile:"",
-    name:"",
-    password:"",
-  });
+  const [user, setUser] = useState<IUser | null>(null);
   const [loading, setLoading] = useState(true);
   const { replace } = useRouter()
   

@@ -5,7 +5,10 @@ export interface IUser {
   password: string;
   id: string;
   verifiedEmail?: boolean;
-  profileImage?: string;
+  profileImage?: string | null;
+  verifiedMobile: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface IDecodeUser {

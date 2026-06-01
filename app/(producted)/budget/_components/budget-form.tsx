@@ -10,20 +10,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { IModelPropsType } from "@/constants/CommonTypes";
 import { useAuth } from "@/context/hooks/authHooks";
-import { TTransactionType } from "@/lib/constants";
 import {
   budgetValidationSchema,
   TBudgetValidationSchema
 } from "@/validation_schema/budget-validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import CategoryHorizontalPicker from "@/components/category-pickert";
 import { Calendar } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { Period } from "@prisma/client";
 import { IBudgetType } from "@/constants/budgetTypes";
-import { useCreateBudgetHook } from "../_hooks/budget-hooks";
+import { useCreateBudgetHook, useUpdateBudgetHook } from "../_hooks/budget-hooks";
 import { Separator } from "@/components/ui/separator";
 
 
@@ -40,18 +39,18 @@ export default function BudgetForm({
 }: TProps){
 
     const { user } = useAuth();
-    const { mutate, isPending } = useCreateBudgetHook()
+    const { mutate} = useCreateBudgetHook()
+    const { mutate: budgetUpdateMutate } = useUpdateBudgetHook()
 
     const {handleSubmit, formState: {errors}, register, control, reset, watch, setValue} = useForm(
         {
             resolver: zodResolver(budgetValidationSchema),
             defaultValues:{
                 period: "WEEKLY",
-                alert: 50,
+                alert: String(50),
             }
         }
     );
-
     useEffect(() => {
     if (user?.id) {
       reset((preV) => ({
@@ -61,8 +60,29 @@ export default function BudgetForm({
     }
   }, [user, reset]);
 
+    useEffect(() => {
+    if (existingBudgetData) {
+      reset({
+        amount: existingBudgetData?.amount,
+        category: existingBudgetData?.category,
+        notes: existingBudgetData?.notes,
+        alert: existingBudgetData?.alert,
+        period: existingBudgetData?.period,
+        status: existingBudgetData?.status,
+        id: existingBudgetData?.id,
+        userId: existingBudgetData?.userId,
+      });
+    }
+  }, [existingBudgetData, reset, user]);
+
+
     const handleBudget = (data:IBudgetType) => {
-        mutate(data);
+      console.log(mode, data)
+      if(mode === "CREATE"){
+        mutate({...data, alert: String(data.alert)});
+      }else{
+        budgetUpdateMutate(data)
+      }
         setOpen(false)
         reset()
     }
@@ -79,7 +99,7 @@ export default function BudgetForm({
     ];
 
     const selectedPeriod = watch("period");
-
+    console.log(errors)
     return(
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="bg-card border border-highlight h-auto">
@@ -140,29 +160,28 @@ export default function BudgetForm({
             </Field>                                                                                    
         
         {/* ALERT */}
-            <Field>
-            <Label htmlFor="alert">Alert</Label>
-            <Controller
-                control={control}
-                name="alert"
-                render={({ field }) => (
-                <div className="space-y-2">
-                <Slider
-                    defaultValue={[(field.value) || 50]}
-                    max={100}
-                    step={1}
-                    value={[(field.value) || 50]}
-                    onValueChange={(val) => field.onChange(val)}
-                    className="w-full cursor-pointer"
-                    />
+              <Field>
+                <Label htmlFor="alert">Alert</Label>
+                <Controller
+                  control={control}
+                  name="alert"
+                  render={({ field }) => (
+                    <div className="space-y-2">
+                      <Slider
+                        max={100}
+                        step={1}
+                        value={[Number(field.value) || 50]}
+                        onValueChange={(val) => field.onChange(String(val))}
+                        className="w-full cursor-pointer"
+                      />
 
-                    <p className="text-sm text-muted-foreground">
-                    Alert at {(field.value) || 50}%
-                    </p>
-                </div>
-                )}
-            />
-            </Field>
+                      <p className="text-sm text-muted-foreground">
+                        Alert at {field.value || 50}%
+                      </p>
+                    </div>
+                  )}
+                />
+              </Field>
 
         {/* NOTES */}
             <Field>

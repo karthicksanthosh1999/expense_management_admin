@@ -13,12 +13,13 @@ const formattedGoals = {
   ACTIVE: 0,
   INACTIVE: 0,
   COMPLETED: 0,
-    TOTAL: 0,
+  ALL: 0,
+  TOTAL: 0,
 };
 
 goals.forEach((item) => {
       const count = item._count.goalStatus;
-  formattedGoals[item.goalStatus!] =
+  formattedGoals[item.goalStatus ?? "ALL"] =
     item._count.goalStatus;
       formattedGoals.TOTAL += count;
 });

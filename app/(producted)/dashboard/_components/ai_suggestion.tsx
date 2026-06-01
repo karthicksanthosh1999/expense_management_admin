@@ -12,7 +12,7 @@ const AiSuggestionCard = () => {
 
     return (
         <>
-            <Card>
+            <Card className="w-full h-80 overflow-y-auto ">
                 <CardContent>
                     <CardHeader>
                         <div className="flex items-center gap-2">
@@ -33,7 +33,7 @@ const AiSuggestionCard = () => {
                         </div>
                     </CardHeader>
                     <Separator className='my-2' />
-                <div className="p-4 text-white rounded-xl h-50 overflow-auto">
+                <div className="p-4 text-white rounded-xl h-auto overflow-auto">
                     {isLoading ? (
                        <AiSuggestionCardSkeleton />
                     ) : (

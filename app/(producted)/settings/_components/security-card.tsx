@@ -22,7 +22,7 @@ const SecurityCard = () => {
     
     const handleOtpFormOpen = async() => {
         try {
-            await sendOTPApi(user?.email)
+            await sendOTPApi(user?.email as string)
             setOTPFormOpen(true)
         } catch (error) {
             console.log(error)

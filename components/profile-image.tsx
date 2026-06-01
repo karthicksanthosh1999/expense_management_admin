@@ -6,7 +6,6 @@ import { Camera, X } from "lucide-react";
 import { Button } from "./ui/button";
 import api from "@/lib/api";
 import { useAuth } from "@/context/hooks/authHooks";
-import { data } from "framer-motion/client";
 import { toast } from "react-hot-toast";
 
 export default function ProfileImage() {
@@ -16,7 +15,6 @@ export default function ProfileImage() {
   const [preview, setPreview] = useState<string | null>(null);
   const [existingImage, setExistingImage] = useState("")
   const [file, setFile] = useState<File | null>(null);
-  const [showUpdateBtn, setShowUpdateButton] = useState(false)
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -47,7 +45,7 @@ export default function ProfileImage() {
   const uploadImage = async (file: File, oldImage?: string) => {
   const formData = new FormData();
   formData.append("image", file);
-  formData.append("id", user?.id);
+  formData.append("id", user?.id ?? "");
   if (oldImage) {
     formData.append("oldImage", oldImage);
   }

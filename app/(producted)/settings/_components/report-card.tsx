@@ -46,7 +46,7 @@ const ReportCard = () => {
     },
   ];
   const { mutate } = useUpdateSettingHook();
-  const { data } = useGetSettingsHooks(user?.id);
+  const { data } = useGetSettingsHooks(user?.id as string);
 
 useEffect(() => {
   if (data?.data) {
@@ -65,13 +65,13 @@ const handleSettingsChange = async (
     if (type === "currency") {
       const selectedCurrency = value as Currency;
       setCurrency(selectedCurrency);
-      mutate({ currency:selectedCurrency, enable_monthly_transaction_report: weeklyReport, notes:"Sample", userId: user?.id });
+      mutate({ currency:selectedCurrency, enable_monthly_transaction_report: weeklyReport, notes:"Sample", userId: user?.id as string });
     }
 
     if (type === "report") {
       const reportEnabled = value as boolean;
       setWeeklyReport(reportEnabled);
-      mutate({ currency, enable_monthly_transaction_report: reportEnabled, notes:"Sample", userId: user?.id });
+      mutate({ currency, enable_monthly_transaction_report: reportEnabled, notes:"Sample", userId: user?.id as string });
     }
   } catch (error) {
     console.error(error);

@@ -67,3 +67,9 @@ export interface IOverallAmountInputType {
   startDate: Date | undefined;
   endDate: Date | undefined;
 }
+
+
+export interface IWeeklyBarChartType {
+  day: string;
+  total: number;
+}

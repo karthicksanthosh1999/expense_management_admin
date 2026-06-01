@@ -13,7 +13,7 @@ export function VersionSwitcher() {
           <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
             <GalleryVerticalEndIcon className="size-4" />
           </div>
-          <span className="font-medium text-xl">Jk-Tech</span>
+          <span className="font-medium text-xl">Sk-Tech</span>
         </Link>
       </SidebarMenuItem>
     </SidebarMenu>

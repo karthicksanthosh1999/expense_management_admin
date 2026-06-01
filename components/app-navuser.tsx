@@ -40,7 +40,7 @@ export function NavUser({
    const handleLogout = async () => {
     try {
       await api.post("/api/auth/logout", { id: authUser?.id });
-      setUser(null);
+      setUser({ id: "", name: "", email: "", verifiedEmail: false, profileImage: "", mobile: "", password: "", verifiedMobile: false });
       navigate.push("/");
       toast.success("User Logout Successfully");
     } catch (error) {

@@ -73,7 +73,7 @@ const TransactionHistory = ({
 
   const handleGoalEdit = (data: ITransaction) => {
     setTransactionUpdateModelOpen(true);
-    setSelectedTransaction(data);
+    setSelectedTransaction({...data, amount: data.amount.toString()} as TTransactionValidationSchemaType);
   };
 
   const handleDelete = (id: string) => {
