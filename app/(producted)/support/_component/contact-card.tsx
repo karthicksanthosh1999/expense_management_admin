@@ -24,7 +24,7 @@ const ContactCard = () => {
   ];
 
   return (
-    <Card className="max-w-[30%] w-full h-fit">
+    <Card className="w-full h-fit">
       <CardContent>
         <h1 className="text-textColor text-xl font-semibold">
           Contact Information

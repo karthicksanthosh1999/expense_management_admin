@@ -102,7 +102,7 @@ export const useDeleteTransactionHook = () => {
 
 // UPDATE TRANSACTION HOOK
 export const useUpdateTransactionHook = () => {
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient();    
   return useMutation<
     IApiResponse<ITransaction>,
     AxiosError,
@@ -116,6 +116,7 @@ export const useUpdateTransactionHook = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      
       toast.success("Transaction Update Successfully", {
         id: "create-transaction",
       });

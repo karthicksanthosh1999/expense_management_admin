@@ -7,7 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Field, FieldGroup } from "@/components/ui/field";
+import { Field, FieldError, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { IModelPropsType } from "@/constants/CommonTypes";
@@ -26,6 +26,7 @@ import {
 } from "../_hooks/transaction-hook";
 import { formatDateForInput } from "@/lib/dateFormat ";
 import CategoryHorizontalPicker from "@/components/category-pickert";
+import { Separator } from "@/components/ui/separator";
 
 interface TProps extends IModelPropsType {
   formType: TTransactionType;
@@ -94,7 +95,7 @@ export function TransactionForm({
   };
   const handleClose = () => {
     setOpen(false);
-    reset();
+    reset({ amount:"", message:'', transactionDate:"", category:""});
   };
 
   return (
@@ -106,9 +107,10 @@ export function TransactionForm({
               {formType.toString().toLowerCase()} Transaction
             </DialogTitle>
           </DialogHeader>
+          <Separator className='my-5' />
           <FieldGroup className="my-3">
             <Field>
-              <Label htmlFor="amount">Amount</Label>
+              <Label htmlFor="amount">Amount:</Label>
               <Input
                 id="amount"
                 type="number"
@@ -118,8 +120,11 @@ export function TransactionForm({
                 className="h-10 text-xl font-normal"
               />
             </Field>
+               {errors?.amount?.message && (
+                    <p className="text-sm text-red-500">{errors?.amount?.message}</p>
+                  )}
             <Field>
-              <Label htmlFor="username-1">Description</Label>
+              <Label htmlFor="username-1">Description:</Label>
               <Input
                 id="description"
                 {...register("message")}
@@ -127,20 +132,29 @@ export function TransactionForm({
                 className="h-10 text-xl font-normal"
               />
             </Field>
+                 {errors?.message?.message && (
+                    <p className="text-sm text-red-500">{errors?.message?.message}</p>
+                  )}
             <Field>
               <Label htmlFor="category">Category</Label>
               <CategoryHorizontalPicker control={control} />
             </Field>
+                   {errors?.category?.message && (
+                    <p className="text-sm text-red-500">{errors?.category?.message}</p>
+                  )}
             <Field>
-              <Label htmlFor="date">Date</Label>
+              <Label htmlFor="date">Date:</Label>
               <Input
                 id="date"
                 type="date"
                 {...register("transactionDate")}
-                placeholder="Enter Your Description"
+                placeholder="Select the date"
                 className="h-10 text-xl font-normal"
               />
             </Field>
+                {errors?.transactionDate?.message && (
+                    <p className="text-sm text-red-500">{errors?.transactionDate?.message}</p>
+                  )}
           </FieldGroup>
           <div className="flex items-center justify-center gap-5">
             <Button

@@ -12,22 +12,20 @@ const page = async () => {
     <>
       {/* AMOUNT CARD  */}
       <AmountCard />
-
-
+      
       {/* AI SUGGESTION CARD */}
-
       <div className="w-full h-fit">
         <Suspense  fallback={<AiSuggestionCardSkeleton />}>
           <AiSuggestionCard />
         </Suspense>
       </div>
 
-      <div className="flex w-full h-full gap-5">
-        <div className="w-[50%] h-full">
+      <div className="grid sm:grid-cols-2 grid-cols-1 w-full h-full gap-5">
+        <div className="w-full h-full">
         <AmountChart />
         </div>
         {/* BAR CHART SECTION */}
-        <div className="w-[50%] h-full">
+        <div className="w-full h-full">
           <WeeklyBarChart />
         </div>
       </div>

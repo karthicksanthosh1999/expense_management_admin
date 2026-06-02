@@ -16,7 +16,7 @@ const ThemeCard = () => {
   const { theme, setTheme } = useTheme();
   const handleTheme = (theme: string) => {
     setTheme(theme);
-    toast(`${theme} theme applied successfully`);
+    toast.success(`${theme} theme applied successfully`);
   };
 
   const themeData = [
@@ -47,7 +47,7 @@ const ThemeCard = () => {
   ];
 
   return (
-    <Card className="max-w-[50%] w-full">
+    <Card className="lg:w-[50%] w-full">
       <CardContent>
         <CardHeader className="text-textColor text-lg font-semibold">
           Theme

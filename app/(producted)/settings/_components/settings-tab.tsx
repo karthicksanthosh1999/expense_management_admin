@@ -20,7 +20,7 @@ const tabs = [
     icon: User2,
     content: (
       <>
-        <div className="flex items-start gap-5 w-full">
+        <div className="flex md:flex-row flex-col items-start gap-5 w-full">
           <div className="w-full">
             <ProfileCard />
           </div>
@@ -50,20 +50,14 @@ const tabs = [
         <ReportCard />
       </>
     ),
-  },
-  {
-    name: "Account",
-    value: "account",
-    icon: SunMoon,
-    content: <></>,
-  },
+  }
 ];
 
 const SettingTabs = () => {
   return (
     <div className="w-full">
       <Tabs defaultValue="profile" className="w-full">
-        <TabsList className="bg-[#0b1020] h-fit w-fit rounded-2xl flex gap-2">
+        <TabsList className="bg-card h-fit w-fit rounded-2xl border flex sm:flex-nowrap flex-wrap gap-2">
           {tabs.map(({ icon: Icon, name, value }) => (
             <TabsTrigger
               key={value}

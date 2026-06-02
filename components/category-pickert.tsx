@@ -2,7 +2,6 @@
 
 import { categoryConfig } from "@/lib/icon-center";
 import { Controller } from "react-hook-form";
-import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 
 type Props = {
   control: any;

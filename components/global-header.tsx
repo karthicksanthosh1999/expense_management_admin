@@ -50,7 +50,7 @@ export default function GlobalHeader({ children }: TProps) {
           />
           <section className="flex w-full items-center justify-between">
             <div className="">
-              <h1 className="text-textColor font-bold text-xl">
+              <h1 className="text-textColor font-bold sm:text-xl text-lg">
                 {currentPageName()}
               </h1>
               <p className="text-gray-400 font-normal text-xs">

@@ -36,6 +36,8 @@ import {
 } from "@/components/ui/context-menu"
 import { useDeleteTransactionHook } from "../_hooks/transaction-hook";
 import DeleteModel from "@/components/delete-model";
+import { useRef } from "react";
+import { toPng } from "html-to-image";
 
 type props = {
   loading: boolean;
@@ -59,6 +61,7 @@ const TransactionHistory = ({
   const [selectedTransaction, setSelectedTransaction] = useState<TTransactionValidationSchemaType | null>(null);
   const [selectedTransactionId, setSelectedTransactionId] = useState<string | null>(null);
   const [transaction, setTransaction] = useState<ITransaction | null>(null);
+  const componentRef = useRef<HTMLDivElement>(null);
 
   const { mutate } = useDeleteTransactionHook()
 
@@ -90,6 +93,23 @@ const TransactionHistory = ({
     }
   }
 
+  const downloadImage = async () => {
+    if (!componentRef.current) return;
+
+    try {
+      const dataUrl = await toPng(componentRef.current, {
+        cacheBust: true,
+      });
+
+      const link = document.createElement("a");
+      link.download = "report.png";
+      link.href = dataUrl;
+      link.click();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <Dialog
@@ -97,10 +117,10 @@ const TransactionHistory = ({
         onOpenChange={setTransactionModelOpen}>
         <Card className="w-full">
           <CardHeader className="flex items-center justify-between">
-            <h1 className="text-2xl font-semibold text-color">
+            <h1 className="lg:text-2xl text-lg font-semibold text-color">
               Transaction History
             </h1>
-            <p className="text-gray-400">
+            <p className="text-gray-400 lg:text-base text-xs">
               Showing {transactionData?.pagination?.page}-
               {transactionData?.pagination?.totalPages} of{" "}
               {transactionData?.pagination?.total} transactions
@@ -136,7 +156,7 @@ const TransactionHistory = ({
                       <div className="flex flex-col items-start">
                         <div className="flex items-center gap-3">
                           <CategoryIcon category={item?.category!} size={20} />
-                          <h1 className="text-color text-lg font-semibold tracking-wider w-fit">
+                          <h1 className="text-color text-sm md:text-lg font-semibold tracking-wider w-fit">
                             {item.message}
                           </h1>
                         </div>
@@ -212,66 +232,68 @@ const TransactionHistory = ({
         </Card>
 
         {/* TRANSACTION MODEL */}
-        <DialogContent className="sm:max-w-lg bg-card border border-highlight">
-          <DialogHeader>
-            <div className="flex justify-between items-center">
-              <DialogTitle className="text-2xl font-semibold">
-                Transaction Details
-              </DialogTitle>
-              <X onClick={handleModelClose} className="cursor-pointer" />
-            </div>
-            <Separator className={'my-2'} />
-          </DialogHeader>
-          <section>
-            <div className="flex items-center justify-center flex-col gap-2">
-              <CategoryIcon category={transaction?.category!} size={30} />
-              <h1 className="font-semibold text-4xl">
-                ₹{transaction?.amount.toString()}
-              </h1>
-              <p className="text-base font-normal pb-5">
-                {transaction?.message}
-              </p>
-            </div>
+            <DialogContent className="sm:max-w-lg bg-card border border-highlight">
+              <div ref={componentRef} className="bg-card">
+                  <DialogHeader>
+                    <div className="flex justify-between items-center w-full">
+                      <DialogTitle className="md:text-2xl text-lg font-semibold">
+                        Transaction Details
+                      </DialogTitle>
+                      <X onClick={handleModelClose} className="cursor-pointer" />
+                    </div>
+                    <Separator className={'my-2'} />
+                  </DialogHeader>
+                  <section>
+                    <div className="flex items-center justify-center bg-card flex-col gap-2">
+                      <CategoryIcon category={transaction?.category!} size={30} />
+                      <h1 className="font-semibold text-4xl">
+                        ₹{transaction?.amount.toString()}
+                      </h1>
+                      <p className="text-base font-normal pb-5">
+                        {transaction?.message}
+                      </p>
+                    </div>
 
-            <div>
-              <Card>
-                <CardContent className="space-y-3">
-                  <div className="flex items-center justify-between text-sm">
-                    <p>Transaction Type:</p>
-                    <span>
-                      {transaction?.transactionType && (
-                        <StatusChip status={transaction.transactionType} />
-                      )}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <p>Transaction Category:</p>
-                    <p className="uppercase">{transaction?.category}</p>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <p>Transaction Date:</p>
-                    {dateFormat(transaction?.transactionDate!) ?? "N/A"}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+                    <div>
+                      <Card>
+                        <CardContent className="space-y-3">
+                          <div className="flex items-center justify-between text-sm">
+                            <p>Transaction Type:</p>
+                            <span>
+                              {transaction?.transactionType && (
+                                <StatusChip status={transaction.transactionType} />
+                              )}
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-between text-sm">
+                            <p>Transaction Category:</p>
+                            <p className="uppercase">{transaction?.category}</p>
+                          </div>
+                          <div className="flex items-center justify-between text-sm">
+                            <p>Transaction Date:</p>
+                            {dateFormat(transaction?.transactionDate!) ?? "N/A"}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
 
-            <div className="space-x-5 flex items-center justify-center mt-5">
-              <Button variant={"outline"} className="h-10 w-30">
-                Download Recept
-              </Button>
-              <Button variant={"destructive"} className="h-10 w-30" onClick={()=>handleDelete(transaction?.id!)}>
-                Delete
-              </Button>
-              <Button
-                variant={"default"}
-                className="h-10 w-30 text-white"
-                onClick={() => handleGoalEdit(transaction!)}>
-                Edit
-              </Button>
-            </div>
-          </section>
-        </DialogContent>
+                    <div className="flex flex-wrap items-center gap-2 justify-center mt-5">
+                      <Button variant={"outline"} className="h-10 w-30" onClick={downloadImage}>
+                        Download Recept
+                      </Button>
+                      <Button variant={"destructive"} className="h-10 w-30" onClick={()=>handleDelete(transaction?.id!)}>
+                        Delete
+                      </Button>
+                      <Button
+                        variant={"default"}
+                        className="h-10 w-30 text-white"
+                        onClick={() => handleGoalEdit(transaction!)}>
+                        Edit
+                      </Button>
+                    </div>
+                  </section>
+              </div>
+            </DialogContent>
       </Dialog>
       {selectedTransaction && (
         <TransactionForm

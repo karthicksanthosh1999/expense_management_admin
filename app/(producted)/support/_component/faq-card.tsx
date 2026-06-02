@@ -56,13 +56,13 @@ const FAQCard = () => {
   };
 
   return (
-    <Card className="max-w-[70%] w-full">
+    <Card className="w-full border light:border-highlight">
       <CardContent>
-        <div className="flex items-center justify-between">
+        <div className="flex md:flex-row gap-5 flex-col items-center justify-between">
           <h1 className="text-textColor text-xl font-semibold">
             Frequently Asked Questions
           </h1>
-          <div className="flex items-center justify-center gap-3">
+          <div className="flex items-center flex-wrap justify-center gap-3 mb-3">
             {buttonList.map(({ id, title }) => (
               <Button
                 key={id}

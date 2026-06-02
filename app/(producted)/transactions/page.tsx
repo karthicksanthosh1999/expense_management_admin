@@ -35,10 +35,10 @@ const page = () => {
         </div>
       </SecondHeader>
       <div className="flex md:flex-row flex-col items-start gap-5 w-full">
-        <div className="w-[75%] space-y-3">
+        <div className="lg:w-[75%] w-full space-y-3">
           <FilterTransactions />
         </div>
-        <div className="w-[25%] space-y-3">
+        <div className="w-full lg:w-[25%] space-y-3">
           <TopTransactionsCard />
           <TransactionChart />
         </div>

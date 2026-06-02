@@ -18,9 +18,13 @@ const page = () => {
       value: "faq",
       icon: User2,
       content: (
-        <div className="flex gap-3">
-          <FAQCard />
-          <ContactCard />
+        <div className="flex md:flex-row flex-col gap-3">
+          <div className="md:w-[70%] w-full">
+            <FAQCard />
+          </div>
+          <div className="md:w-[30%] w-full">
+            <ContactCard />
+          </div>
         </div>
       ),
     },

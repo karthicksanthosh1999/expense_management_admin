@@ -30,6 +30,9 @@ import {
   CircleStar,
   Stethoscope,
   FileBracesCorner,
+  HandCoins,
+  MirrorRound,
+  Umbrella,
 } from "lucide-react";
 
 export const categoryConfig = {
@@ -76,6 +79,18 @@ export const categoryConfig = {
   medical: {
     icon: Stethoscope,
     bg: "bg-gradient-to-r from-blue-300 to-blue-400",
+  },
+  salary: {
+    icon: HandCoins,
+    bg: "bg-gradient-to-r from-green-700 to-green-600",
+  },
+  cosmetic: {
+    icon: MirrorRound,
+    bg: "bg-gradient-to-r from-gray-700 to-gray-600",
+  },
+  insurance: {
+    icon: Umbrella,
+    bg: "bg-gradient-to-r from-green-700 to-orange-600",
   },
 };
 

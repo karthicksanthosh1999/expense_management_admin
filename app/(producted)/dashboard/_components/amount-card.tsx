@@ -81,8 +81,9 @@ const AmountCard = () => {
       <Card className="mt-3">
         <CardContent>
           <form onSubmit={handleSubmit}>
-            <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
-              <div className="space-y-2 flex gap-5 items-center">
+            <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-between sm:place-items-center place-items-start w-full gap-4">
+
+              <div className="space-y-2 flex gap-5 items-center w-full">
                 <Label>Start Date:</Label>
                 <DatePicker
                   value={filters.startDate}
@@ -100,18 +101,20 @@ const AmountCard = () => {
                 />
               </div>
 
-              <div className="flex items-end gap-2 h-full">
+              <Separator className={'md:hidden block'} />
+
+              <div className="flex items-center justify-center gap-2 h-full">
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className="px-8 text-white text-sm h-full font-normal">
+                  className="px-8 py-1 text-white text-base h-full font-semibold">
                   Apply
                 </Button>
 
                 <Button
                   type="button"
                   onClick={handleReset}
-                  className="bg-orange-400 hover:bg-orange-500 text-sm text-white px-8 h-full font-normal">
+                  className="bg-orange-400 hover:bg-orange-500 text-base text-white px-8 py-1 h-full font-semibold">
                   Reset
                 </Button>
               </div>

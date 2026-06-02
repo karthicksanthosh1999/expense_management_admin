@@ -14,6 +14,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import {
@@ -32,10 +33,14 @@ import { getDefaultDates } from "@/lib/getCurrentMonth";
 import { formatted } from "@/lib/amount-converter";
 import { useOverAllTransactionDetailsHook } from "@/app/(producted)/transactions/_hooks/transaction-hook";
 import ButtonLoading from "./loaders/ButtonLoading";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
   const pathName = usePathname();
   const { user } = useAuth();
+  const { toggleSidebar } = useSidebar();
+  const isMobile = useIsMobile()
 
   const { startDate: defaultStart, endDate: defaultEnd } = getDefaultDates();
 
@@ -43,6 +48,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     startDate: defaultStart,
     endDate: defaultEnd,
   });
+
+  const handleSidebarClose = () => {
+    if(isMobile){
+      toggleSidebar()
+    }
+  }
+
   const data = {
     navMain: [
       {
@@ -133,6 +145,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                           : "text-gray-400 hover:text-white hover:bg-highlight hover:translate-x-0.75"
                       }`}
                       isActive={isActive}
+                      onClick={handleSidebarClose}
                       render={<Link href={url} />}>
                       {Icon && <Icon size={18} />}
                       {title}

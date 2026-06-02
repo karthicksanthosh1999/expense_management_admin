@@ -13,6 +13,7 @@ import OTPForm from '@/components/otp-form';
 import { useState } from 'react';
 import { sendOTPApi } from '../_hooks/settingHooks';
 import { Verified, X } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
 
 const SecurityCard = () => {
 
@@ -36,6 +37,7 @@ const SecurityCard = () => {
         <Card>
             <CardContent>
                 <CardHeader className='text-2xl font-semibold'>Security Settings</CardHeader>
+                <Separator className='my-5' />
                     <Accordion>
                         {/* PASSWORD RESET  */}
                         <div className="mt-5">

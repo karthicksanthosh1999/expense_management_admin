@@ -43,12 +43,6 @@ export function ProfileDropdown({ logout, user }: TProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <BadgeCheckIcon />
-            Account
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => handleLogout()}>
           <LogOutIcon />

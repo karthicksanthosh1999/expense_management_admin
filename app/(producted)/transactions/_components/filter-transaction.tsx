@@ -75,9 +75,10 @@ export default function TransactionFilters() {
 
   return (
     <>
-      <Card className="p-4">
-        <CardContent className="space-y-4 flex  items-center justify-between">
-          <div className="h-full flex flex-col justify-start items-start space-y-3">
+      <Card className="p-4 w-full mt-5">
+        <CardContent className="space-y-4 flex lg:flex-row flex-col w-full items-center justify-between">
+
+          <div className="h-full flex flex-col justify-start w-full items-start space-y-4">
             <Label>Transaction Type:</Label>
             <div className="flex flex-wrap gap-3">
               {tabsList.map((item, idx) => {
@@ -97,7 +98,7 @@ export default function TransactionFilters() {
             </div>
 
             {/* DATES */}
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid lg:grid-cols-3 grid-cols-1 gap-4">
               <div className="space-y-3">
                 <Label>Start Date:</Label>
                 <DatePicker
@@ -137,10 +138,10 @@ export default function TransactionFilters() {
             </div>
           </div>
 
-          <Separator orientation="vertical" />
+          {/* <Separator orientation="vertical" className='md:block hidden' /> */}
 
           {/* Submit Button */}
-          <div className="space-y-3 flex flex-col w-fit">
+          <div className="flex lg:flex-col flex-wrap gap-3 w-fit">
             <Button
               variant={"default"}
               onClick={handleSubmit}
