@@ -50,11 +50,11 @@ export default function CategoryHorizontalPicker({ control }: Props) {
               </Button>
             </PopoverTrigger>
 
-            <PopoverContent className="w-full">
+            <PopoverContent className="w-full h-full">
               <Command>
                 <CommandInput placeholder="Search category..." />
                 <CommandEmpty>No category found.</CommandEmpty>
-                <CommandGroup>
+                <CommandGroup className="max-h-56 overflow-y-scroll">
                   {Object.entries(categoryConfig).map(([key, config]) => {
                     return (
                       <CommandItem

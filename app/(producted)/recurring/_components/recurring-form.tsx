@@ -2,19 +2,16 @@
 
 import CategoryHorizontalPicker from '@/components/category-pickert';
 import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Field, FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Separator } from '@/components/ui/separator';
 import { IModelPropsType } from '@/constants/CommonTypes';
 import { useAuth } from '@/context/hooks/authHooks';
 import { formatDateForInput } from '@/lib/dateFormat ';
 import { recurringTransactionValidationSchema, TRecurringTransactionValidationSchemaType } from '@/validation_schema/transaction-validatino';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CalendarIcon } from 'lucide-react';
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
@@ -24,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useCreateRecurringTransactionHook, useUpdateRecurringTransactionHook } from '../_hooks/recurring-hook';
 
 
 interface TProps extends IModelPropsType {
@@ -33,6 +31,8 @@ interface TProps extends IModelPropsType {
 
 export default function RecurringForm({ mode, open, setOpen, existingTransactionData } : TProps) {
     const { user } = useAuth();
+      const { mutate:createRecurringMutate } = useCreateRecurringTransactionHook();
+      const { mutate:updateRecurringMutate } = useUpdateRecurringTransactionHook();
     const { 
         reset, 
         register, 
@@ -72,14 +72,15 @@ export default function RecurringForm({ mode, open, setOpen, existingTransaction
                 userId: user.id
             }))
         }
-      },[user, reset])
+      },[user, mode,reset])
 
+      console.log(errors)
 
         const handleTransaction = (data: TRecurringTransactionValidationSchemaType) => {
           if (mode === "CREATE") {
-            console.log(data)
+            createRecurringMutate(data)
           } else {
-            // updateTransactionMutation(data);
+            updateRecurringMutate(data);
           }
           handleClose();
         };
@@ -88,13 +89,12 @@ export default function RecurringForm({ mode, open, setOpen, existingTransaction
           reset();
         };
 
-        console.log(errors)
   return (
     <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
         <form onSubmit={handleSubmit(handleTransaction)}> 
             <DialogHeader>
-                <DialogTitle>{mode ?? "N/A"} Transaction</DialogTitle>
+                <DialogTitle className='capitalize'>{mode.toString().toLowerCase()} Transaction</DialogTitle>
             </DialogHeader>
           <Separator className='my-5' />
             <FieldGroup className="my-3">
@@ -106,7 +106,7 @@ export default function RecurringForm({ mode, open, setOpen, existingTransaction
                   step="0.01"
                   {...register("amount")}
                   placeholder="00.00"
-                  className="h-10 text-xl font-normal"
+                  className="h-10 text-sm font-normal"
                 />
               </Field>
                 {errors?.amount?.message && (
@@ -118,7 +118,7 @@ export default function RecurringForm({ mode, open, setOpen, existingTransaction
                   id="description"
                   {...register("message")}
                   placeholder="Enter Your Description"
-                  className="h-10 text-xl font-normal"
+                  className="h-10 text-sm font-normal"
                 />
               </Field>
                   {errors?.message?.message && (
@@ -138,14 +138,13 @@ export default function RecurringForm({ mode, open, setOpen, existingTransaction
                   type="date"
                   {...register("startDate")}
                   placeholder="Select the Start date"
-                  className="h-10 text-xl font-normal"
+                  className="h-10 text-sm font-normal"
                 />
               </Field>
                   {errors?.startDate?.message && (
                       <p className="text-sm text-red-500">{errors?.startDate?.message}</p>
                     )}
               <Field>
-              
               <Controller
                 control={control}
                 name="frequency"
@@ -177,7 +176,7 @@ export default function RecurringForm({ mode, open, setOpen, existingTransaction
                   type="date"
                   {...register("nextRunDate")}
                   placeholder="Select the next date"
-                  className="h-10 text-xl font-normal"
+                  className="h-10 text-sm font-normal"
                 />
                   {errors?.nextRunDate?.message && (
                       <p className="text-sm text-red-500">{errors?.nextRunDate?.message}</p>

@@ -6,17 +6,17 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";
 
-// FILTER TRANSACTION HOOK
+// FILTER RECURRING TRANSACTION HOOK
 export const useFilterRecurringTransaction = () => {
   return useQuery({
-    queryKey: ["transactions" ],
+    queryKey: ["recurring" ],
     queryFn: () => filterRecurringTransactionApi(),
   });
 };
 
 
-// CREATE TRANSACTION HOOK
-export const useCreateTransactionHook = () => {
+// CREATE RECURRING TRANSACTION HOOK
+export const useCreateRecurringTransactionHook = () => {
   const queryClient = useQueryClient();
   return useMutation<
     IApiResponse<IGetRecurringTransactionDTO>,
@@ -32,43 +32,43 @@ export const useCreateTransactionHook = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["recurring"] });
       toast.success("Recurring Transaction Created Successfully", {
-        id: "create-transaction",
+        id: "create-recurring-transaction",
       });
     },
     onError: () => {
       toast.error("Something Went Wrong", {
-        id: "create-transaction",
+        id: "create-recurring-transaction",
       });
     },
   });
 };
 
-// DELETE TRANSACTION HOOK
-export const useDeleteTransactionHook = () => {
+// DELETE RECURRING TRANSACTION HOOK
+export const useDeleteRecurringTransactionHook = () => {
   const queryClient = useQueryClient();
   return useMutation<IApiResponse<IGetRecurringTransactionDTO>, AxiosError, string>({
     mutationFn: deleteRecurringTransactionAPI,
     onMutate: () => {
       toast.loading("Recurring Transaction Deleting...", {
-        id: "delete-transaction",
+        id: "delete-recurring-transaction",
       });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["recurring"] });
       toast.success("Recurring Transaction Delete Successfully", {
-        id: "delete-transaction",
+        id: "delete-recurring-transaction",
       });
     },
     onError: () => {
       toast.error("Something Went Wrong", {
-        id: "delete-transaction",
+        id: "delete-recurring-transaction",
       });
     },
   });
 };
 
-// UPDATE TRANSACTION HOOK
-export const useUpdateTransactionHook = () => {
+// UPDATE RECURRING TRANSACTION HOOK
+export const useUpdateRecurringTransactionHook = () => {
   const queryClient = useQueryClient();    
   return useMutation<
     IApiResponse<IGetRecurringTransactionDTO>,
@@ -97,14 +97,14 @@ export const useUpdateTransactionHook = () => {
 };
 
 
-// FILTER TRANSACTION API
+// FILTER RECURRING TRANSACTION API
 const filterRecurringTransactionApi = async (): Promise<IApiResponse<IGetRecurringTransactionDTO[]>> => {
   const { data } = await api.get(`/api/transaction/recurrition`);
   return data;
 };
 
 
-// CREATE TRANSACTION API
+// CREATE RECURRING TRANSACTION API
 const createRecurringTransactionAPI = async (
   transactionData: TRecurringTransactionValidationSchemaType,
 ): Promise<IApiResponse<IGetRecurringTransactionDTO>> => {
@@ -112,19 +112,19 @@ const createRecurringTransactionAPI = async (
   return data;
 };
 
-// DELETE TRANSACTION API
+// DELETE RECURRING TRANSACTION API
 const deleteRecurringTransactionAPI = async (
   id: string,
 ): Promise<IApiResponse<IGetRecurringTransactionDTO>> => {
-  const { data } = await api.delete("/api/transaction/recurrition", { data: { id } });
+  const { data } = await api.delete(`/api/transaction/recurrition/${id}`);
   return data;
 };
 
 
-// UPDATE TRANSACTION API
+// UPDATE RECURRING TRANSACTION API
 const updateRecurringTransactionAPI = async (
   transactionData: TRecurringTransactionValidationSchemaType,
 ): Promise<IApiResponse<IGetRecurringTransactionDTO>> => {
-  const { data } = await api.put("/api/transaction", transactionData);
+  const { data } = await api.put("/api/transaction/recurrition", transactionData);
   return data;
 };
