@@ -42,7 +42,7 @@ export const POST = asyncHandler(async (req: Request) => {
 });
 
 export const GET = asyncHandler(async (req: Request) => {
-  const transaction = await prisma.recurringTransaction.findMany();
+  const transaction = await prisma.recurringTransaction.findMany({ orderBy: { createdAt: "desc" } });
   return NextResponse.json({
     message: "Transaction Get Successfully",
     status: true,
@@ -50,3 +50,4 @@ export const GET = asyncHandler(async (req: Request) => {
     data: transaction,
   });
 });
+

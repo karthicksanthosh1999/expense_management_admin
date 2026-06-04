@@ -23,11 +23,15 @@ export async function DELETE(
   { params }: { params: Promise<{id: string}> },
 ) {
   const {id} = await params;
-  await prisma.recurringTransaction.delete({
+  const transaction = await prisma.recurringTransaction.delete({
     where: { id },
   });
 
   return NextResponse.json({
+    message : "Recurrition transaction deleted sucessfully",
     success: true,
+    statusCode: 200,
+    data:transaction
+
   });
 }

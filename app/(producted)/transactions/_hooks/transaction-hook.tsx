@@ -43,7 +43,7 @@ export const useOverAllTransactionDetailsHook = (
   dates: IOverallAmountInputType,
 ) => {
   return useQuery({
-    queryKey: ["transactions-amount", dates],
+    queryKey: ["transactions", dates],
     queryFn: () => overallAmountDetails(dates),
   });
 };

@@ -25,10 +25,11 @@ export const exportPdf = (data: ITransaction[], user: IUser) => {
   autoTable(doc, {
     startY: 45,
 
-    head: [["S.No", "Transaction Date", "Amount", "Status"]],
+    head: [["S.No", "Transaction Date", "Commands","Amount", "Status"]],
     body: data.map((item, index) => [
       index + 1,
       dateFormat(item.transactionDate),
+      item.message,
       item.amount.toString(),
       item.transactionType,
     ]),
@@ -41,8 +42,9 @@ export const exportPdf = (data: ITransaction[], user: IUser) => {
     columnStyles: {
       0: { halign: "center" },
       1: { halign: "center" },
-      2: { halign: "center" },
+      2: { halign: "left" },
       3: { halign: "center" },
+      4: { halign: "center" },
     },
   });
 
