@@ -10,7 +10,7 @@ export const POST = asyncHandler(async (req: Request) => {
 
   const type = searchParams.get("type");
   const category = searchParams.get("category");
-
+ 
   const startDateParam = searchParams.get("startDate");
   const endDateParam = searchParams.get("endDate");
 

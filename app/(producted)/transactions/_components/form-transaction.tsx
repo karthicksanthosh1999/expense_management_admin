@@ -95,7 +95,7 @@ export function TransactionForm({
   };
   const handleClose = () => {
     setOpen(false);
-    reset({ amount:"", message:'', transactionDate:"", category:""});
+    reset();
   };
 
   return (

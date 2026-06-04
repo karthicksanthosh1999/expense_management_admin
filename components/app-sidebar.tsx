@@ -23,6 +23,7 @@ import {
   Headset,
   Layers2,
   LayoutDashboard,
+  RefreshCcw,
   Settings,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -72,6 +73,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             url: "/transactions",
             icon: ArrowRightLeft,
             isActive: pathName === "/transactions",
+          },
+          {
+            title: "Recurring Transactions",
+            url: "/recurring",
+            icon: RefreshCcw ,
+            isActive: pathName === "/recurring",
           },
           {
             title: "Goals",
@@ -124,7 +131,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <ButtonLoading />
                 </div>
               ) : (
-                <h1 className="text-highlight font-semibold text-base">
+                <h1 className="text-green-300 font-semibold text-lg text-shadow: 0px 0px 186px rgba(67,193,21,0.9);">
                   {formatted(amountDetails?.data?.balance ?? 0)}
                 </h1>
               )}
